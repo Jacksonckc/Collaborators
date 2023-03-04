@@ -122,7 +122,7 @@
     },
     "/user/password": {
       "put": {
-        "description": "Modify a user's password, you will recieve a 200 when succeed",
+        "description": "Modify a user's password",
         "parameters": [
           {
             "name": "authorization",
@@ -135,11 +135,30 @@
             "required": true,
             "description": "Input your new password",
             "schema": {
-              "$ref": "#/definitions/UpdatePassword"
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "example": "new password"
+                }
+              }
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Update successful. You will receive the new password object.",
+            "schema": {
+              "$ref": "#/definitions/Password"
+            }
+          },
+          "400": {
+            "description": "Update failed, it might be caused by anything. You will receive an err message.",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
+          }
+        }
       }
     },
     "/user/login": {
@@ -231,27 +250,27 @@
       "properties": {
         "projectName": {
           "type": "string",
-          "example": "Voluptatem repudiandae aut consequatur repudiandae quo consectetur."
+          "example": "Sed et consectetur expedita autem et non ad velit quos."
         },
         "projectLink": {
           "type": "string",
-          "example": "Caden_Kunze@Robel.biz"
+          "example": "Courtney_Lindgren@gmail.com"
         },
         "projectAutherId": {
           "type": "string",
-          "example": "021a7e8b-0db9-486c-8688-e86537f9c8de"
+          "example": "1fc54b8e-b6f6-4add-996d-6cecd56337a6"
         },
         "projectLikesCount": {
           "type": "number",
-          "example": 61
+          "example": 63
         },
         "projectStartDate": {
           "type": "string",
-          "example": "1989-11-24"
+          "example": "2010-08-30"
         },
         "projectDescription": {
           "type": "string",
-          "example": "Maxime praesentium architecto occaecati temporibus rerum. Et sed eum dicta vitae soluta nihil eos repudiandae velit."
+          "example": "Aut aperiam vel tenetur incidunt et. Nemo quis iusto itaque id eos repellat omnis id. Accusantium ab dolorem sapiente sint excepturi natus voluptate repudiandae. Mollitia voluptatem et quia animi provident."
         },
         "isProjectFinished": {
           "type": "boolean",
@@ -273,7 +292,7 @@
       "properties": {
         "skillName": {
           "type": "string",
-          "example": "pt"
+          "example": "cn"
         },
         "skillLevel": {
           "type": "number",
@@ -281,7 +300,7 @@
         },
         "skillDescription": {
           "type": "string",
-          "example": "Ducimus voluptatum qui adipisci rerum saepe eum."
+          "example": "Consequatur reprehenderit in aut sed sit ut."
         }
       },
       "required": [
@@ -295,43 +314,43 @@
       "properties": {
         "userEmail": {
           "type": "string",
-          "example": "Hilda.Boehm@hotmail.com"
+          "example": "Amos.Daniel@Schroeder.info"
         },
         "userFirstName": {
           "type": "string",
-          "example": "Lourdes"
+          "example": "Thaddeus"
         },
         "userLastName": {
           "type": "string",
-          "example": "Bailey"
+          "example": "Simonis"
         },
         "userBirthday": {
           "type": "string",
-          "example": "1971-02-27"
+          "example": "1999-03-27"
         },
         "userPhone": {
           "type": "string",
-          "example": "017-397-6604"
+          "example": "500-359-3816"
         },
         "userStory": {
           "type": "string",
-          "example": "Quaerat facere tempora deserunt doloremque sapiente dolorum. Earum et itaque occaecati nobis voluptatem nisi inventore. Maxime aut dignissimos error nisi eum accusamus exercitationem beatae. Assumenda quas ipsam quidem."
+          "example": "Doloremque modi possimus qui nihil voluptatem quo laborum itaque. Aliquid a vitae eos placeat vel suscipit id. Ipsa doloribus impedit doloremque aut at occaecati aspernatur voluptatem."
         },
         "userAvatar": {
           "type": "string",
-          "example": "Itaque ut temporibus sit."
+          "example": "Voluptatem enim iure non assumenda."
         },
         "password": {
           "type": "string",
-          "example": "8Asia90"
+          "example": "4Felicity27"
         },
         "userProjectCount": {
           "type": "number",
-          "example": 6
+          "example": 1
         },
         "acorns": {
           "type": "number",
-          "example": 7
+          "example": 9
         },
         "userLevel": {
           "type": "number",
@@ -345,6 +364,23 @@
         "userProjectCount",
         "acorns",
         "userLevel"
+      ]
+    },
+    "Password": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "133e4a49-cc57-4b07-9605-1efa2a6c9dca"
+        },
+        "hash": {
+          "type": "string",
+          "example": "1Jayson03"
+        }
+      },
+      "required": [
+        "userId",
+        "hash"
       ]
     },
     "Err": {

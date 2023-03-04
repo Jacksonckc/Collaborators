@@ -38,6 +38,10 @@ const doc = {
       $acorns: Math.floor(casual.random * 10),
       $userLevel: 1
     },
+    Password: {
+      $userId: casual.uuid,
+      $hash: casual.password
+    },
     Err: { err: 'Something is wrong....' }
   }
 };

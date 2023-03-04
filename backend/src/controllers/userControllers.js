@@ -24,8 +24,8 @@ const getUser = async (req, res) => {
   try {
     const result = await UserModel.findById(req.user._id);
     res.status(200).json(result);
-  } catch (e) {
-    res.status(404).json({ err: e });
+  } catch {
+    res.status(404).json({ err: 'Fail to retrieve user data.' });
   }
 };
 
@@ -61,14 +61,13 @@ const addUser = async (req, res) => {
       acorns: 10,
       userLevel: 1
     });
-    // const newUser = await UserModel.findOne({ email: req.body.email });
     const hash = await encryptPassword(req.body.password);
     await PasswordModel.create({ userId: ObjectID(newUser._id), hash });
     newUser.save();
     await session.commitTransaction();
     res.status(201).json({ ...newUser._doc });
-  } catch (e) {
-    res.status(400).json({ err: e });
+  } catch {
+    res.status(400).json({ err: 'Cannot register user.' });
   }
 };
 
@@ -102,7 +101,7 @@ const changeUserInfo = async (req, res) => {
       new: true
     });
     res.status(200).json(updatedUserData);
-  } catch (e) {
+  } catch {
     res.status(400).json({ err: 'Cannot change the user data to the database.' });
   }
 };
@@ -124,33 +123,44 @@ const deleteUser = async (req, res) => {
   try {
     await UserModel.findByIdAndDelete(req.user._id);
     res.sendStatus(200);
-  } catch (e) {
-    res.status(400).json({ err: 'Cannot delete user' });
+  } catch {
+    res.status(400).json({ err: 'Cannot delete user.' });
   }
 };
 
 const updateUserPassword = async (req, res) => {
   /*  
-  #swagger.description = "Modify a user's password, you will recieve a 200 when succeed"
+  #swagger.description = "Modify a user's password"
   #swagger.parameters['Password'] = {
     in: 'body',
     type: 'object',
     required: true,
     description: 'Input your new password',
-    schema: { $ref: '#/definitions/UpdatePassword' },
-  } */
-  // try {
-  //   const hash = await encryptPassword(req.user._id, req.body.password);
-  //   const data = { hash: hash };
-  //   await mongodb
-  //     .getDb()
-  //     .db('acorn_currency')
-  //     .collection('passwords')
-  //     .updateOne({ userId: req.user._id }, { $set: data }, { upsert: true });
-  //   res.json({ err: 'Your password has been updated.' });
-  // } catch {
-  //   res.json({ err: 'Oops, something went wrong when you change your password.' });
-  // }
+    schema: { password: 'new password' },
+  } 
+  #swagger.responses[200] = {
+    description: 'Update successful. You will receive the new password object.',
+    schema: { $ref: '#/definitions/Password' },
+  }
+  #swagger.responses[400] = {
+    description: 'Update failed, it might be caused by anything. You will receive an err message.',
+    schema: { $ref: '#/definitions/Err' }
+  }
+  */
+  const user = req.user;
+  if (!user) return res.json({ err: 'You are not authorized!' });
+
+  try {
+    const hash = await encryptPassword(req.body.password);
+
+    const updatedPassword = await PasswordModel.findOneAndUpdate(
+      { userId: req.user._id },
+      { hash }
+    );
+    res.status[200].json(updatedPassword);
+  } catch {
+    res.status[400].json({ err: 'Fail to update the password.' });
+  }
 };
 
 const loginUser = async (req, res) => {
@@ -179,7 +189,7 @@ const loginUser = async (req, res) => {
 
   const userPasswordObj = await PasswordModel.findOne({ userId: user._id });
 
-  const result = bcrypt.compare(req.body.password, userPasswordObj.hash);
+  const result = await bcrypt.compare(req.body.password, userPasswordObj.hash);
   result
     ? res.status(200).json({ token: generateJWTToken(user._id) })
     : res.status(400).json({ err: 'Information you enter is invalid!' });
@@ -207,18 +217,17 @@ const getUsers = async (req, res) => {
   try {
     result = await UserModel.find();
     res.status(200).json(result);
-  } catch (e) {
-    console.log(e);
+  } catch {
     res.status(404).json({ err: 'Failed to fetch all users' });
   }
 };
 
 module.exports = {
-  getUsers,
   getUser,
   addUser,
   changeUserInfo,
   deleteUser,
+  updateUserPassword,
   loginUser,
-  updateUserPassword
+  getUsers
 };
