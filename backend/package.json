@@ -7,8 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "swagger": "node ./swagger.js",
-    "seed": "node ./scripts/seed.mjs"
+    "swagger": "node ./src/scripts/swagger.js",
+    "seed": "node ./src/scripts/seed.mjs"
   },
   "author": "",
   "license": "ISC",

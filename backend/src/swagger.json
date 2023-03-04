@@ -1,0 +1,360 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Collaborator",
+    "description": "Swagger Collaborator API",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3001",
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/user/": {
+      "get": {
+        "description": "Get a specific the user information by token",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved data. You will receive an user object",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "404": {
+            "description": "Cannot find the user. You will receive an err message",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Create a new user",
+        "parameters": [
+          {
+            "name": "User Data",
+            "in": "body",
+            "required": true,
+            "description": "Register a new user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User successfully created. You will receive the new user object.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Registration failed, it might be caused by anything. You will receive an err message.",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Modify a user's info, you can only modify certain fields",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "User Info",
+            "in": "body",
+            "required": true,
+            "description": "Please only input what needs to be changed, if you leave the default value, they will be updated to the DB",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Update successful. You will receive the new user object.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Update failed, it might be caused by anything. You will receive an err message.",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete user information, you will receive 204 when deleted",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deletion successful. There will be no return value"
+          },
+          "400": {
+            "description": "Deletion failed, it might be caused by anything. You will receive an err message.",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
+          }
+        }
+      }
+    },
+    "/user/password": {
+      "put": {
+        "description": "Modify a user's password, you will recieve a 200 when succeed",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Password",
+            "in": "body",
+            "required": true,
+            "description": "Input your new password",
+            "schema": {
+              "$ref": "#/definitions/UpdatePassword"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/user/login": {
+      "post": {
+        "description": "Login using userEmail and password",
+        "parameters": [
+          {
+            "name": "Login Info",
+            "in": "body",
+            "required": true,
+            "description": "Input login info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userEmail": {
+                  "type": "string",
+                  "example": "Example@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "xxxxxx"
+                }
+              },
+              "required": [
+                "userEmail",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User successfully logged in. You will receive a token.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "example": "something secret"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Login failed, it might be caused by anything. You will receive an err message.",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
+          }
+        }
+      }
+    },
+    "/user/all": {
+      "get": {
+        "description": "Get all the user information, only admin can access",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all users. You will receive an array of user objects"
+          },
+          "403": {
+            "description": "You are not an admin user. You will receive an err message",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
+          },
+          "404": {
+            "description": "Falied to retrieve all users. You will receive an err message",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Project": {
+      "type": "object",
+      "properties": {
+        "projectName": {
+          "type": "string",
+          "example": "Voluptatem repudiandae aut consequatur repudiandae quo consectetur."
+        },
+        "projectLink": {
+          "type": "string",
+          "example": "Caden_Kunze@Robel.biz"
+        },
+        "projectAutherId": {
+          "type": "string",
+          "example": "021a7e8b-0db9-486c-8688-e86537f9c8de"
+        },
+        "projectLikesCount": {
+          "type": "number",
+          "example": 61
+        },
+        "projectStartDate": {
+          "type": "string",
+          "example": "1989-11-24"
+        },
+        "projectDescription": {
+          "type": "string",
+          "example": "Maxime praesentium architecto occaecati temporibus rerum. Et sed eum dicta vitae soluta nihil eos repudiandae velit."
+        },
+        "isProjectFinished": {
+          "type": "boolean",
+          "example": false
+        }
+      },
+      "required": [
+        "projectName",
+        "projectLink",
+        "projectAutherId",
+        "projectLikesCount",
+        "projectStartDate",
+        "projectDescription",
+        "isProjectFinished"
+      ]
+    },
+    "Skill": {
+      "type": "object",
+      "properties": {
+        "skillName": {
+          "type": "string",
+          "example": "pt"
+        },
+        "skillLevel": {
+          "type": "number",
+          "example": 2
+        },
+        "skillDescription": {
+          "type": "string",
+          "example": "Ducimus voluptatum qui adipisci rerum saepe eum."
+        }
+      },
+      "required": [
+        "skillName",
+        "skillLevel",
+        "skillDescription"
+      ]
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "userEmail": {
+          "type": "string",
+          "example": "Hilda.Boehm@hotmail.com"
+        },
+        "userFirstName": {
+          "type": "string",
+          "example": "Lourdes"
+        },
+        "userLastName": {
+          "type": "string",
+          "example": "Bailey"
+        },
+        "userBirthday": {
+          "type": "string",
+          "example": "1971-02-27"
+        },
+        "userPhone": {
+          "type": "string",
+          "example": "017-397-6604"
+        },
+        "userStory": {
+          "type": "string",
+          "example": "Quaerat facere tempora deserunt doloremque sapiente dolorum. Earum et itaque occaecati nobis voluptatem nisi inventore. Maxime aut dignissimos error nisi eum accusamus exercitationem beatae. Assumenda quas ipsam quidem."
+        },
+        "userAvatar": {
+          "type": "string",
+          "example": "Itaque ut temporibus sit."
+        },
+        "password": {
+          "type": "string",
+          "example": "8Asia90"
+        },
+        "userProjectCount": {
+          "type": "number",
+          "example": 6
+        },
+        "acorns": {
+          "type": "number",
+          "example": 7
+        },
+        "userLevel": {
+          "type": "number",
+          "example": 1
+        }
+      },
+      "required": [
+        "userEmail",
+        "userFirstName",
+        "password",
+        "userProjectCount",
+        "acorns",
+        "userLevel"
+      ]
+    },
+    "Err": {
+      "type": "object",
+      "properties": {
+        "err": {
+          "type": "string",
+          "example": "Something is wrong...."
+        }
+      }
+    }
+  }
+}

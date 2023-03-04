@@ -8,6 +8,6 @@ mongoose.set('strictQuery', false);
 module.exports = class Database {
   init = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log('Connected successfully to server');
+    console.log('Connected successfully to MongoBD');
   };
 };
