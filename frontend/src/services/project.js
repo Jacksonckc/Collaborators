@@ -1,0 +1,2 @@
+const getAllProjects = () => {};
+export { getAllProjects };

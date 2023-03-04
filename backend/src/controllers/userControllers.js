@@ -152,14 +152,14 @@ const updateUserPassword = async (req, res) => {
 
   try {
     const hash = await encryptPassword(req.body.password);
-
     const updatedPassword = await PasswordModel.findOneAndUpdate(
       { userId: req.user._id },
       { hash }
     );
-    res.status[200].json(updatedPassword);
+
+    res.status(200).json(updatedPassword);
   } catch {
-    res.status[400].json({ err: 'Fail to update the password.' });
+    res.status(400).json({ err: 'Fail to update the password.' });
   }
 };
 
@@ -185,14 +185,19 @@ const loginUser = async (req, res) => {
      schema: { $ref: '#/definitions/Err' }
   } 
   */
-  const user = await UserModel.findOne({ userEmail: req.body.userEmail });
 
-  const userPasswordObj = await PasswordModel.findOne({ userId: user._id });
+  try {
+    const user = await UserModel.findOne({ userEmail: req.body.userEmail });
 
-  const result = await bcrypt.compare(req.body.password, userPasswordObj.hash);
-  result
-    ? res.status(200).json({ token: generateJWTToken(user._id) })
-    : res.status(400).json({ err: 'Information you enter is invalid!' });
+    const userPasswordObj = await PasswordModel.findOne({ userId: user._id });
+
+    const result = await bcrypt.compare(req.body.password, userPasswordObj.hash);
+    result
+      ? res.status(200).json({ token: generateJWTToken(user._id) })
+      : res.status(400).json({ err: 'Information you enter is invalid!' });
+  } catch {
+    res.status(400).json({ err: 'Information you enter is invalid!' });
+  }
 };
 
 const getUsers = async (req, res) => {
