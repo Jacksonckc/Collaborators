@@ -1,13 +1,9 @@
 const bcrypt = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
-const { ObjectID } = require('bson');
-const mongoose = require('mongoose');
-var _ = require('lodash');
 
-const { PasswordModel, UserModel } = require('../models');
+const { UserModel } = require('../models');
 
 const checkIfUserExists = async (req) => {
-  // this returns an object if the matched
   return UserModel.findOne({ userEmail: req.body.userEmail });
 };
 

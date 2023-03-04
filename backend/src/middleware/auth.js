@@ -1,5 +1,7 @@
 const { verify } = require('jsonwebtoken');
+
 const { UserModel } = require('../models/');
+
 const getAuth = async (req, res, next) => {
   const token = req.headers.authorization?.replace('Bearer', '').trim();
   try {
@@ -12,7 +14,6 @@ const getAuth = async (req, res, next) => {
   } catch (e) {
     console.log(e);
   }
-
   next();
 };
 
