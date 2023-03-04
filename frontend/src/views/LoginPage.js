@@ -52,8 +52,6 @@ export default function LoginPage() {
     [userEmail, password, navigate]
   );
 
-  console.log(isValidLogin);
-
   return (
     <ThemeProvider theme={theme}>
       {!isValidLogin && <Alert severity='error'>hi</Alert>}

@@ -1,6 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import { HomePage, LoginPage, MyProjectsPage, ProfilePage, RegisterPage } from './views';
+import {
+  HomePage,
+  LoginPage,
+  MyConnectionsPage,
+  MyPostsPage,
+  ProfilePage,
+  RegisterPage
+} from './views';
 
 import './App.css';
 
@@ -15,8 +22,12 @@ const App = () => {
       element: <LoginPage />
     },
     {
-      path: '/myProjects',
-      element: <MyProjectsPage />
+      path: '/myConnections',
+      element: <MyConnectionsPage />
+    },
+    {
+      path: '/myPosts',
+      element: <MyPostsPage />
     },
     {
       path: '/profile',

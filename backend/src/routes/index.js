@@ -14,4 +14,6 @@ routes.get('/', (req, res) => {
 routes.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 routes.use('/user', user);
 
+// all the other routes should use getAuth.
+
 module.exports = routes;

@@ -1,4 +1,3 @@
-const { ObjectID } = require('bson');
 const bcrypt = require('bcrypt');
 var _ = require('lodash');
 const mongoose = require('mongoose');
@@ -62,7 +61,7 @@ const addUser = async (req, res) => {
       userLevel: 1
     });
     const hash = await encryptPassword(req.body.password);
-    await PasswordModel.create({ userId: ObjectID(newUser._id), hash });
+    await PasswordModel.create({ userId: newUser._id.toString(), hash });
     newUser.save();
     await session.commitTransaction();
     res.status(201).json({ ...newUser._doc });
@@ -153,7 +152,7 @@ const updateUserPassword = async (req, res) => {
   try {
     const hash = await encryptPassword(req.body.password);
     const updatedPassword = await PasswordModel.findOneAndUpdate(
-      { userId: req.user._id },
+      { userId: req.user._id.toString() },
       { hash }
     );
 
@@ -189,7 +188,7 @@ const loginUser = async (req, res) => {
   try {
     const user = await UserModel.findOne({ userEmail: req.body.userEmail });
 
-    const userPasswordObj = await PasswordModel.findOne({ userId: user._id });
+    const userPasswordObj = await PasswordModel.findOne({ userId: user._id.toString() });
 
     const result = await bcrypt.compare(req.body.password, userPasswordObj.hash);
     result

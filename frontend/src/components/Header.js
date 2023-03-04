@@ -15,7 +15,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['My Projects', 'My Connections'];
+const pages = ['My Posts', 'My Connections'];
 const settings = ['Profile', 'Favorites', 'Skills', 'Logout'];
 
 const Header = () => {
@@ -41,10 +41,17 @@ const Header = () => {
   const handleGoToProfile = () => {
     navigate('/profile');
   };
+  const handleGoToMyConnections = () => {
+    navigate('/myConnections');
+  };
+  const handleGoToMyPosts = () => {
+    navigate('/myPosts');
+  };
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
   };
+
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
@@ -94,10 +101,10 @@ const Header = () => {
               sx={{
                 display: { xs: 'block', md: 'none' }
               }}>
-              <MenuItem key={pages[0]} onClick={handleCloseNavMenu}>
+              <MenuItem key={pages[0]} onClick={handleGoToMyPosts}>
                 <Typography textAlign='center'>{pages[0]}</Typography>
               </MenuItem>
-              <MenuItem key={pages[1]} onClick={handleCloseNavMenu}>
+              <MenuItem key={pages[1]} onClick={handleGoToMyConnections}>
                 <Typography textAlign='center'>{pages[1]}</Typography>
               </MenuItem>
             </Menu>
@@ -107,7 +114,7 @@ const Header = () => {
             variant='h5'
             noWrap
             component='a'
-            href=''
+            href='/'
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -123,13 +130,13 @@ const Header = () => {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button
               key={pages[0]}
-              onClick={handleCloseNavMenu}
+              onClick={handleGoToMyPosts}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               {pages[0]}
             </Button>
             <Button
               key={pages[1]}
-              onClick={handleCloseNavMenu}
+              onClick={handleGoToMyConnections}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               {pages[1]}
             </Button>
