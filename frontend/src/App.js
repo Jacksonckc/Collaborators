@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import { HomePage, LoginPage, Profile, ProjectGallaryPage, RegisterPage } from './views';
+import { HomePage, LoginPage, MyProjectsPage, ProfilePage, RegisterPage } from './views';
+
 import './App.css';
 
 const App = () => {
@@ -14,16 +15,16 @@ const App = () => {
       element: <LoginPage />
     },
     {
-      path: '/projects',
-      element: <ProjectGallaryPage />
+      path: '/myProjects',
+      element: <MyProjectsPage />
+    },
+    {
+      path: '/profile',
+      element: <ProfilePage />
     },
     {
       path: '/register',
       element: <RegisterPage />
-    },
-    {
-      path: '/profile',
-      element: <Profile />
     }
   ]);
 

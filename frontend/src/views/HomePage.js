@@ -1,20 +1,22 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Header } from '../components';
+import { Header, Post } from '../components';
+
+import { checkAuthByToken } from '../utils';
 
 export default function HomePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    !token && navigate('/login');
-  });
+    checkAuthByToken(navigate);
+  }, [navigate]);
 
   return (
     <div>
       <Header />
-      Home
+      <Post />
+      Will have all the posts, a post has the author info, project info?, date and comments.
     </div>
   );
 }

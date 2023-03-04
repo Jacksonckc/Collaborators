@@ -15,8 +15,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Projects', 'xxx'];
-const settings = ['Profile', 'Logout'];
+const pages = ['My Projects', 'My Connections'];
+const settings = ['Profile', 'Favorites', 'Skills', 'Logout'];
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -64,7 +64,7 @@ const Header = () => {
               color: 'inherit',
               textDecoration: 'none'
             }}>
-            LOGO
+            Feed
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -94,12 +94,12 @@ const Header = () => {
               sx={{
                 display: { xs: 'block', md: 'none' }
               }}>
-              {pages.map((page) => (
-                // this will need to be changed to actual pages
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center'>{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem key={pages[0]} onClick={handleCloseNavMenu}>
+                <Typography textAlign='center'>{pages[0]}</Typography>
+              </MenuItem>
+              <MenuItem key={pages[1]} onClick={handleCloseNavMenu}>
+                <Typography textAlign='center'>{pages[1]}</Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -118,17 +118,21 @@ const Header = () => {
               color: 'inherit',
               textDecoration: 'none'
             }}>
-            LOGO
+            Feed
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}>
-                {page}
-              </Button>
-            ))}
+            <Button
+              key={pages[0]}
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              {pages[0]}
+            </Button>
+            <Button
+              key={pages[1]}
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              {pages[1]}
+            </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -155,8 +159,14 @@ const Header = () => {
               <MenuItem key={settings[0]} onClick={handleGoToProfile}>
                 <Typography textAlign='center'>{settings[0]}</Typography>
               </MenuItem>
-              <MenuItem key={settings[1]} onClick={handleLogout}>
+              <MenuItem key={settings[1]}>
                 <Typography textAlign='center'>{settings[1]}</Typography>
+              </MenuItem>
+              <MenuItem key={settings[2]}>
+                <Typography textAlign='center'>{settings[2]}</Typography>
+              </MenuItem>
+              <MenuItem key={settings[3]} onClick={handleLogout}>
+                <Typography textAlign='center'>{settings[3]}</Typography>
               </MenuItem>
             </Menu>
           </Box>

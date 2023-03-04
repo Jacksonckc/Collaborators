@@ -1,7 +1,7 @@
 import HomePage from './HomePage';
 import LoginPage from './LoginPage';
-import Profile from './Profile';
-import ProjectGallaryPage from './ProjectGallaryPage';
+import MyProjectsPage from './MyProjectsPage';
+import ProfilePage from './ProfilePage';
 import RegisterPage from './RegisterPage';
 
-export { HomePage, LoginPage, Profile, ProjectGallaryPage, RegisterPage };
+export { HomePage, LoginPage, MyProjectsPage, ProfilePage, RegisterPage };

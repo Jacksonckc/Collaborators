@@ -11,6 +11,7 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Alert from '@mui/material/Alert';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -23,13 +24,14 @@ const theme = createTheme();
 export default function LoginPage() {
   const [userEmail, setUserEmail] = useState(null);
   const [password, setPassword] = useState(0);
+  const [isValidLogin, setIsValidLogin] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     token && navigate('/');
-  });
+  }, [navigate]);
 
   // useCallback caches the function and only recreate the function when anything in the dependency array changes.
   const handleLogin = useCallback(
@@ -42,7 +44,7 @@ export default function LoginPage() {
       try {
         const token = await loginUser(userData);
         // eslint-disable-next-line no-unused-expressions
-        token ? (localStorage.setItem('token', token), navigate('/')) : alert('login failed');
+        token ? (localStorage.setItem('token', token), navigate('/')) : setIsValidLogin(false);
       } catch (e) {
         alert(e);
       }
@@ -50,13 +52,11 @@ export default function LoginPage() {
     [userEmail, password, navigate]
   );
 
-  // testing useCallback feature
-  // useEffect(() => {
-  //   console.log('handleLogin recreated');
-  // }, [handleLogin]);
+  console.log(isValidLogin);
 
   return (
     <ThemeProvider theme={theme}>
+      {!isValidLogin && <Alert severity='error'>hi</Alert>}
       <Grid container component='main' sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid

@@ -31,7 +31,7 @@ export default function RegisterPage() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     token && navigate('/');
-  });
+  }, [navigate]);
 
   const userData = {
     userEmail,

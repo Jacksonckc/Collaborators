@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Grid } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Icon from '@mui/material/Icon';
 import { Container } from '@mui/system';
 
 import { Header } from '../components';
 import { getUserData, updateUserData } from '../services';
+import { checkAuthByToken } from '../utils';
 
-export default function Profile() {
+export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
   const [userFirstName, setUserFirstName] = useState(null);
   const [userLastName, setUserLastName] = useState(null);
@@ -24,12 +24,9 @@ export default function Profile() {
   useEffect(() => {
     const init = async () => {
       // if no token, not authed
-      const token = localStorage.getItem('token');
-      !token && navigate('/login');
+      checkAuthByToken(navigate);
 
-      // if token expired, not authed
       const result = await getUserData();
-      result.err && localStorage.removeItem('token') && navigate('/login');
 
       // once authed, set states
       setUserData(result);
@@ -41,7 +38,7 @@ export default function Profile() {
       setUserStory(result.userStory);
     };
     init();
-  }, []);
+  }, [navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
