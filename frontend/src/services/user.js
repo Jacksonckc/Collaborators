@@ -92,4 +92,53 @@ const updateUserData = async (userData) => {
 
   return null;
 };
-export { registerUser, loginUser, getUserData, updateUserData };
+
+const deleteUser = async () => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: localStorage.getItem('token')
+  };
+
+  const method = 'DELETE';
+
+  const options = {
+    method,
+    headers
+  };
+
+  try {
+    const url = `${process.env.REACT_APP_BACKEND_URL}/user`;
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    return data;
+  } catch {}
+  return null;
+};
+
+const updateUserPassword = async (newPassword) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: localStorage.getItem('token')
+  };
+
+  const body = JSON.stringify({ password: newPassword });
+  const method = 'PUT';
+
+  const options = {
+    method,
+    headers,
+    body
+  };
+
+  try {
+    const url = `${process.env.REACT_APP_BACKEND_URL}/user/password`;
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    return data;
+  } catch {}
+
+  return null;
+};
+export { registerUser, loginUser, getUserData, updateUserData, deleteUser, updateUserPassword };

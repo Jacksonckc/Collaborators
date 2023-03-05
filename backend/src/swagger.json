@@ -244,6 +244,24 @@
       }
     },
     "/user/post/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
       "post": {
         "description": "",
         "parameters": [
@@ -259,9 +277,6 @@
               "type": "object",
               "properties": {
                 "postCaption": {
-                  "example": "any"
-                },
-                "projectData": {
                   "example": "any"
                 }
               }
@@ -308,27 +323,27 @@
       "properties": {
         "projectName": {
           "type": "string",
-          "example": "Tempora adipisci occaecati facere quidem harum odit molestias."
+          "example": "Voluptatibus rerum doloremque provident."
         },
         "projectLink": {
           "type": "string",
-          "example": "Maeve.Tromp@yahoo.com"
+          "example": "Hyman.Crooks@hotmail.com"
         },
         "projectAutherId": {
           "type": "string",
-          "example": "d41ab4b9-6a72-44a8-9af3-f741624cc475"
+          "example": "00b008e5-238b-4624-b960-4f0088e61179"
         },
         "projectLikesCount": {
           "type": "number",
-          "example": 88
+          "example": 72
         },
         "projectStartDate": {
           "type": "string",
-          "example": "1988-12-23"
+          "example": "2002-07-11"
         },
         "projectDescription": {
           "type": "string",
-          "example": "Aut voluptatem officia reprehenderit recusandae consequatur illo. Provident ratione optio quibusdam accusantium rerum adipisci aut officia rerum. Ut nobis odio reprehenderit recusandae quae. Expedita quia impedit et aut sunt itaque."
+          "example": "Enim sed corporis molestias iure nihil eos eos at. Quo suscipit voluptas. Corporis porro dolores aliquid rerum qui dignissimos quibusdam. Hic aut exercitationem hic sint magnam. Quis tempora dolorem sint ipsum sed veritatis ut vel."
         },
         "isProjectFinished": {
           "type": "boolean",
@@ -350,15 +365,15 @@
       "properties": {
         "skillName": {
           "type": "string",
-          "example": "es"
+          "example": "de"
         },
         "skillLevel": {
           "type": "number",
-          "example": 0
+          "example": 4
         },
         "skillDescription": {
           "type": "string",
-          "example": "Dolorem officia iusto doloribus itaque vel sit."
+          "example": "Beatae nihil quisquam et sunt explicabo."
         }
       },
       "required": [
@@ -372,43 +387,43 @@
       "properties": {
         "userEmail": {
           "type": "string",
-          "example": "Zachariah_Ratke@Ada.biz"
+          "example": "Mann.Elsa@hotmail.com"
         },
         "userFirstName": {
           "type": "string",
-          "example": "Brenden"
+          "example": "Ethyl"
         },
         "userLastName": {
           "type": "string",
-          "example": "Kunze"
+          "example": "Volkman"
         },
         "userBirthday": {
           "type": "string",
-          "example": "2014-12-15"
+          "example": "2012-08-15"
         },
         "userPhone": {
           "type": "string",
-          "example": "690-052-6681"
+          "example": "342-364-7762"
         },
         "userStory": {
           "type": "string",
-          "example": "Pariatur eum officia aut. Mollitia vero soluta nesciunt id minus ut dolorem. Dolore qui vitae possimus quidem velit praesentium et qui. Omnis qui mollitia quia similique sint qui et vel."
+          "example": "Voluptatem consequatur qui adipisci distinctio maxime expedita sed unde. Omnis earum commodi dolor est asperiores. Suscipit et ut nulla aperiam qui et reiciendis explicabo."
         },
         "userAvatar": {
           "type": "string",
-          "example": "Enim omnis est illum labore illum."
+          "example": "Et perspiciatis ea in non perspiciatis."
         },
         "password": {
           "type": "string",
-          "example": "8Celestine73"
+          "example": "4Cayla70"
         },
         "userProjectCount": {
           "type": "number",
-          "example": 3
+          "example": 7
         },
         "acorns": {
           "type": "number",
-          "example": 5
+          "example": 4
         },
         "userLevel": {
           "type": "number",
@@ -429,11 +444,11 @@
       "properties": {
         "userId": {
           "type": "string",
-          "example": "499521ab-0f3f-4ee9-8a6c-93082a9441dc"
+          "example": "26a36268-03d7-4dcc-a6b9-509c1501ff5e"
         },
         "hash": {
           "type": "string",
-          "example": "5Toy50"
+          "example": "7Breana68"
         }
       },
       "required": [

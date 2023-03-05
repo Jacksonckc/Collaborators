@@ -13,6 +13,8 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { registerUser } from '../services';
@@ -25,6 +27,7 @@ export default function RegisterPage() {
   const [userFirstName, setUserFirstName] = useState(null);
   const [userLastName, setUserLastName] = useState(null);
   const [password, setPassword] = useState(0);
+  const [errMessage, setErrMessage] = useState(null);
 
   const navigate = useNavigate();
 
@@ -45,21 +48,30 @@ export default function RegisterPage() {
     try {
       const result = await registerUser(userData);
       // errors check validation in the backend, error will return when register function in the backend fails
-      result.errors
-        ? alert(
-            result.errors.map((error) => {
-              return error.msg;
-            })
-          )
-        : result.error
-        ? alert(result.error)
-        : navigate('/');
+      result.err ? setErrMessage(result.err) : navigate('/');
     } catch (e) {
       alert(e);
     }
   };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setErrMessage(null);
+  };
   return (
     <ThemeProvider theme={theme}>
+      <Snackbar
+        open={errMessage != null}
+        autoHideDuration={2000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+        <Alert onClose={handleCloseSnackbar} severity='error' sx={{ width: '100%' }}>
+          {errMessage}
+        </Alert>
+      </Snackbar>
       <Container component='main' maxWidth='xs'>
         <CssBaseline />
         <Box

@@ -12,6 +12,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -52,9 +53,25 @@ export default function LoginPage() {
     [userEmail, password, navigate]
   );
 
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setIsValidLogin(true);
+  };
   return (
     <ThemeProvider theme={theme}>
-      {!isValidLogin && <Alert severity='error'>hi</Alert>}
+      <Snackbar
+        open={!isValidLogin}
+        autoHideDuration={2000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+        <Alert onClose={handleCloseSnackbar} severity='error' sx={{ width: '100%' }}>
+          Login Failed! Please try again.
+        </Alert>
+      </Snackbar>
+
       <Grid container component='main' sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
