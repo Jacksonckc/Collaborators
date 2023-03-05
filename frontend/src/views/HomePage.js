@@ -1,22 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Header, Post } from '../components';
-
+import { getAllPosts } from '../services';
 import { checkAuthByToken } from '../utils';
+import { Container } from '@mui/material';
 
 export default function HomePage() {
-  const navigate = useNavigate();
+  const [allPosts, setAllPosts] = useState();
 
+  const navigate = useNavigate();
   useEffect(() => {
-    checkAuthByToken(navigate);
+    const init = async () => {
+      checkAuthByToken(navigate);
+
+      const result = await getAllPosts();
+      setAllPosts(result);
+    };
+    init();
   }, [navigate]);
 
   return (
     <div>
       <Header />
-      <Post />
-      Will have all the posts, a post has the author info, project info?, date and comments.
+      <Container
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          marginTop: '40px'
+        }}>
+        {allPosts && allPosts.map((postData) => <Post postData={postData} />)}
+      </Container>
     </div>
   );
 }

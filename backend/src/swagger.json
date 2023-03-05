@@ -242,6 +242,64 @@
           }
         }
       }
+    },
+    "/user/post/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "postCaption": {
+                  "example": "any"
+                },
+                "projectData": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/user/post/all": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -250,31 +308,31 @@
       "properties": {
         "projectName": {
           "type": "string",
-          "example": "Sed et consectetur expedita autem et non ad velit quos."
+          "example": "Tempora adipisci occaecati facere quidem harum odit molestias."
         },
         "projectLink": {
           "type": "string",
-          "example": "Courtney_Lindgren@gmail.com"
+          "example": "Maeve.Tromp@yahoo.com"
         },
         "projectAutherId": {
           "type": "string",
-          "example": "1fc54b8e-b6f6-4add-996d-6cecd56337a6"
+          "example": "d41ab4b9-6a72-44a8-9af3-f741624cc475"
         },
         "projectLikesCount": {
           "type": "number",
-          "example": 63
+          "example": 88
         },
         "projectStartDate": {
           "type": "string",
-          "example": "2010-08-30"
+          "example": "1988-12-23"
         },
         "projectDescription": {
           "type": "string",
-          "example": "Aut aperiam vel tenetur incidunt et. Nemo quis iusto itaque id eos repellat omnis id. Accusantium ab dolorem sapiente sint excepturi natus voluptate repudiandae. Mollitia voluptatem et quia animi provident."
+          "example": "Aut voluptatem officia reprehenderit recusandae consequatur illo. Provident ratione optio quibusdam accusantium rerum adipisci aut officia rerum. Ut nobis odio reprehenderit recusandae quae. Expedita quia impedit et aut sunt itaque."
         },
         "isProjectFinished": {
           "type": "boolean",
-          "example": false
+          "example": true
         }
       },
       "required": [
@@ -292,15 +350,15 @@
       "properties": {
         "skillName": {
           "type": "string",
-          "example": "cn"
+          "example": "es"
         },
         "skillLevel": {
           "type": "number",
-          "example": 2
+          "example": 0
         },
         "skillDescription": {
           "type": "string",
-          "example": "Consequatur reprehenderit in aut sed sit ut."
+          "example": "Dolorem officia iusto doloribus itaque vel sit."
         }
       },
       "required": [
@@ -314,43 +372,43 @@
       "properties": {
         "userEmail": {
           "type": "string",
-          "example": "Amos.Daniel@Schroeder.info"
+          "example": "Zachariah_Ratke@Ada.biz"
         },
         "userFirstName": {
           "type": "string",
-          "example": "Thaddeus"
+          "example": "Brenden"
         },
         "userLastName": {
           "type": "string",
-          "example": "Simonis"
+          "example": "Kunze"
         },
         "userBirthday": {
           "type": "string",
-          "example": "1999-03-27"
+          "example": "2014-12-15"
         },
         "userPhone": {
           "type": "string",
-          "example": "500-359-3816"
+          "example": "690-052-6681"
         },
         "userStory": {
           "type": "string",
-          "example": "Doloremque modi possimus qui nihil voluptatem quo laborum itaque. Aliquid a vitae eos placeat vel suscipit id. Ipsa doloribus impedit doloremque aut at occaecati aspernatur voluptatem."
+          "example": "Pariatur eum officia aut. Mollitia vero soluta nesciunt id minus ut dolorem. Dolore qui vitae possimus quidem velit praesentium et qui. Omnis qui mollitia quia similique sint qui et vel."
         },
         "userAvatar": {
           "type": "string",
-          "example": "Voluptatem enim iure non assumenda."
+          "example": "Enim omnis est illum labore illum."
         },
         "password": {
           "type": "string",
-          "example": "4Felicity27"
+          "example": "8Celestine73"
         },
         "userProjectCount": {
           "type": "number",
-          "example": 1
+          "example": 3
         },
         "acorns": {
           "type": "number",
-          "example": 9
+          "example": 5
         },
         "userLevel": {
           "type": "number",
@@ -371,11 +429,11 @@
       "properties": {
         "userId": {
           "type": "string",
-          "example": "133e4a49-cc57-4b07-9605-1efa2a6c9dca"
+          "example": "499521ab-0f3f-4ee9-8a6c-93082a9441dc"
         },
         "hash": {
           "type": "string",
-          "example": "1Jayson03"
+          "example": "5Toy50"
         }
       },
       "required": [

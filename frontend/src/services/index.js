@@ -1,4 +1,4 @@
 import { registerUser, loginUser, getUserData, updateUserData } from './user';
-import { getAllProjects } from './project';
+import { getAllPosts } from './post';
 
-export { registerUser, loginUser, getUserData, updateUserData, getAllProjects };
+export { registerUser, loginUser, getUserData, updateUserData, getAllPosts };

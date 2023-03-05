@@ -1,2 +1,0 @@
-const getAllProjects = () => {};
-export { getAllProjects };
