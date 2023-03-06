@@ -7,7 +7,7 @@ const getAuth = async (req, res, next) => {
   try {
     if (token) {
       // secret will be an env
-      const decodedTokenInfo = verify(token, 'secret');
+      const decodedTokenInfo = verify(token, process.env.SECRET);
       const user = await UserModel.findById(decodedTokenInfo.data.userId);
       req.user = user;
     }
