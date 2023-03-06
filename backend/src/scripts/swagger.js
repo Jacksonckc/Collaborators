@@ -8,7 +8,7 @@ const doc = {
     title: 'Collaborator',
     description: 'Swagger Collaborator API'
   },
-  host: process.env.HOST,
+  host: 'collaborators-bdgs.onrender.com',
   schemes: ['http', 'https'],
   definitions: {
     Project: {

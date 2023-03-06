@@ -5,7 +5,7 @@
     "description": "Swagger Collaborator API",
     "version": "1.0.0"
   },
-  "host": "localhost:3001",
+  "host": "collaborators-bdgs.onrender.com",
   "basePath": "/",
   "schemes": [
     "http",
@@ -379,31 +379,31 @@
       "properties": {
         "projectName": {
           "type": "string",
-          "example": "Dolores fugit natus ut voluptatem distinctio rerum ad unde."
+          "example": "Quo hic ut ipsa ipsa accusamus illum voluptatem."
         },
         "projectLink": {
           "type": "string",
-          "example": "Ethel_Wolff@Elfrieda.org"
+          "example": "Littel_Lura@yahoo.com"
         },
         "projectAutherId": {
           "type": "string",
-          "example": "97e4d6ab-725b-4e29-9f42-bdea66243204"
+          "example": "21084205-499d-4b63-b158-008c51f13ecc"
         },
         "projectLikesCount": {
           "type": "number",
-          "example": 8
+          "example": 70
         },
         "projectStartDate": {
           "type": "string",
-          "example": "2006-09-11"
+          "example": "2009-06-06"
         },
         "projectDescription": {
           "type": "string",
-          "example": "Voluptatem consequatur quasi expedita. Nobis aut ipsa saepe et quae ullam. Quia quos laudantium nisi tempora hic ducimus. Molestiae assumenda exercitationem dolore quia facere id repellendus cum dolorum."
+          "example": "Voluptatem voluptas rem et. Neque vitae sunt consequatur aut expedita ipsam consequatur iure ipsum. Illo est maxime."
         },
         "isProjectFinished": {
           "type": "boolean",
-          "example": false
+          "example": true
         }
       },
       "required": [
@@ -421,15 +421,15 @@
       "properties": {
         "skillName": {
           "type": "string",
-          "example": "de"
+          "example": "es"
         },
         "skillLevel": {
           "type": "number",
-          "example": 0
+          "example": 4
         },
         "skillDescription": {
           "type": "string",
-          "example": "Sint amet tenetur voluptates quia delectus consequatur non."
+          "example": "Eveniet sint praesentium labore velit rerum saepe odio et."
         }
       },
       "required": [
@@ -443,43 +443,43 @@
       "properties": {
         "userEmail": {
           "type": "string",
-          "example": "Collins_Wade@gmail.com"
+          "example": "Lora_Gibson@yahoo.com"
         },
         "userFirstName": {
           "type": "string",
-          "example": "Rita"
+          "example": "Shania"
         },
         "userLastName": {
           "type": "string",
-          "example": "Cassin"
+          "example": "Kuphal"
         },
         "userBirthday": {
           "type": "string",
-          "example": "1973-04-05"
+          "example": "2009-11-26"
         },
         "userPhone": {
           "type": "string",
-          "example": "096-874-1720"
+          "example": "661-713-3223"
         },
         "userStory": {
           "type": "string",
-          "example": "Ipsum cumque nam aut soluta et iure possimus voluptatem. Ipsa incidunt exercitationem illo animi labore. Pariatur aut beatae aliquam dolorem esse."
+          "example": "Dolorem perferendis quae recusandae. Aspernatur placeat eos saepe est dolorem doloribus voluptas rerum enim. Qui ut enim beatae optio rerum delectus voluptate exercitationem. Dicta occaecati consectetur et possimus."
         },
         "userAvatar": {
           "type": "string",
-          "example": "Impedit doloribus quia alias ea vel."
+          "example": "Et fugiat unde qui laudantium vel dolor."
         },
         "password": {
           "type": "string",
-          "example": "8Freda93"
+          "example": "6Alanna92"
         },
         "userProjectCount": {
           "type": "number",
-          "example": 3
+          "example": 5
         },
         "acorns": {
           "type": "number",
-          "example": 2
+          "example": 6
         },
         "userLevel": {
           "type": "number",
@@ -500,11 +500,11 @@
       "properties": {
         "userId": {
           "type": "string",
-          "example": "d7aed906-2d47-4d22-8528-855d822f6429"
+          "example": "266b326f-04f1-4c18-85f9-1a3822a50535"
         },
         "hash": {
           "type": "string",
-          "example": "8Ona95"
+          "example": "3Piper86"
         }
       },
       "required": [
