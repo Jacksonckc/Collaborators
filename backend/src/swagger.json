@@ -243,6 +243,32 @@
         }
       }
     },
+    "/user/{userId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/user/post/": {
       "get": {
         "description": "",
@@ -294,6 +320,36 @@
             "description": "Bad Request"
           }
         }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "postId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
       }
     },
     "/user/post/all": {
@@ -323,31 +379,31 @@
       "properties": {
         "projectName": {
           "type": "string",
-          "example": "Voluptatibus rerum doloremque provident."
+          "example": "Dolores fugit natus ut voluptatem distinctio rerum ad unde."
         },
         "projectLink": {
           "type": "string",
-          "example": "Hyman.Crooks@hotmail.com"
+          "example": "Ethel_Wolff@Elfrieda.org"
         },
         "projectAutherId": {
           "type": "string",
-          "example": "00b008e5-238b-4624-b960-4f0088e61179"
+          "example": "97e4d6ab-725b-4e29-9f42-bdea66243204"
         },
         "projectLikesCount": {
           "type": "number",
-          "example": 72
+          "example": 8
         },
         "projectStartDate": {
           "type": "string",
-          "example": "2002-07-11"
+          "example": "2006-09-11"
         },
         "projectDescription": {
           "type": "string",
-          "example": "Enim sed corporis molestias iure nihil eos eos at. Quo suscipit voluptas. Corporis porro dolores aliquid rerum qui dignissimos quibusdam. Hic aut exercitationem hic sint magnam. Quis tempora dolorem sint ipsum sed veritatis ut vel."
+          "example": "Voluptatem consequatur quasi expedita. Nobis aut ipsa saepe et quae ullam. Quia quos laudantium nisi tempora hic ducimus. Molestiae assumenda exercitationem dolore quia facere id repellendus cum dolorum."
         },
         "isProjectFinished": {
           "type": "boolean",
-          "example": true
+          "example": false
         }
       },
       "required": [
@@ -369,11 +425,11 @@
         },
         "skillLevel": {
           "type": "number",
-          "example": 4
+          "example": 0
         },
         "skillDescription": {
           "type": "string",
-          "example": "Beatae nihil quisquam et sunt explicabo."
+          "example": "Sint amet tenetur voluptates quia delectus consequatur non."
         }
       },
       "required": [
@@ -387,43 +443,43 @@
       "properties": {
         "userEmail": {
           "type": "string",
-          "example": "Mann.Elsa@hotmail.com"
+          "example": "Collins_Wade@gmail.com"
         },
         "userFirstName": {
           "type": "string",
-          "example": "Ethyl"
+          "example": "Rita"
         },
         "userLastName": {
           "type": "string",
-          "example": "Volkman"
+          "example": "Cassin"
         },
         "userBirthday": {
           "type": "string",
-          "example": "2012-08-15"
+          "example": "1973-04-05"
         },
         "userPhone": {
           "type": "string",
-          "example": "342-364-7762"
+          "example": "096-874-1720"
         },
         "userStory": {
           "type": "string",
-          "example": "Voluptatem consequatur qui adipisci distinctio maxime expedita sed unde. Omnis earum commodi dolor est asperiores. Suscipit et ut nulla aperiam qui et reiciendis explicabo."
+          "example": "Ipsum cumque nam aut soluta et iure possimus voluptatem. Ipsa incidunt exercitationem illo animi labore. Pariatur aut beatae aliquam dolorem esse."
         },
         "userAvatar": {
           "type": "string",
-          "example": "Et perspiciatis ea in non perspiciatis."
+          "example": "Impedit doloribus quia alias ea vel."
         },
         "password": {
           "type": "string",
-          "example": "4Cayla70"
+          "example": "8Freda93"
         },
         "userProjectCount": {
           "type": "number",
-          "example": 7
+          "example": 3
         },
         "acorns": {
           "type": "number",
-          "example": 4
+          "example": 2
         },
         "userLevel": {
           "type": "number",
@@ -444,11 +500,11 @@
       "properties": {
         "userId": {
           "type": "string",
-          "example": "26a36268-03d7-4dcc-a6b9-509c1501ff5e"
+          "example": "d7aed906-2d47-4d22-8528-855d822f6429"
         },
         "hash": {
           "type": "string",
-          "example": "7Breana68"
+          "example": "8Ona95"
         }
       },
       "required": [

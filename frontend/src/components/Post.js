@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -13,12 +14,15 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Textarea from '@mui/joy/Textarea';
+// import Textarea from '@mui/joy/Textarea';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import InputAdornment from '@mui/material/InputAdornment';
-import { TextField } from '@mui/material';
+import { TextField, Menu, MenuItem, Box } from '@mui/material';
 
 import { AddComment } from './index';
+import { getUserData, getOtherUserData, deletePost } from '../services';
+import { checkAuthByToken } from '../utils';
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -33,6 +37,24 @@ const ExpandMore = styled((props) => {
 export default function Post({ postData }) {
   const [expanded, setExpanded] = React.useState(false);
   const [liked, setLiked] = useState(false);
+  const [anchorSettings, setAnchorSettings] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [postAuthorData, setPostAuthorData] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const init = async () => {
+      // if no token, not authed
+      checkAuthByToken(navigate);
+
+      var result = await getUserData();
+      // once authed, set states
+      setUserData(result);
+      result = await getOtherUserData(postData.authorId);
+      setPostAuthorData(result);
+    };
+    init();
+  }, [navigate, postData.authorId]);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -41,20 +63,60 @@ export default function Post({ postData }) {
     setLiked(!liked);
   };
 
+  const handleOpenSettings = (event) => {
+    setAnchorSettings(event.currentTarget);
+  };
+
+  const handleCloseSettings = () => {
+    setAnchorSettings(null);
+  };
+
+  const handleDeletePost = async () => {
+    const response = window.confirm('Are you sure you want to delete your post?');
+    if (response) {
+      try {
+        const result = await deletePost(postData._id);
+        if (result?.err) alert(result.err);
+        else window.location.reload();
+      } catch (e) {
+        alert(e);
+      }
+    } else return;
+  };
+
   return (
     <Card sx={{ maxWidth: 505, width: '100%' }} style={{ margin: 'auto' }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
-            J
+            {postAuthorData?.userFirstName[0]}
           </Avatar>
         }
         action={
-          <IconButton aria-label='settings'>
-            <MoreVertIcon />
-          </IconButton>
+          userData && userData._id === postData.authorId ? (
+            <Box>
+              <IconButton aria-label='settings' onClick={handleOpenSettings}>
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                anchorEl={anchorSettings}
+                open={Boolean(anchorSettings)}
+                onClose={handleCloseSettings}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: -70
+                }}
+                keepMounted>
+                <MenuItem key={1} onClick={handleDeletePost}>
+                  <Typography textAlign='center'>Delete Post</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+          ) : (
+            <Box></Box>
+          )
         }
-        title='Jackson' // This will be the author name
+        title={postAuthorData?.userFirstName} // This will be the author name
         subheader={postData.postDate}
       />
       <CardContent>
@@ -78,8 +140,10 @@ export default function Post({ postData }) {
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
-        <CardContent>
+        <Box style={{ margin: '5px' }}>
           <AddComment />
+        </Box>
+        <CardContent>
           <Typography paragraph>Comments:</Typography>
           {postData.postComments?.map((comment, index) => (
             <TextField

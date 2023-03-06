@@ -2,26 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Header, Post } from '../components';
-import { getAllPosts, createPost } from '../services';
+import { getUserData, getAllPosts, createPost } from '../services';
 import { checkAuthByToken } from '../utils';
 import { Container, Card, CardHeader, TextField, Button, Snackbar, Alert } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { red } from '@mui/material/colors';
 
 export default function HomePage() {
   const [allPosts, setAllPosts] = useState();
   const [postCaption, setPostCaption] = useState(null);
   const [errMessage, setErrMessage] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   const navigate = useNavigate();
   useEffect(() => {
     const init = async () => {
       checkAuthByToken(navigate);
       try {
-        const result = await getAllPosts();
+        var result = await getAllPosts();
         setAllPosts(result);
+
+        result = await getUserData();
+        // once authed, set states
+        setUserData(result);
       } catch {}
       return;
     };
@@ -69,23 +72,16 @@ export default function HomePage() {
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
-                J
+                {userData?.userFirstName[0]}
               </Avatar>
             }
-            // this can be edit post and delete post.
-            action={
-              <IconButton aria-label='settings'>
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title='Jackson' // This will be the author name
-            subheader='New Post!'
+            title={`${userData?.userFirstName ? userData.userFirstName : 'User'} says:`} // This will be the author name
           />
           <TextField
             style={{ width: '98%', padding: '1%' }}
             multiline
             label='Caption'
-            placeholder='This is my first post!'
+            placeholder='Tell us what is on your mind...'
             required
             onChange={(e) => setPostCaption(e.target.value)}
           />

@@ -13,4 +13,7 @@ routes.post('/login', controllers.loginUser);
 routes.get('/all', getAuth, controllers.getUsers);
 
 routes.use('/post', getAuth, post);
+
+routes.get('/:userId', getAuth, controllers.getOtherUser);
+
 module.exports = routes;

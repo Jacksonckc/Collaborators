@@ -3,7 +3,6 @@ const { PostModel } = require('../models');
 const getUserPosts = async (req, res) => {
   const user = req.user;
   if (!user) return res.json({ err: 'You are not authorized!' });
-
   try {
     const result = await PostModel.find({ authorId: req.user._id.toString() });
     res.status(200).json(result);
@@ -35,6 +34,22 @@ const createPost = async (req, res) => {
   }
 };
 
+const deletePost = async (req, res) => {
+  const user = req.user;
+  if (!user) return res.json({ err: 'You are not authorized!' });
+
+  try {
+    const post = await PostModel.findById(req.body.postId);
+    if (user._id != post.authorId) return res.json({ err: 'You are not the author of this post!' });
+    else {
+      await PostModel.findByIdAndDelete(req.body.postId);
+      res.sendStatus(200);
+    }
+  } catch {
+    res.status(404).json({ err: 'Cannot delete post.' });
+  }
+};
+
 const getAllPosts = async (req, res) => {
   const user = req.user;
   if (!user) return res.json({ err: 'You are not authorized!' });
@@ -47,4 +62,4 @@ const getAllPosts = async (req, res) => {
   }
 };
 
-module.exports = { getUserPosts, createPost, getAllPosts };
+module.exports = { getUserPosts, createPost, deletePost, getAllPosts };

@@ -5,10 +5,11 @@ const {
   changeUserInfo,
   deleteUser,
   loginUser,
-  updateUserPassword
+  updateUserPassword,
+  getOtherUser
 } = require('./userControllers');
 
-const { getUserPosts, createPost, getAllPosts } = require('./postControllers');
+const { getUserPosts, createPost, deletePost, getAllPosts } = require('./postControllers');
 module.exports = {
   getUsers,
   getUser,
@@ -17,7 +18,9 @@ module.exports = {
   deleteUser,
   loginUser,
   updateUserPassword,
+  getOtherUser,
   getUserPosts,
   createPost,
+  deletePost,
   getAllPosts
 };

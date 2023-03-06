@@ -226,6 +226,18 @@ const getUsers = async (req, res) => {
   }
 };
 
+const getOtherUser = async (req, res) => {
+  const user = req.user;
+  if (!user) return res.json({ err: 'You are not authorized!' });
+
+  try {
+    const result = await UserModel.findById(req.params.userId);
+    res.status(200).json(result);
+  } catch {
+    res.status(404).json({ err: 'Fail to retrieve user data.' });
+  }
+};
+
 module.exports = {
   getUser,
   addUser,
@@ -233,5 +245,6 @@ module.exports = {
   deleteUser,
   updateUserPassword,
   loginUser,
-  getUsers
+  getUsers,
+  getOtherUser
 };

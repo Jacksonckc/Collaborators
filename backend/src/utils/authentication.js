@@ -15,7 +15,7 @@ const encryptPassword = async (password) => {
 const generateJWTToken = (userId) => {
   var token = jsonwebtoken.sign(
     {
-      exp: Math.floor(Date.now() / 1000) + 60 * 60, // expires in 1 hour
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // expires in 1 day
       data: { userId }
     },
     process.env.SECRET

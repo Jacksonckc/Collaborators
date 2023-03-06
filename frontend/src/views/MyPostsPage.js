@@ -7,7 +7,7 @@ import { checkAuthByToken } from '../utils';
 import { Container } from '@mui/material';
 
 export default function MyPostsPage() {
-  const [allPosts, setAllPosts] = useState();
+  const [allPosts, setAllPosts] = useState([]);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -32,7 +32,11 @@ export default function MyPostsPage() {
           gap: '10px',
           marginTop: '40px'
         }}>
-        {allPosts && allPosts.map((postData) => <Post postData={postData} key={postData._id} />)}
+        {allPosts?.length === 0 ? (
+          <div>You dont have any posts yet, go make one!</div>
+        ) : (
+          allPosts.map((postData) => <Post postData={postData} key={postData._id} />)
+        )}
       </Container>
     </div>
   );

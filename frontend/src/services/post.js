@@ -65,4 +65,30 @@ const createPost = async (postCaption) => {
 
   return null;
 };
-export { getAllPosts, getUserPosts, createPost };
+
+const deletePost = async (postId) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: localStorage.getItem('token')
+  };
+
+  const method = 'DELETE';
+  const body = JSON.stringify({
+    postId
+  });
+
+  const options = {
+    method,
+    headers,
+    body
+  };
+
+  try {
+    const url = `${process.env.REACT_APP_BACKEND_URL}/user/post`;
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+  } catch {}
+  return null;
+};
+export { getAllPosts, getUserPosts, createPost, deletePost };

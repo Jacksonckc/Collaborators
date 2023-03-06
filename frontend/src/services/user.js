@@ -67,6 +67,28 @@ const getUserData = async () => {
   return null;
 };
 
+const getOtherUserData = async (userId) => {
+  const headers = {
+    accept: 'application/json',
+    authorization: localStorage.getItem('token')
+  };
+  const method = 'GET';
+
+  const options = {
+    method,
+    headers
+  };
+
+  try {
+    const url = `${process.env.REACT_APP_BACKEND_URL}/user/${userId}`;
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+  } catch {}
+
+  return null;
+};
+
 const updateUserData = async (userData) => {
   const headers = {
     'Content-Type': 'application/json',
@@ -141,4 +163,12 @@ const updateUserPassword = async (newPassword) => {
 
   return null;
 };
-export { registerUser, loginUser, getUserData, updateUserData, deleteUser, updateUserPassword };
+export {
+  registerUser,
+  loginUser,
+  getUserData,
+  getOtherUserData,
+  updateUserData,
+  deleteUser,
+  updateUserPassword
+};
