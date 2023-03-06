@@ -5,7 +5,7 @@
     "description": "Swagger Collaborator API",
     "version": "1.0.0"
   },
-  "host": "collaborators-bdgs.onrender.com",
+  "host": "localhost:3001",
   "basePath": "/",
   "schemes": [
     "http",
@@ -269,6 +269,26 @@
         }
       }
     },
+    "/user/post/all": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/user/post/": {
       "get": {
         "description": "",
@@ -320,10 +340,18 @@
             "description": "Bad Request"
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/user/post/{postId}": {
+      "put": {
         "description": "",
         "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "authorization",
             "in": "header",
@@ -335,11 +363,35 @@
             "schema": {
               "type": "object",
               "properties": {
-                "postId": {
+                "postCaption": {
                   "example": "any"
                 }
               }
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -352,7 +404,7 @@
         }
       }
     },
-    "/user/post/all": {
+    "/user/connection/suggested": {
       "get": {
         "description": "",
         "parameters": [
@@ -371,6 +423,41 @@
           }
         }
       }
+    },
+    "/user/connection/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "receiverId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -379,27 +466,27 @@
       "properties": {
         "projectName": {
           "type": "string",
-          "example": "Quo hic ut ipsa ipsa accusamus illum voluptatem."
+          "example": "Odit doloribus aut nam dolores."
         },
         "projectLink": {
           "type": "string",
-          "example": "Littel_Lura@yahoo.com"
+          "example": "Sean_Cole@Wuckert.io"
         },
         "projectAutherId": {
           "type": "string",
-          "example": "21084205-499d-4b63-b158-008c51f13ecc"
+          "example": "692d2711-3aa4-4717-908c-e7a3e4f5451a"
         },
         "projectLikesCount": {
           "type": "number",
-          "example": 70
+          "example": 98
         },
         "projectStartDate": {
           "type": "string",
-          "example": "2009-06-06"
+          "example": "1994-04-03"
         },
         "projectDescription": {
           "type": "string",
-          "example": "Voluptatem voluptas rem et. Neque vitae sunt consequatur aut expedita ipsam consequatur iure ipsum. Illo est maxime."
+          "example": "Nihil dolorem sed repudiandae voluptatem et quia quidem. Ut ipsa qui. Aperiam beatae iure quae. Porro velit voluptatem distinctio dolores maxime pariatur ab maiores odio. Eum eum repudiandae."
         },
         "isProjectFinished": {
           "type": "boolean",
@@ -421,15 +508,15 @@
       "properties": {
         "skillName": {
           "type": "string",
-          "example": "es"
+          "example": "pt"
         },
         "skillLevel": {
           "type": "number",
-          "example": 4
+          "example": 2
         },
         "skillDescription": {
           "type": "string",
-          "example": "Eveniet sint praesentium labore velit rerum saepe odio et."
+          "example": "Consequuntur tempore earum in."
         }
       },
       "required": [
@@ -443,43 +530,43 @@
       "properties": {
         "userEmail": {
           "type": "string",
-          "example": "Lora_Gibson@yahoo.com"
+          "example": "Damian.Rogahn@Maurine.info"
         },
         "userFirstName": {
           "type": "string",
-          "example": "Shania"
+          "example": "Jacinthe"
         },
         "userLastName": {
           "type": "string",
-          "example": "Kuphal"
+          "example": "Windler"
         },
         "userBirthday": {
           "type": "string",
-          "example": "2009-11-26"
+          "example": "1974-12-02"
         },
         "userPhone": {
           "type": "string",
-          "example": "661-713-3223"
+          "example": "672-768-4988"
         },
         "userStory": {
           "type": "string",
-          "example": "Dolorem perferendis quae recusandae. Aspernatur placeat eos saepe est dolorem doloribus voluptas rerum enim. Qui ut enim beatae optio rerum delectus voluptate exercitationem. Dicta occaecati consectetur et possimus."
+          "example": "Sed adipisci odit totam. Molestias totam enim aperiam. Nihil sunt sunt corporis quos magni exercitationem."
         },
         "userAvatar": {
           "type": "string",
-          "example": "Et fugiat unde qui laudantium vel dolor."
+          "example": "Expedita ducimus debitis iste animi non laborum eum."
         },
         "password": {
           "type": "string",
-          "example": "6Alanna92"
+          "example": "0Granville38"
         },
         "userProjectCount": {
           "type": "number",
-          "example": 5
+          "example": 8
         },
         "acorns": {
           "type": "number",
-          "example": 6
+          "example": 2
         },
         "userLevel": {
           "type": "number",
@@ -500,11 +587,11 @@
       "properties": {
         "userId": {
           "type": "string",
-          "example": "266b326f-04f1-4c18-85f9-1a3822a50535"
+          "example": "b86361f7-d10f-4399-b361-ebd328e79f18"
         },
         "hash": {
           "type": "string",
-          "example": "3Piper86"
+          "example": "5Josh58"
         }
       },
       "required": [

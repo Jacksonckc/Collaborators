@@ -66,16 +66,14 @@ const createPost = async (postCaption) => {
   return null;
 };
 
-const deletePost = async (postId) => {
+const updatePost = async (postId, postCaption) => {
   const headers = {
     'Content-Type': 'application/json',
     authorization: localStorage.getItem('token')
   };
 
-  const method = 'DELETE';
-  const body = JSON.stringify({
-    postId
-  });
+  const method = 'PUT';
+  const body = JSON.stringify({ postCaption });
 
   const options = {
     method,
@@ -84,11 +82,33 @@ const deletePost = async (postId) => {
   };
 
   try {
-    const url = `${process.env.REACT_APP_BACKEND_URL}/user/post`;
+    const url = `${process.env.REACT_APP_BACKEND_URL}/user/post/${postId}`;
     const response = await fetch(url, options);
     const data = await response.json();
     return data;
   } catch {}
   return null;
 };
-export { getAllPosts, getUserPosts, createPost, deletePost };
+
+const deletePost = async (postId) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: localStorage.getItem('token')
+  };
+
+  const method = 'DELETE';
+
+  const options = {
+    method,
+    headers
+  };
+
+  try {
+    const url = `${process.env.REACT_APP_BACKEND_URL}/user/post/${postId}`;
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+  } catch {}
+  return null;
+};
+export { getAllPosts, getUserPosts, createPost, updatePost, deletePost };

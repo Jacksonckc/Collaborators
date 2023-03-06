@@ -1,3 +1,4 @@
+const { getSuggestedConnections, sendConnectionRequest } = require('./connectionControllers');
 const {
   getUsers,
   getUser,
@@ -9,8 +10,17 @@ const {
   getOtherUser
 } = require('./userControllers');
 
-const { getUserPosts, createPost, deletePost, getAllPosts } = require('./postControllers');
+const {
+  getUserPosts,
+  createPost,
+  updatePost,
+  deletePost,
+  getAllPosts
+} = require('./postControllers');
+
 module.exports = {
+  getSuggestedConnections,
+  sendConnectionRequest,
   getUsers,
   getUser,
   addUser,
@@ -21,6 +31,7 @@ module.exports = {
   getOtherUser,
   getUserPosts,
   createPost,
+  updatePost,
   deletePost,
   getAllPosts
 };

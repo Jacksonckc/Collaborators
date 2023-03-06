@@ -1,8 +1,19 @@
 import AddComment from './AddComment';
+import Connection from './Connection';
 import Copyright from './Copyright';
 import Header from './Header';
 import LinearBuffer from './LinearBuffer';
 import Post from './Post';
 import Project from './Project';
+import SuggestedConnections from './SuggestedConnections';
 
-export { AddComment, Copyright, Header, LinearBuffer, Post, Project };
+export {
+  AddComment,
+  Connection,
+  Copyright,
+  Header,
+  LinearBuffer,
+  Post,
+  Project,
+  SuggestedConnections
+};

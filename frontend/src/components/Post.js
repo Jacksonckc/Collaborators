@@ -20,7 +20,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { TextField, Menu, MenuItem, Box } from '@mui/material';
 
 import { AddComment } from './index';
-import { getUserData, getOtherUserData, deletePost } from '../services';
+import { getUserData, getOtherUserData, updatePost, deletePost } from '../services';
 import { checkAuthByToken } from '../utils';
 
 const ExpandMore = styled((props) => {
@@ -40,6 +40,7 @@ export default function Post(props) {
   const [anchorSettings, setAnchorSettings] = useState(null);
   const [userData, setUserData] = useState(null);
   const [postAuthorData, setPostAuthorData] = useState(null);
+  const [newPostCaption, setNewPostCaption] = useState('new');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -90,6 +91,25 @@ export default function Post(props) {
     } else return;
   };
 
+  const handleUpdatePost = async () => {
+    const response = window.confirm('Are you sure you want to update your post?');
+    if (response) {
+      try {
+        props.setIsLoading(true);
+        handleCloseSettings();
+        setTimeout(async () => {
+          const result = await updatePost(props.postData._id, newPostCaption);
+          if (result?.err) {
+            alert(result.err);
+          }
+          props.setIsLoading(false);
+        }, 3000);
+      } catch (e) {
+        alert(e);
+      }
+    } else return;
+  };
+
   return (
     <Card sx={{ maxWidth: 505, width: '100%' }} style={{ margin: 'auto' }}>
       <CardHeader
@@ -115,6 +135,9 @@ export default function Post(props) {
                 keepMounted>
                 <MenuItem key={1} onClick={handleDeletePost}>
                   <Typography textAlign='center'>Delete Post</Typography>
+                </MenuItem>
+                <MenuItem key={2} onClick={handleUpdatePost}>
+                  <Typography textAlign='center'>Update Post</Typography>
                 </MenuItem>
               </Menu>
             </Box>

@@ -21,7 +21,7 @@ const getUser = async (req, res) => {
   if (!user) return res.json({ err: 'You are not authorized!' });
 
   try {
-    const result = await UserModel.findById(req.user._id);
+    const result = await UserModel.findById(user._id);
     res.status(200).json(result);
   } catch {
     res.status(404).json({ err: 'Fail to retrieve user data.' });
@@ -96,7 +96,7 @@ const changeUserInfo = async (req, res) => {
 
   try {
     const updatedData = _.omit(req.body, ['userEmail', 'userProjectCount', 'acorns', 'userLevel']);
-    const updatedUserData = await UserModel.findByIdAndUpdate(req.user._id, updatedData, {
+    const updatedUserData = await UserModel.findByIdAndUpdate(user._id, updatedData, {
       new: true
     });
     res.status(200).json(updatedUserData);
@@ -120,7 +120,7 @@ const deleteUser = async (req, res) => {
   if (!user) return res.json({ err: 'You are not authorized!' });
 
   try {
-    await UserModel.findByIdAndDelete(req.user._id);
+    await UserModel.findByIdAndDelete(user._id);
     res.sendStatus(200);
   } catch {
     res.status(400).json({ err: 'Cannot delete user.' });
@@ -152,7 +152,7 @@ const updateUserPassword = async (req, res) => {
   try {
     const hash = await encryptPassword(req.body.password);
     const updatedPassword = await PasswordModel.findOneAndUpdate(
-      { userId: req.user._id.toString() },
+      { userId: user._id.toString() },
       { hash }
     );
 

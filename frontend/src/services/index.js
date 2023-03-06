@@ -1,3 +1,4 @@
+import { getSuggestedConnections, sendConnectionRequest } from './connection';
 import {
   registerUser,
   loginUser,
@@ -7,9 +8,11 @@ import {
   deleteUser,
   updateUserPassword
 } from './user';
-import { getAllPosts, getUserPosts, createPost, deletePost } from './post';
+import { getAllPosts, getUserPosts, createPost, updatePost, deletePost } from './post';
 
 export {
+  getSuggestedConnections,
+  sendConnectionRequest,
   registerUser,
   loginUser,
   getUserData,
@@ -20,5 +23,6 @@ export {
   getAllPosts,
   getUserPosts,
   createPost,
+  updatePost,
   deletePost
 };

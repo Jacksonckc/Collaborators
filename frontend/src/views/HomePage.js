@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Header, LinearBuffer, Post } from '../components';
+import { Header, LinearBuffer, Post, SuggestedConnections } from '../components';
 import { getUserData, getAllPosts, createPost } from '../services';
 import { checkAuthByToken } from '../utils';
 import { Container, Card, CardHeader, TextField, Button, Snackbar, Alert } from '@mui/material';
@@ -73,43 +73,52 @@ export default function HomePage() {
       <Container
         style={{
           display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
           marginTop: '40px'
         }}>
-        <Card
-          sx={{ maxWidth: 505, width: '100%' }}
-          style={{ margin: 'auto', backgroundColor: '	#F5F5F5' }}>
-          <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
-                {userData?.userFirstName[0]}
-              </Avatar>
-            }
-            title={`${userData?.userFirstName ? userData.userFirstName : 'User'} says:`} // This will be the author name
-          />
-          <TextField
-            style={{ width: '98%', padding: '1%' }}
-            multiline
-            label='Caption'
-            placeholder='Tell us what is on your mind...'
-            required
-            onChange={(e) => setPostCaption(e.target.value)}
-          />
+        <Container
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px'
+          }}>
+          <Card
+            sx={{ maxWidth: 505, width: '100%' }}
+            style={{ margin: 'auto', backgroundColor: '	#F5F5F5' }}>
+            <CardHeader
+              avatar={
+                <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
+                  {userData?.userFirstName[0]}
+                </Avatar>
+              }
+              title={`${userData?.userFirstName ? userData.userFirstName : 'User'} says:`} // This will be the author name
+            />
+            <TextField
+              style={{ width: '98%', padding: '1%' }}
+              multiline
+              label='Caption'
+              placeholder='Tell us what is on your mind...'
+              required
+              onChange={(e) => setPostCaption(e.target.value)}
+            />
 
-          <Button
-            style={{ display: 'block', margin: '5px 10px 10px auto ' }}
-            variant='contained'
-            onClick={handleCreatePost}
-            disabled={isLoading}>
-            Add Post
-          </Button>
-        </Card>
-        {isLoading && <LinearBuffer />}
-        {allPosts &&
-          allPosts.map((postData) => (
-            <Post postData={postData} key={postData._id} setIsLoading={setIsLoading} />
-          ))}
+            <Button
+              style={{ display: 'block', margin: '5px 10px 10px auto ' }}
+              variant='contained'
+              onClick={handleCreatePost}
+              disabled={isLoading}>
+              Add Post
+            </Button>
+          </Card>
+          {isLoading && <LinearBuffer />}
+          {allPosts &&
+            allPosts.map((postData) => (
+              <Post postData={postData} key={postData._id} setIsLoading={setIsLoading} />
+            ))}
+        </Container>
+
+        <Container style={{ maxWidth: '200px', padding: '0' }}>
+          <SuggestedConnections />
+        </Container>
       </Container>
     </div>
   );
