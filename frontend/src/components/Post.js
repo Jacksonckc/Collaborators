@@ -34,7 +34,7 @@ const ExpandMore = styled((props) => {
   })
 }));
 
-export default function Post({ postData }) {
+export default function Post(props) {
   const [expanded, setExpanded] = React.useState(false);
   const [liked, setLiked] = useState(false);
   const [anchorSettings, setAnchorSettings] = useState(null);
@@ -50,11 +50,11 @@ export default function Post({ postData }) {
       var result = await getUserData();
       // once authed, set states
       setUserData(result);
-      result = await getOtherUserData(postData.authorId);
+      result = await getOtherUserData(props.postData.authorId);
       setPostAuthorData(result);
     };
     init();
-  }, [navigate, postData.authorId]);
+  }, [navigate, props.postData.authorId]);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -75,9 +75,15 @@ export default function Post({ postData }) {
     const response = window.confirm('Are you sure you want to delete your post?');
     if (response) {
       try {
-        const result = await deletePost(postData._id);
-        if (result?.err) alert(result.err);
-        else window.location.reload();
+        props.setIsLoading(true);
+        handleCloseSettings();
+        setTimeout(async () => {
+          const result = await deletePost(props.postData._id);
+          if (result?.err) {
+            alert(result.err);
+          }
+          props.setIsLoading(false);
+        }, 3000);
       } catch (e) {
         alert(e);
       }
@@ -93,7 +99,7 @@ export default function Post({ postData }) {
           </Avatar>
         }
         action={
-          userData && userData._id === postData.authorId ? (
+          userData && userData._id === props.postData.authorId ? (
             <Box>
               <IconButton aria-label='settings' onClick={handleOpenSettings}>
                 <MoreVertIcon />
@@ -117,11 +123,11 @@ export default function Post({ postData }) {
           )
         }
         title={postAuthorData?.userFirstName} // This will be the author name
-        subheader={postData.postDate}
+        subheader={props.postData.postDate}
       />
       <CardContent>
         <Typography variant='body2' color='text.secondary'>
-          {postData.postCaption}
+          {props.postData.postCaption}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -145,7 +151,7 @@ export default function Post({ postData }) {
         </Box>
         <CardContent>
           <Typography paragraph>Comments:</Typography>
-          {postData.postComments?.map((comment, index) => (
+          {props.postData.postComments?.map((comment, index) => (
             <TextField
               key={index}
               style={{ width: '100%' }}

@@ -48,7 +48,7 @@ export default function RegisterPage() {
     try {
       const result = await registerUser(userData);
       // errors check validation in the backend, error will return when register function in the backend fails
-      result.err ? setErrMessage(result.err) : navigate('/');
+      result?.err ? setErrMessage(result.err) : navigate('/');
     } catch (e) {
       alert(e);
     }

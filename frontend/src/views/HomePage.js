@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Header, Post } from '../components';
+import { Header, LinearBuffer, Post } from '../components';
 import { getUserData, getAllPosts, createPost } from '../services';
 import { checkAuthByToken } from '../utils';
 import { Container, Card, CardHeader, TextField, Button, Snackbar, Alert } from '@mui/material';
@@ -13,6 +13,7 @@ export default function HomePage() {
   const [postCaption, setPostCaption] = useState(null);
   const [errMessage, setErrMessage] = useState(null);
   const [userData, setUserData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -29,24 +30,34 @@ export default function HomePage() {
       return;
     };
     init();
-  }, [navigate]);
+  }, [navigate, isLoading]);
 
   const handleCreatePost = async () => {
     try {
-      const result = await createPost(postCaption);
-
-      result.err ? setErrMessage(result.err) : window.location.reload();
+      setIsLoading(true);
+      setTimeout(async () => {
+        const result = await createPost(postCaption);
+        if (result?.err) {
+          setErrMessage(result.err);
+        } else {
+          setPostCaption(null);
+        }
+        setIsLoading(false);
+      }, 2000);
     } catch (e) {
       alert(e);
+      setIsLoading(false);
     }
   };
-  const handleCloseSnackbar = (event, reason) => {
+
+  const handleCloseSnackbar = (reason) => {
     if (reason === 'clickaway') {
       return;
     }
 
     setErrMessage(null);
   };
+
   return (
     <div>
       <Snackbar
@@ -85,15 +96,20 @@ export default function HomePage() {
             required
             onChange={(e) => setPostCaption(e.target.value)}
           />
+
           <Button
             style={{ display: 'block', margin: '5px 10px 10px auto ' }}
             variant='contained'
-            onClick={handleCreatePost}>
+            onClick={handleCreatePost}
+            disabled={isLoading}>
             Add Post
           </Button>
         </Card>
-
-        {allPosts && allPosts.map((postData) => <Post postData={postData} key={postData._id} />)}
+        {isLoading && <LinearBuffer />}
+        {allPosts &&
+          allPosts.map((postData) => (
+            <Post postData={postData} key={postData._id} setIsLoading={setIsLoading} />
+          ))}
       </Container>
     </div>
   );

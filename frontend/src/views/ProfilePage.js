@@ -54,7 +54,7 @@ export default function ProfilePage() {
         userStory
       });
 
-      result.err ? alert(result.err) : alert('Your information has been updated!');
+      result?.err ? alert(result.err) : alert('Your information has been updated!');
       window.location.reload();
     } catch (e) {
       alert(e);

@@ -7,7 +7,7 @@ const checkAuthByToken = async (callback) => {
 
   // if token expired, not authed
   const result = await getUserData();
-  if (result.err) {
+  if (result?.err) {
     localStorage.removeItem('token');
     callback('/login');
   }
