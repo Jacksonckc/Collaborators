@@ -62,7 +62,7 @@ export default function HomePage() {
       <Container
         style={{
           display: 'grid',
-          gridTemplateColumns: '200px 2fr 1fr',
+          gridTemplateColumns: '1fr 2fr 1fr',
           alignItems: 'start',
           marginTop: '40px'
         }}>
