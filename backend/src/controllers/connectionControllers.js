@@ -10,10 +10,8 @@ const getSuggestedConnections = async (req, res) => {
 
     const existedConnectionsIds = [
       ...new Set(flatten(existedConnections.map((c) => c.userIds))),
-      user._id
+      user._id.toString()
     ];
-    // console.log(...uniqueExistedConnectionsIds);
-
     const result = await UserModel.find({
       _id: { $nin: existedConnectionsIds }
     });
@@ -63,16 +61,11 @@ const cancelConnectionRequest = async (req, res) => {
   if (!user) return res.json({ err: 'You are not authorized!' });
 
   try {
-    const result = await ConnectionModel.findOneAndDelete({
+    await ConnectionModel.findOneAndDelete({
       userIds: {
         $all: [user._id, req.params.receiverId]
       }
     });
-    console.log(result);
-    // if (result.length == 0)
-    //   return res
-    //     .status(404)
-    //     .json({ err: 'The connection request does not exist, please double check.' });
 
     res.sendStatus(200);
   } catch {

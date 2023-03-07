@@ -13,7 +13,7 @@ import { sendConnectionRequest, cancelConnectionRequest } from '../services';
 export default function Connection({ connectionRequestData }) {
   const [sent, setSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(connectionRequestData);
+
   const buttonSx = {
     ...(sent && {
       bgcolor: green[500],

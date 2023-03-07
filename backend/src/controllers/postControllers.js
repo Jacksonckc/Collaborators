@@ -50,7 +50,7 @@ const updatePost = async (req, res) => {
       'postLikeCounts',
       'postComments'
     ]);
-    console.log(updatedData);
+
     const updatedPostData = await PostModel.findByIdAndUpdate(req.params.postId, updatedData, {
       new: true
     });
