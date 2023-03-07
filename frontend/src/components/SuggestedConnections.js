@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { getSuggestedConnections } from '../services';
 
@@ -8,21 +8,21 @@ import { Connection } from './index';
 
 export default function SuggestedConnections() {
   const [suggestedConnectionsData, setSuggestedConnectionsData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const init = async () => {
       try {
         var result = await getSuggestedConnections();
-        // once authed, set states
         setSuggestedConnectionsData(result);
+        result?.err && alert(result.err);
       } catch (e) {
         alert(e);
       }
     };
     init();
-  }, [navigate, isLoading]);
+  }, [navigate]);
 
   return (
     <Box
@@ -32,16 +32,12 @@ export default function SuggestedConnections() {
         gap: '10px',
         border: '1px solid black',
         borderRadius: '5px',
-        padding: '10px'
+        padding: '10px 10px 10px 15px'
       }}>
+      <Typography>You might want to connect...</Typography>
       {suggestedConnectionsData &&
-        suggestedConnectionsData.map((SuggestedConnectionData, index) => (
-          <Connection
-            SuggestedConnectionData={SuggestedConnectionData}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-            key={index}
-          />
+        suggestedConnectionsData.map((connectionRequestData, index) => (
+          <Connection connectionRequestData={connectionRequestData} key={index} />
         ))}
     </Box>
   );

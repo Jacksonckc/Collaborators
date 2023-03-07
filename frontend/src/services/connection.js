@@ -45,4 +45,27 @@ const sendConnectionRequest = async (receiverId) => {
   return null;
 };
 
-export { getSuggestedConnections, sendConnectionRequest };
+const cancelConnectionRequest = async (receiverId) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: localStorage.getItem('token')
+  };
+
+  const method = 'DELETE';
+
+  const options = {
+    method,
+    headers
+  };
+
+  try {
+    const url = `${process.env.REACT_APP_BACKEND_URL}/user/connection/${receiverId}`;
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+  } catch {}
+
+  return null;
+};
+
+export { getSuggestedConnections, sendConnectionRequest, cancelConnectionRequest };

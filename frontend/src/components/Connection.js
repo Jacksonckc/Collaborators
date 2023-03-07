@@ -4,16 +4,18 @@ import Box from '@mui/joy/Box';
 import { InputAdornment, Button, Typography } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import SendIcon from '@mui/icons-material/Send';
+import CancelIcon from '@mui/icons-material/Cancel';
 import CircularProgress from '@mui/material/CircularProgress';
 import { green } from '@mui/material/colors';
 
-import { sendConnectionRequest } from '../services';
+import { sendConnectionRequest, cancelConnectionRequest } from '../services';
 
-export default function Connection({ SuggestedConnectionData, isLoading, setIsLoading }) {
-  const [success, setSuccess] = useState(false);
-
+export default function Connection({ connectionRequestData }) {
+  const [sent, setSent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  console.log(connectionRequestData);
   const buttonSx = {
-    ...(success && {
+    ...(sent && {
       bgcolor: green[500],
       '&:hover': {
         bgcolor: green[700]
@@ -21,29 +23,25 @@ export default function Connection({ SuggestedConnectionData, isLoading, setIsLo
     })
   };
 
-  const handleSendConnectionRequest = async () => {
-    try {
-      setIsLoading(true);
-      setTimeout(async () => {
-        await sendConnectionRequest(SuggestedConnectionData._id);
-        setIsLoading(false);
-      }, 2000);
-    } catch (e) {
+  const handleButtonClick = async () => {
+    setIsLoading(true);
+    setTimeout(async () => {
+      try {
+        if (sent) {
+          const result = await cancelConnectionRequest(connectionRequestData._id);
+          result?.err && alert(result.err);
+        } else {
+          const result = await sendConnectionRequest(connectionRequestData._id);
+          result?.err && alert(result.err);
+        }
+      } catch (e) {
+        alert(e);
+      }
+      setSent(!sent);
       setIsLoading(false);
-      alert(e);
-    }
+    }, 2000);
   };
 
-  const handleButtonClick = () => {
-    if (!isLoading) {
-      setSuccess(false);
-      setIsLoading(true);
-      setTimeout(() => {
-        setSuccess(true);
-        setIsLoading(false);
-      }, 2000);
-    }
-  };
   return (
     <Box
       style={{
@@ -54,14 +52,15 @@ export default function Connection({ SuggestedConnectionData, isLoading, setIsLo
       <InputAdornment position='start'>
         <AccountCircle />
       </InputAdornment>
-      <Typography fontSize={20}>{SuggestedConnectionData.userFirstName}</Typography>
+      <Typography fontSize={20}>{connectionRequestData.userFirstName}</Typography>
 
       <Box sx={{ m: 1, position: 'relative' }}>
         <Button
           variant='contained'
           disabled={isLoading}
           onClick={handleButtonClick}
-          endIcon={<SendIcon />}
+          style={{ display: 'flex', justifyContent: 'space-between' }}
+          endIcon={sent ? <CancelIcon /> : <SendIcon />}
           sx={buttonSx}></Button>
         {isLoading && (
           <CircularProgress
@@ -70,7 +69,7 @@ export default function Connection({ SuggestedConnectionData, isLoading, setIsLo
               color: green[500],
               position: 'absolute',
               top: '50%',
-              left: '50%',
+              left: '53%',
               marginTop: '-12px',
               marginLeft: '-12px'
             }}

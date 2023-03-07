@@ -4,7 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { Header, LinearBuffer, Post, SuggestedConnections } from '../components';
 import { getUserData, getAllPosts, createPost } from '../services';
 import { checkAuthByToken } from '../utils';
-import { Container, Card, CardHeader, TextField, Button, Snackbar, Alert } from '@mui/material';
+import {
+  Container,
+  Card,
+  CardHeader,
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+  Grid
+} from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import { red } from '@mui/material/colors';
 
@@ -72,9 +81,13 @@ export default function HomePage() {
       <Header />
       <Container
         style={{
-          display: 'flex',
+          display: 'grid',
+          gridTemplateColumns: '200px 2fr 1fr',
+          alignItems: 'start',
           marginTop: '40px'
         }}>
+        <Container></Container>
+
         <Container
           style={{
             display: 'flex',
@@ -82,8 +95,7 @@ export default function HomePage() {
             gap: '10px'
           }}>
           <Card
-            sx={{ maxWidth: 505, width: '100%' }}
-            style={{ margin: 'auto', backgroundColor: '	#F5F5F5' }}>
+            style={{ margin: 'auto', backgroundColor: '	#F5F5F5', maxWidth: 505, width: '100%' }}>
             <CardHeader
               avatar={
                 <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
@@ -116,7 +128,7 @@ export default function HomePage() {
             ))}
         </Container>
 
-        <Container style={{ maxWidth: '200px', padding: '0' }}>
+        <Container style={{ maxWidth: '300px', padding: '0', margin: 'auto' }}>
           <SuggestedConnections />
         </Container>
       </Container>
