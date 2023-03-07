@@ -45,18 +45,19 @@ export default function RegisterPage() {
 
   const handleRegister = async (event) => {
     event.preventDefault();
+
     const result = await registerUser(userData);
     // errors check validation in the backend, error will return when register function in the backend fails
-    result?.err ? setErrMessage(result.err) : navigate('/');
+    result?.err ? setErrMessage(result.err) : navigate('/login');
   };
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
+
     setErrMessage(null);
   };
-
   return (
     <ThemeProvider theme={theme}>
       <Snackbar

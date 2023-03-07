@@ -19,7 +19,9 @@ export default function HomePage() {
   useEffect(() => {
     const init = async () => {
       checkAuthByToken(navigate);
+
       setAllPosts(await getAllPosts());
+
       setUserData(await getUserData());
     };
     init();
@@ -41,6 +43,7 @@ export default function HomePage() {
     if (reason === 'clickaway') {
       return;
     }
+
     setErrMessage(null);
   };
 
