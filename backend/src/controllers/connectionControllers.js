@@ -1,4 +1,5 @@
 const { ConnectionModel, UserModel } = require('../models');
+const { flatten } = require('lodash');
 
 const getSuggestedConnections = async (req, res) => {
   const user = req.user;
@@ -7,17 +8,14 @@ const getSuggestedConnections = async (req, res) => {
   try {
     const existedConnections = await ConnectionModel.find({ userIds: user._id }).select('userIds');
 
-    const existedConnectionsIds = [user._id];
-    if (existedConnections.length > 0) {
-      existedConnections.forEach((connection) => {
-        existedConnectionsIds.push(...connection.userIds);
-      });
-    }
-    let uniqueExistedConnectionsIds = [...new Set(existedConnectionsIds)];
+    const existedConnectionsIds = [
+      ...new Set(flatten(existedConnections.map((c) => c.userIds))),
+      user._id
+    ];
     // console.log(...uniqueExistedConnectionsIds);
 
     const result = await UserModel.find({
-      _id: { $nin: uniqueExistedConnectionsIds }
+      _id: { $nin: existedConnectionsIds }
     });
 
     res.status(200).json(result);

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -21,7 +20,6 @@ import { TextField, Menu, MenuItem, Box } from '@mui/material';
 
 import { AddComment } from './index';
 import { getUserData, getOtherUserData, updatePost, deletePost } from '../services';
-import { checkAuthByToken } from '../utils';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -41,12 +39,10 @@ export default function Post(props) {
   const [userData, setUserData] = useState(null);
   const [postAuthorData, setPostAuthorData] = useState(null);
   const [newPostCaption, setNewPostCaption] = useState('new');
-  const navigate = useNavigate();
 
   useEffect(() => {
     const init = async () => {
       // if no token, not authed
-      checkAuthByToken(navigate);
 
       var result = await getUserData();
       // once authed, set states
@@ -55,7 +51,7 @@ export default function Post(props) {
       setPostAuthorData(result);
     };
     init();
-  }, [navigate, props.postData.authorId]);
+  }, [props.postData.authorId]);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);

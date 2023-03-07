@@ -3,26 +3,26 @@ import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 
 import { getSuggestedConnections } from '../services';
-import { checkAuthByToken } from '../utils';
+
 import { Connection } from './index';
 
 export default function SuggestedConnections() {
   const [suggestedConnectionsData, setSuggestedConnectionsData] = useState(null);
-  const [isConnecting, setIsConnecting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     const init = async () => {
-      // if no token, not authed
-      checkAuthByToken(navigate);
-
-      var result = await getSuggestedConnections();
-      // once authed, set states
-      setSuggestedConnectionsData(result);
+      try {
+        var result = await getSuggestedConnections();
+        // once authed, set states
+        setSuggestedConnectionsData(result);
+      } catch (e) {
+        alert(e);
+      }
     };
     init();
-  }, [navigate]);
-
-  // console.log(suggestedConnectionsData);
+  }, [navigate, isLoading]);
 
   return (
     <Box
@@ -35,10 +35,12 @@ export default function SuggestedConnections() {
         padding: '10px'
       }}>
       {suggestedConnectionsData &&
-        suggestedConnectionsData.map((SuggestedConnectionData) => (
+        suggestedConnectionsData.map((SuggestedConnectionData, index) => (
           <Connection
             SuggestedConnectionData={SuggestedConnectionData}
-            setIsConnecting={setIsConnecting}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+            key={index}
           />
         ))}
     </Box>
