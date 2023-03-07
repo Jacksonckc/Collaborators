@@ -44,20 +44,20 @@ export default function ProfilePage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const result = await updateUserData({
-        userFirstName,
-        userLastName,
-        userEmail,
-        userPhone,
-        userBirthday,
-        userStory
-      });
 
-      result?.err ? alert(result.err) : alert('Your information has been updated!');
+    const result = await updateUserData({
+      userFirstName,
+      userLastName,
+      userEmail,
+      userPhone,
+      userBirthday,
+      userStory
+    });
+
+    if (result?.err) alert(result.err);
+    else {
+      alert('Your information has been updated!');
       window.location.reload();
-    } catch (e) {
-      alert(e);
     }
   };
 

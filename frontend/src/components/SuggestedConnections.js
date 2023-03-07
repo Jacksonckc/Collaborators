@@ -13,13 +13,9 @@ export default function SuggestedConnections() {
 
   useEffect(() => {
     const init = async () => {
-      try {
-        var result = await getSuggestedConnections();
-        setSuggestedConnectionsData(result);
-        result?.err && alert(result.err);
-      } catch (e) {
-        alert(e);
-      }
+      var result = await getSuggestedConnections();
+      result?.err && alert(result.err);
+      setSuggestedConnectionsData(result);
     };
     init();
   }, [navigate]);

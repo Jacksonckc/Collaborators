@@ -5,7 +5,7 @@
     "description": "Swagger Collaborator API",
     "version": "1.0.0"
   },
-  "host": "https://collaborators-bdgs.onrender.com",
+  "host": "localhost:3001",
   "basePath": "/",
   "schemes": [
     "http",
@@ -492,27 +492,27 @@
       "properties": {
         "projectName": {
           "type": "string",
-          "example": "Placeat velit deleniti tempore molestias consequatur veritatis nostrum voluptatem rerum."
+          "example": "Earum perferendis sed tempore eaque eveniet autem quidem et."
         },
         "projectLink": {
           "type": "string",
-          "example": "Dewitt_Gutmann@Monte.ca"
+          "example": "Kitty.Littel@hotmail.com"
         },
         "projectAutherId": {
           "type": "string",
-          "example": "b29ce66d-4002-4623-91cf-c8348dc41c29"
+          "example": "e85f42ac-3e6b-46f4-9242-0776ad3b7f85"
         },
         "projectLikesCount": {
           "type": "number",
-          "example": 99
+          "example": 29
         },
         "projectStartDate": {
           "type": "string",
-          "example": "1978-04-03"
+          "example": "1970-01-15"
         },
         "projectDescription": {
           "type": "string",
-          "example": "Sapiente aut soluta vel quis illo in. Molestiae vero quas sunt quasi. Occaecati tempora neque omnis enim esse labore nobis autem. Voluptatibus dolore dolores voluptatem vel ea."
+          "example": "Asperiores qui eius laboriosam. Consequatur qui non delectus consequatur expedita beatae. Facere suscipit dolore fugit sit ipsam. Molestiae numquam nihil et."
         },
         "isProjectFinished": {
           "type": "boolean",
@@ -534,15 +534,15 @@
       "properties": {
         "skillName": {
           "type": "string",
-          "example": "en"
+          "example": "fr"
         },
         "skillLevel": {
           "type": "number",
-          "example": 3
+          "example": 4
         },
         "skillDescription": {
           "type": "string",
-          "example": "Ab dolorem qui et."
+          "example": "Qui aperiam eos molestiae sed."
         }
       },
       "required": [
@@ -556,43 +556,43 @@
       "properties": {
         "userEmail": {
           "type": "string",
-          "example": "Gleichner.Stacy@Wolf.name"
+          "example": "Reymundo.Langworth@Esteban.biz"
         },
         "userFirstName": {
           "type": "string",
-          "example": "Retta"
+          "example": "Marianna"
         },
         "userLastName": {
           "type": "string",
-          "example": "McLaughlin"
+          "example": "Eichmann"
         },
         "userBirthday": {
           "type": "string",
-          "example": "2007-12-09"
+          "example": "1999-06-10"
         },
         "userPhone": {
           "type": "string",
-          "example": "446-510-2772"
+          "example": "516-396-4205"
         },
         "userStory": {
           "type": "string",
-          "example": "Rerum eveniet recusandae dolorem aut ratione debitis ab quos in. Reprehenderit sapiente commodi qui aperiam nostrum id magni cumque. Illo id modi totam nobis omnis."
+          "example": "Atque et error omnis quaerat odit. Quisquam dolores repellendus expedita quos esse ut dolorem consequatur. In aut amet maiores sed molestiae dolores vel voluptas."
         },
         "userAvatar": {
           "type": "string",
-          "example": "Voluptatibus eaque omnis aliquid."
+          "example": "Velit omnis ducimus enim voluptatibus ad."
         },
         "password": {
           "type": "string",
-          "example": "2Hortense95"
+          "example": "7Morris46"
         },
         "userProjectCount": {
           "type": "number",
-          "example": 1
+          "example": 4
         },
         "acorns": {
           "type": "number",
-          "example": 5
+          "example": 0
         },
         "userLevel": {
           "type": "number",
@@ -613,11 +613,11 @@
       "properties": {
         "userId": {
           "type": "string",
-          "example": "9391c1af-7f3d-4c51-86d6-8775a01caae4"
+          "example": "6312c99f-cfd2-47c3-bb30-149cf17c26af"
         },
         "hash": {
           "type": "string",
-          "example": "0Katarina75"
+          "example": "9Isadore73"
         }
       },
       "required": [

@@ -42,13 +42,10 @@ export default function LoginPage() {
         password
       };
       event.preventDefault();
-      try {
-        const token = await loginUser(userData);
-        // eslint-disable-next-line no-unused-expressions
-        token ? (localStorage.setItem('token', token), navigate('/')) : setIsValidLogin(false);
-      } catch (e) {
-        alert(e);
-      }
+
+      const token = await loginUser(userData);
+      // eslint-disable-next-line no-unused-expressions
+      token ? (localStorage.setItem('token', token), navigate('/')) : setIsValidLogin(false);
     },
     [userEmail, password, navigate]
   );
@@ -57,9 +54,9 @@ export default function LoginPage() {
     if (reason === 'clickaway') {
       return;
     }
-
     setIsValidLogin(true);
   };
+
   return (
     <ThemeProvider theme={theme}>
       <Snackbar

@@ -90,19 +90,13 @@ export default function Post(props) {
   const handleUpdatePost = async () => {
     const response = window.confirm('Are you sure you want to update your post?');
     if (response) {
-      try {
-        props.setIsLoading(true);
-        handleCloseSettings();
-        setTimeout(async () => {
-          const result = await updatePost(props.postData._id, newPostCaption);
-          if (result?.err) {
-            alert(result.err);
-          }
-          props.setIsLoading(false);
-        }, 3000);
-      } catch (e) {
-        alert(e);
-      }
+      props.setIsLoading(true);
+      handleCloseSettings();
+      setTimeout(async () => {
+        const result = await updatePost(props.postData._id, newPostCaption);
+        result?.err && alert(result.err);
+        props.setIsLoading(false);
+      }, 3000);
     } else return;
   };
 

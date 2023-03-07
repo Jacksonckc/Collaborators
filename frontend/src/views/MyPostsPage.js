@@ -14,11 +14,7 @@ export default function MyPostsPage() {
   useEffect(() => {
     const init = async () => {
       checkAuthByToken(navigate);
-      try {
-        const result = await getUserPosts();
-        setAllPosts(result);
-      } catch {}
-      return;
+      setAllPosts(await getUserPosts());
     };
     init();
   }, [navigate, isLoading]);

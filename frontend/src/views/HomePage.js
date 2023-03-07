@@ -4,16 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Header, LinearBuffer, Post, SuggestedConnections } from '../components';
 import { getUserData, getAllPosts, createPost } from '../services';
 import { checkAuthByToken } from '../utils';
-import {
-  Container,
-  Card,
-  CardHeader,
-  TextField,
-  Button,
-  Snackbar,
-  Alert,
-  Grid
-} from '@mui/material';
+import { Container, Card, CardHeader, TextField, Button, Snackbar, Alert } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import { red } from '@mui/material/colors';
 
@@ -28,42 +19,28 @@ export default function HomePage() {
   useEffect(() => {
     const init = async () => {
       checkAuthByToken(navigate);
-      try {
-        var result = await getAllPosts();
-        setAllPosts(result);
-
-        result = await getUserData();
-        // once authed, set states
-        setUserData(result);
-      } catch {}
-      return;
+      setAllPosts(await getAllPosts());
+      setUserData(await getUserData());
     };
     init();
   }, [navigate, isLoading]);
 
   const handleCreatePost = async () => {
-    try {
-      setIsLoading(true);
-      setTimeout(async () => {
-        const result = await createPost(postCaption);
-        if (result?.err) {
-          setErrMessage(result.err);
-        } else {
-          setPostCaption(null);
-        }
-        setIsLoading(false);
-      }, 2000);
-    } catch (e) {
-      alert(e);
+    setIsLoading(true);
+    setTimeout(async () => {
+      const result = await createPost(postCaption);
+      if (result?.err) {
+        setErrMessage(result.err);
+      }
       setIsLoading(false);
-    }
+      setPostCaption(null);
+    }, 2000);
   };
 
   const handleCloseSnackbar = (reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setErrMessage(null);
   };
 
@@ -127,7 +104,6 @@ export default function HomePage() {
               <Post postData={postData} key={postData._id} setIsLoading={setIsLoading} />
             ))}
         </Container>
-
         <Container style={{ maxWidth: '300px', padding: '0', margin: 'auto' }}>
           <SuggestedConnections />
         </Container>

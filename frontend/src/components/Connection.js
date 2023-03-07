@@ -26,16 +26,12 @@ export default function Connection({ connectionRequestData }) {
   const handleButtonClick = async () => {
     setIsLoading(true);
     setTimeout(async () => {
-      try {
-        if (sent) {
-          const result = await cancelConnectionRequest(connectionRequestData._id);
-          result?.err && alert(result.err);
-        } else {
-          const result = await sendConnectionRequest(connectionRequestData._id);
-          result?.err && alert(result.err);
-        }
-      } catch (e) {
-        alert(e);
+      if (sent) {
+        const result = await cancelConnectionRequest(connectionRequestData._id);
+        result?.err && alert(result.err);
+      } else {
+        const result = await sendConnectionRequest(connectionRequestData._id);
+        result?.err && alert(result.err);
       }
       setSent(!sent);
       setIsLoading(false);
