@@ -3,7 +3,6 @@ var _ = require('lodash');
 
 const getUserPosts = async (req, res) => {
   const user = req.user;
-  if (!user) return res.json({ err: 'You are not authorized!' });
   try {
     const result = await PostModel.find({ authorId: user._id.toString() });
     res.status(200).json(result);
@@ -14,7 +13,6 @@ const getUserPosts = async (req, res) => {
 
 const createPost = async (req, res) => {
   const user = req.user;
-  if (!user) return res.json({ err: 'You are not authorized!' });
   if (!req.body.postCaption) {
     return res.status(400).json({ err: 'Cannot create post without a caption.' });
   }
@@ -37,7 +35,6 @@ const createPost = async (req, res) => {
 
 const updatePost = async (req, res) => {
   const user = req.user;
-  if (!user) return res.json({ err: 'You are not authorized!' });
 
   if (!req.body.postCaption) {
     return res.status(400).json({ err: 'Cannot change the post without a caption.' });
@@ -62,7 +59,6 @@ const updatePost = async (req, res) => {
 
 const deletePost = async (req, res) => {
   const user = req.user;
-  if (!user) return res.json({ err: 'You are not authorized!' });
 
   try {
     const post = await PostModel.findById(req.params.postId);
@@ -78,7 +74,6 @@ const deletePost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   const user = req.user;
-  if (!user) return res.json({ err: 'You are not authorized!' });
 
   try {
     const result = await PostModel.find();

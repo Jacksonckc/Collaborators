@@ -28,12 +28,13 @@ export default function Connection({ connectionRequestData }) {
     setTimeout(async () => {
       if (sent) {
         const result = await cancelConnectionRequest(connectionRequestData._id);
-        result?.err && alert(result.err);
+        if (result?.err) alert(result.err);
+        else setSent(!sent);
       } else {
         const result = await sendConnectionRequest(connectionRequestData._id);
-        result?.err && alert(result.err);
+        if (result?.err) alert(result.err);
+        else setSent(!sent);
       }
-      setSent(!sent);
       setIsLoading(false);
     }, 2000);
   };

@@ -3,7 +3,6 @@ const { flatten } = require('lodash');
 
 const getSuggestedConnections = async (req, res) => {
   const user = req.user;
-  if (!user) return res.json({ err: 'You are not authorized!' });
 
   try {
     const existedConnections = await ConnectionModel.find({ userIds: user._id }).select('userIds');
@@ -25,7 +24,6 @@ const getSuggestedConnections = async (req, res) => {
 
 const sendConnectionRequest = async (req, res) => {
   const user = req.user;
-  if (!user) return res.json({ err: 'You are not authorized!' });
 
   // set cannot connect to yourself and cannot make duplicate connections.
   if (user._id.toString() === req.body.receiverId)
@@ -58,7 +56,6 @@ const sendConnectionRequest = async (req, res) => {
 
 const cancelConnectionRequest = async (req, res) => {
   const user = req.user;
-  if (!user) return res.json({ err: 'You are not authorized!' });
 
   try {
     await ConnectionModel.findOneAndDelete({
@@ -72,5 +69,10 @@ const cancelConnectionRequest = async (req, res) => {
     res.status(404).json({ err: 'Fail to cancel connection request.' });
   }
 };
+
+// const getAllConnections = async (req,res)=>{
+//   const user = req.user;
+
+// }
 
 module.exports = { getSuggestedConnections, sendConnectionRequest, cancelConnectionRequest };

@@ -18,7 +18,6 @@ const getUser = async (req, res) => {
   }
   */
   const user = req.user;
-  if (!user) return res.json({ err: 'You are not authorized!' });
 
   try {
     const result = await UserModel.findById(user._id);
@@ -90,7 +89,6 @@ const changeUserInfo = async (req, res) => {
   }
   */
   const user = req.user;
-  if (!user) return res.json({ err: 'You are not authorized!' });
 
   // in case someone passes in a password here
 
@@ -117,7 +115,6 @@ const deleteUser = async (req, res) => {
   }
   */
   const user = req.user;
-  if (!user) return res.json({ err: 'You are not authorized!' });
 
   try {
     await UserModel.findByIdAndDelete(user._id);
@@ -147,7 +144,6 @@ const updateUserPassword = async (req, res) => {
   }
   */
   const user = req.user;
-  if (!user) return res.json({ err: 'You are not authorized!' });
 
   try {
     const hash = await encryptPassword(req.body.password);
@@ -228,7 +224,6 @@ const getUsers = async (req, res) => {
 
 const getOtherUser = async (req, res) => {
   const user = req.user;
-  if (!user) return res.json({ err: 'You are not authorized!' });
 
   try {
     const result = await UserModel.findById(req.params.userId);

@@ -19,9 +19,7 @@ export default function HomePage() {
   useEffect(() => {
     const init = async () => {
       checkAuthByToken(navigate);
-
       setAllPosts(await getAllPosts());
-
       setUserData(await getUserData());
     };
     init();
@@ -31,11 +29,9 @@ export default function HomePage() {
     setIsLoading(true);
     setTimeout(async () => {
       const result = await createPost(postCaption);
-      if (result?.err) {
-        setErrMessage(result.err);
-      }
-      setIsLoading(false);
+      result?.err && setErrMessage(result.err);
       setPostCaption(null);
+      setIsLoading(false);
     }, 2000);
   };
 
@@ -63,6 +59,7 @@ export default function HomePage() {
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 2fr 1fr',
+
           alignItems: 'start',
           marginTop: '40px'
         }}>
@@ -79,14 +76,14 @@ export default function HomePage() {
             <CardHeader
               avatar={
                 <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
-                  {userData?.userFirstName[0]}
+                  {userData?.userFirstName[0] + userData?.userLastName[0]}
                 </Avatar>
               }
               title={`${userData?.userFirstName ? userData.userFirstName : 'User'} says:`} // This will be the author name
             />
+
             <TextField
               style={{ width: '98%', padding: '1%' }}
-              multiline
               label='Caption'
               placeholder='Tell us what is on your mind...'
               required
@@ -107,7 +104,14 @@ export default function HomePage() {
               <Post postData={postData} key={postData._id} setIsLoading={setIsLoading} />
             ))}
         </Container>
-        <Container style={{ maxWidth: '300px', padding: '0', margin: 'auto' }}>
+        <Container
+          style={{
+            maxWidth: '300px',
+            padding: '0',
+            margin: ' 0 auto',
+            position: 'sticky',
+            top: '108.5px'
+          }}>
           <SuggestedConnections />
         </Container>
       </Container>

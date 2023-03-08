@@ -14,6 +14,7 @@ const getAuth = async (req, res, next) => {
   } catch (e) {
     console.log(e);
   }
+  if (!req.user) return res.json({ err: 'You are not authorized!' });
   next();
 };
 

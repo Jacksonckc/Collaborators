@@ -14,7 +14,7 @@ export default function SuggestedConnections() {
   useEffect(() => {
     const init = async () => {
       var result = await getSuggestedConnections();
-      result?.err && alert(result.err);
+      result?.err && console.log(result.err);
       setSuggestedConnectionsData(result);
     };
     init();
@@ -26,11 +26,11 @@ export default function SuggestedConnections() {
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
-        border: '1px solid black',
+        border: '1px solid #1876D1',
         borderRadius: '5px',
         padding: '10px 10px 10px 15px'
       }}>
-      <Typography>You might want to connect...</Typography>
+      <Typography color='#1876D1'>You might want to connect...</Typography>
       {suggestedConnectionsData &&
         suggestedConnectionsData.map((connectionRequestData, index) => (
           <Connection connectionRequestData={connectionRequestData} key={index} />
