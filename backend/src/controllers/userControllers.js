@@ -223,8 +223,6 @@ const getUsers = async (req, res) => {
 };
 
 const getOtherUser = async (req, res) => {
-  const user = req.user;
-
   try {
     const result = await UserModel.findById(req.params.userId);
     res.status(200).json(result);

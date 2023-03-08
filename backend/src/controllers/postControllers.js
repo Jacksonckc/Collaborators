@@ -34,8 +34,6 @@ const createPost = async (req, res) => {
 };
 
 const updatePost = async (req, res) => {
-  const user = req.user;
-
   if (!req.body.postCaption) {
     return res.status(400).json({ err: 'Cannot change the post without a caption.' });
   }
@@ -73,8 +71,6 @@ const deletePost = async (req, res) => {
 };
 
 const getAllPosts = async (req, res) => {
-  const user = req.user;
-
   try {
     const result = await PostModel.find();
     res.status(200).json(result);
