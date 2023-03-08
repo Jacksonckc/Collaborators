@@ -30,7 +30,11 @@ export default function SuggestedConnections() {
         borderRadius: '5px',
         padding: '10px 10px 10px 15px'
       }}>
-      <Typography color='#1876D1'>You might want to connect...</Typography>
+      <Typography color='#1876D1'>
+        {suggestedConnectionsData?.length > 0
+          ? 'You might want to connect...'
+          : 'No suggested connections.'}
+      </Typography>
       {suggestedConnectionsData &&
         suggestedConnectionsData.map((connectionRequestData, index) => (
           <Connection connectionRequestData={connectionRequestData} key={index} />

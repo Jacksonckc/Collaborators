@@ -59,7 +59,6 @@ export default function HomePage() {
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 2fr 1fr',
-
           alignItems: 'start',
           marginTop: '40px'
         }}>
@@ -101,7 +100,12 @@ export default function HomePage() {
           {isLoading && <LinearBuffer />}
           {allPosts &&
             allPosts.map((postData) => (
-              <Post postData={postData} key={postData._id} setIsLoading={setIsLoading} />
+              <Post
+                postData={postData}
+                key={postData._id}
+                setIsLoading={setIsLoading}
+                isLoading={isLoading}
+              />
             ))}
         </Container>
         <Container

@@ -12,7 +12,7 @@ const getUser = async (req, res) => {
     description: 'Successfully retrieved data. You will receive an user object',
     schema: { $ref: '#/definitions/User' }
   }
-  #swagger.responses[404] = {
+  #swagger.responses[400] = {
     description: 'Cannot find the user. You will receive an err message',
     schema: { $ref: '#definitions/Err' }
   }
@@ -23,7 +23,7 @@ const getUser = async (req, res) => {
     const result = await UserModel.findById(user._id);
     res.status(200).json(result);
   } catch {
-    res.status(404).json({ err: 'Fail to retrieve user data.' });
+    res.status(400).json({ err: 'Fail to retrieve user data.' });
   }
 };
 
@@ -34,7 +34,6 @@ const addUser = async (req, res) => {
     in: 'body',
     type: 'object',
     required: true,
-    description: 'Register a new user',
     schema: { $ref: '#/definitions/User' }
   } 
   #swagger.responses[201] = {
@@ -76,7 +75,6 @@ const changeUserInfo = async (req, res) => {
     in: 'body',
     type: 'object',
     required: true,
-    description: 'Please only input what needs to be changed, if you leave the default value, they will be updated to the DB',
     schema: { $ref: '#/definitions/User' },
   }
   #swagger.responses[200] = {
@@ -106,7 +104,7 @@ const changeUserInfo = async (req, res) => {
 const deleteUser = async (req, res) => {
   /*
   #swagger.description = 'Delete user information, you will receive 204 when deleted'
-  #swagger.responses[200] = {
+  #swagger.responses[204] = {
     description: 'Deletion successful. There will be no return value'
   }
   #swagger.responses[400] = {
@@ -118,7 +116,7 @@ const deleteUser = async (req, res) => {
 
   try {
     await UserModel.findByIdAndDelete(user._id);
-    res.sendStatus(200);
+    res.sendStatus(204);
   } catch {
     res.status(400).json({ err: 'Cannot delete user.' });
   }
@@ -131,7 +129,6 @@ const updateUserPassword = async (req, res) => {
     in: 'body',
     type: 'object',
     required: true,
-    description: 'Input your new password',
     schema: { password: 'new password' },
   } 
   #swagger.responses[200] = {
@@ -165,7 +162,6 @@ const loginUser = async (req, res) => {
     in: 'body',
     type: 'object',
     required: true,
-    description: 'Input login info',
     schema: { 
       $userEmail: 'Example@gmail.com',
       $password: 'xxxxxx'
@@ -205,7 +201,7 @@ const getUsers = async (req, res) => {
     description: 'You are not an admin user. You will receive an err message',
     schema: { $ref: '#/definitions/Err' }
   }
-  #swagger.responses[404] = {
+  #swagger.responses[400] = {
     description: 'Falied to retrieve all users. You will receive an err message',
     schema: { $ref: '#/definitions/Err' }
   }
@@ -218,7 +214,7 @@ const getUsers = async (req, res) => {
     result = await UserModel.find();
     res.status(200).json(result);
   } catch {
-    res.status(404).json({ err: 'Failed to fetch all users' });
+    res.status(400).json({ err: 'Failed to fetch all users' });
   }
 };
 
@@ -227,7 +223,7 @@ const getOtherUser = async (req, res) => {
     const result = await UserModel.findById(req.params.userId);
     res.status(200).json(result);
   } catch {
-    res.status(404).json({ err: 'Fail to retrieve user data.' });
+    res.status(400).json({ err: 'Fail to retrieve user data.' });
   }
 };
 

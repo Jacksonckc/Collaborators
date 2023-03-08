@@ -17,6 +17,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { TextField, Box, Button } from '@mui/material';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { AddComment } from './index';
 import { getUserData, getOtherUserData, updatePost, deletePost } from '../services';
@@ -140,7 +141,7 @@ export default function Post(props) {
               defaultValue={props.postData.postCaption}
               onChange={(e) => setNewPostCaption(e.target.value)}></TextField>
             <Button onClick={handleConfirmEdit}>
-              <ModeEditIcon />
+              {props.isLoading ? <CloudUploadIcon /> : <ModeEditIcon />}
             </Button>
           </Box>
         ) : (
@@ -171,6 +172,7 @@ export default function Post(props) {
         <CardContent>
           <Typography paragraph>Comments:</Typography>
           {props.postData.postComments?.map((comment, index) => (
+            // needs to create a comment comp
             <TextField
               key={index}
               style={{ width: '100%' }}

@@ -2,6 +2,17 @@ const { ConnectionModel, UserModel } = require('../models');
 const { flatten } = require('lodash');
 
 const getSuggestedConnections = async (req, res) => {
+  /*
+  #swagger.description = 'Get all the users except for the ones you have connections with.'
+  #swagger.responses[200] = {
+    description: 'Successfully retrieved all suggested users. You will receive an array of user objects',
+    schema: { $ref: '#/definitions/Connection' }
+  }
+  #swagger.responses[400] = {
+    description: 'Falied to retrieve all suggested users. You will receive an err message',
+    schema: { $ref: '#/definitions/Err' }
+  }
+  */
   const user = req.user;
 
   try {
@@ -18,11 +29,28 @@ const getSuggestedConnections = async (req, res) => {
     res.status(200).json(result);
   } catch (e) {
     console.log(e);
-    res.status(404).json({ err: 'Fail to retrieve suggested connections.' });
+    res.status(400).json({ err: 'Fail to retrieve suggested connections.' });
   }
 };
 
 const sendConnectionRequest = async (req, res) => {
+  /* 
+  #swagger.description = 'Create a new connection request' 
+  #swagger.parameters['Connection Request Data'] = {
+    in: 'body',
+    type: 'object',
+    required: true,
+    schema: { receiverId: 'string' }
+  } 
+  #swagger.responses[201] = {
+    description: 'Connection request successfully created. You will receive the new connection object.',
+    schema: { $ref: '#/definitions/Connection' }
+  }
+  #swagger.responses[400] = {
+    description: 'Failed to send a connection request, it might be caused by anything. You will receive an err message.',
+    schema: { $ref: '#/definitions/Err' }
+  }
+  */
   const user = req.user;
 
   // set cannot connect to yourself and cannot make duplicate connections.
@@ -38,7 +66,7 @@ const sendConnectionRequest = async (req, res) => {
 
     if (result.length > 0)
       return res
-        .status(404)
+        .status(400)
         .json({ err: 'The connection request is already sent by or to you, please double check.' });
 
     const newConnection = new ConnectionModel({
@@ -50,11 +78,21 @@ const sendConnectionRequest = async (req, res) => {
     newConnection.save();
     res.status(201).json({ ...newConnection._doc });
   } catch {
-    res.status(404).json({ err: 'Fail to send connection request.' });
+    res.status(400).json({ err: 'Fail to send connection request.' });
   }
 };
 
 const cancelConnectionRequest = async (req, res) => {
+  /*
+  #swagger.description = 'Cancel a connection request, you will receive 204 when canceled.'
+  #swagger.responses[204] = {
+    description: 'Cancelation successful. There will be no return value'
+  }
+  #swagger.responses[400] = {
+    description: 'Cancelation failed, it might be caused by anything. You will receive an err message.',
+    schema: { $ref: '#/definitions/Err' }
+  }
+  */
   const user = req.user;
 
   try {
@@ -66,13 +104,35 @@ const cancelConnectionRequest = async (req, res) => {
 
     res.sendStatus(200);
   } catch {
-    res.status(404).json({ err: 'Fail to cancel connection request.' });
+    res.status(400).json({ err: 'Fail to cancel connection request.' });
   }
 };
 
-// const getAllConnections = async (req,res)=>{
-//   const user = req.user;
+const getAllConnections = async (req, res) => {
+  /*
+  #swagger.description = 'Get all the connections including the ones you have not accepted.'
+  #swagger.responses[200] = {
+    description: 'Successfully retrieved all connections. You will receive an array of connection objects',
+    schema: { $ref: '#/definitions/Connection }
+  }
+  #swagger.responses[400] = {
+    description: 'Falied to retrieve all connections. You will receive an err message',
+    schema: { $ref: '#/definitions/Err' }
+  }
+  */
+  const user = req.user;
 
-// }
+  try {
+    const result = await ConnectionModel.find({ userIds: user._id });
+    res.status(200).json(result);
+  } catch {
+    res.status(400).json({ err: 'Fail to get all connections.' });
+  }
+};
 
-module.exports = { getSuggestedConnections, sendConnectionRequest, cancelConnectionRequest };
+module.exports = {
+  getSuggestedConnections,
+  sendConnectionRequest,
+  cancelConnectionRequest,
+  getAllConnections
+};
