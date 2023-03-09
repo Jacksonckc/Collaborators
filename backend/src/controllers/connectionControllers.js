@@ -113,7 +113,7 @@ const getAllConnections = async (req, res) => {
   #swagger.description = 'Get all the connections including the ones you have not accepted.'
   #swagger.responses[200] = {
     description: 'Successfully retrieved all connections. You will receive an array of connection objects',
-    schema: { $ref: '#/definitions/Connection }
+    schema: { $ref: '#/definitions/Connection' }
   }
   #swagger.responses[400] = {
     description: 'Falied to retrieve all connections. You will receive an err message',

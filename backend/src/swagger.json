@@ -29,7 +29,7 @@
               "$ref": "#/definitions/User"
             }
           },
-          "404": {
+          "400": {
             "description": "Cannot find the user. You will receive an err message",
             "schema": {
               "$ref": "#/definitions/Err"
@@ -44,7 +44,6 @@
             "name": "User Data",
             "in": "body",
             "required": true,
-            "description": "Register a new user",
             "schema": {
               "$ref": "#/definitions/User"
             }
@@ -77,7 +76,6 @@
             "name": "User Info",
             "in": "body",
             "required": true,
-            "description": "Please only input what needs to be changed, if you leave the default value, they will be updated to the DB",
             "schema": {
               "$ref": "#/definitions/User"
             }
@@ -109,6 +107,9 @@
         ],
         "responses": {
           "200": {
+            "description": "OK"
+          },
+          "204": {
             "description": "Deletion successful. There will be no return value"
           },
           "400": {
@@ -133,7 +134,6 @@
             "name": "Password",
             "in": "body",
             "required": true,
-            "description": "Input your new password",
             "schema": {
               "type": "object",
               "properties": {
@@ -169,7 +169,6 @@
             "name": "Login Info",
             "in": "body",
             "required": true,
-            "description": "Input login info",
             "schema": {
               "type": "object",
               "properties": {
@@ -228,14 +227,14 @@
           "200": {
             "description": "Successfully retrieved all users. You will receive an array of user objects"
           },
-          "403": {
-            "description": "You are not an admin user. You will receive an err message",
+          "400": {
+            "description": "Falied to retrieve all users. You will receive an err message",
             "schema": {
               "$ref": "#/definitions/Err"
             }
           },
-          "404": {
-            "description": "Falied to retrieve all users. You will receive an err message",
+          "403": {
+            "description": "You are not an admin user. You will receive an err message",
             "schema": {
               "$ref": "#/definitions/Err"
             }
@@ -263,15 +262,15 @@
           "200": {
             "description": "OK"
           },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/user/post/all": {
       "get": {
-        "description": "",
+        "description": "Get all the posts from all the users.",
         "parameters": [
           {
             "name": "authorization",
@@ -283,15 +282,15 @@
           "200": {
             "description": "OK"
           },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
     "/user/post/": {
       "get": {
-        "description": "",
+        "description": "Get all the posts for you.",
         "parameters": [
           {
             "name": "authorization",
@@ -303,13 +302,13 @@
           "200": {
             "description": "OK"
           },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Bad Request"
           }
         }
       },
       "post": {
-        "description": "",
+        "description": "Create a post!",
         "parameters": [
           {
             "name": "authorization",
@@ -317,13 +316,15 @@
             "type": "string"
           },
           {
-            "name": "body",
+            "name": "Post Data",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "postCaption": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "string"
                 }
               }
             }
@@ -334,17 +335,23 @@
             "description": "OK"
           },
           "201": {
-            "description": "Created"
+            "description": "Post successfully created. You will receive the new post object.",
+            "schema": {
+              "$ref": "#/definitions/Post"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Failed to create a post, it might be caused by anything. You will receive an err message.",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
           }
         }
       }
     },
     "/user/post/{postId}": {
       "put": {
-        "description": "",
+        "description": "Modify a post's info, you can only modify certain fields",
         "parameters": [
           {
             "name": "postId",
@@ -358,13 +365,15 @@
             "type": "string"
           },
           {
-            "name": "body",
+            "name": "Post data",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "postCaption": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "string"
                 }
               }
             }
@@ -372,15 +381,21 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Update successful. You will receive the new post object.",
+            "schema": {
+              "$ref": "#/definitions/Post"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Update failed, it might be caused by anything. You will receive an err message.",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
           }
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete post information, you will receive 204 when deleted",
         "parameters": [
           {
             "name": "postId",
@@ -398,15 +413,21 @@
           "200": {
             "description": "OK"
           },
-          "404": {
-            "description": "Not Found"
+          "204": {
+            "description": "Deletion successful. There will be no return value"
+          },
+          "400": {
+            "description": "Deletion failed, it might be caused by anything. You will receive an err message.",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
           }
         }
       }
     },
     "/user/connection/suggested": {
       "get": {
-        "description": "",
+        "description": "Get all the users except for the ones you have connections with.",
         "parameters": [
           {
             "name": "authorization",
@@ -416,17 +437,23 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Successfully retrieved all suggested users. You will receive an array of user objects",
+            "schema": {
+              "$ref": "#/definitions/Connection"
+            }
           },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Falied to retrieve all suggested users. You will receive an err message",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
           }
         }
       }
     },
     "/user/connection/": {
       "post": {
-        "description": "",
+        "description": "Create a new connection request",
         "parameters": [
           {
             "name": "authorization",
@@ -434,13 +461,15 @@
             "type": "string"
           },
           {
-            "name": "body",
+            "name": "Connection Request Data",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "receiverId": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "string"
                 }
               }
             }
@@ -451,17 +480,47 @@
             "description": "OK"
           },
           "201": {
-            "description": "Created"
+            "description": "Connection request successfully created. You will receive the new connection object.",
+            "schema": {
+              "$ref": "#/definitions/Connection"
+            }
           },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Failed to send a connection request, it might be caused by anything. You will receive an err message.",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Get all the connections including the ones you have not accepted.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all connections. You will receive an array of connection objects",
+            "schema": {
+              "$ref": "#/definitions/Connection"
+            }
+          },
+          "400": {
+            "description": "Falied to retrieve all connections. You will receive an err message",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
           }
         }
       }
     },
     "/user/connection/{receiverId}": {
       "delete": {
-        "description": "",
+        "description": "Cancel a connection request, you will receive 204 when canceled.",
         "parameters": [
           {
             "name": "receiverId",
@@ -479,44 +538,87 @@
           "200": {
             "description": "OK"
           },
-          "404": {
-            "description": "Not Found"
+          "204": {
+            "description": "Cancelation successful. There will be no return value"
+          },
+          "400": {
+            "description": "Cancelation failed, it might be caused by anything. You will receive an err message.",
+            "schema": {
+              "$ref": "#/definitions/Err"
+            }
           }
         }
       }
     }
   },
   "definitions": {
+    "Post": {
+      "type": "object",
+      "properties": {
+        "authorId": {
+          "type": "string",
+          "example": "eae96a9b-f023-4058-9746-5d0b0ed9772e"
+        },
+        "postDate": {
+          "type": "string",
+          "example": "1987-03-15"
+        },
+        "postCaption": {
+          "type": "string",
+          "example": "Culpa ipsa est illo in."
+        },
+        "postLikeCounts": {
+          "type": "number",
+          "example": 2
+        },
+        "postComments": {
+          "type": "array",
+          "example": [
+            "Sed quisquam quam commodi."
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "authorId",
+        "postDate",
+        "postCaption",
+        "postLikeCounts",
+        "postComments"
+      ]
+    },
     "Project": {
       "type": "object",
       "properties": {
         "projectName": {
           "type": "string",
-          "example": "Earum perferendis sed tempore eaque eveniet autem quidem et."
+          "example": "Magnam vitae quaerat quasi quisquam."
         },
         "projectLink": {
           "type": "string",
-          "example": "Kitty.Littel@hotmail.com"
+          "example": "Nathaniel_Dooley@gmail.com"
         },
         "projectAutherId": {
           "type": "string",
-          "example": "e85f42ac-3e6b-46f4-9242-0776ad3b7f85"
+          "example": "46e38724-3c47-496c-b5b9-5e1bed316e4d"
         },
         "projectLikesCount": {
           "type": "number",
-          "example": 29
+          "example": 38
         },
         "projectStartDate": {
           "type": "string",
-          "example": "1970-01-15"
+          "example": "2000-08-13"
         },
         "projectDescription": {
           "type": "string",
-          "example": "Asperiores qui eius laboriosam. Consequatur qui non delectus consequatur expedita beatae. Facere suscipit dolore fugit sit ipsam. Molestiae numquam nihil et."
+          "example": "Provident fugiat eligendi et inventore dolorem sunt omnis. Ex iste deleniti quo accusamus doloremque. Molestiae est a fugiat praesentium dolor fuga."
         },
         "isProjectFinished": {
           "type": "boolean",
-          "example": false
+          "example": true
         }
       },
       "required": [
@@ -534,15 +636,15 @@
       "properties": {
         "skillName": {
           "type": "string",
-          "example": "fr"
+          "example": "en"
         },
         "skillLevel": {
           "type": "number",
-          "example": 4
+          "example": 0
         },
         "skillDescription": {
           "type": "string",
-          "example": "Qui aperiam eos molestiae sed."
+          "example": "Ducimus nihil nobis recusandae et rerum qui ut."
         }
       },
       "required": [
@@ -556,43 +658,43 @@
       "properties": {
         "userEmail": {
           "type": "string",
-          "example": "Reymundo.Langworth@Esteban.biz"
+          "example": "Scot.Hettinger@yahoo.com"
         },
         "userFirstName": {
           "type": "string",
-          "example": "Marianna"
+          "example": "Amari"
         },
         "userLastName": {
           "type": "string",
-          "example": "Eichmann"
+          "example": "Witting"
         },
         "userBirthday": {
           "type": "string",
-          "example": "1999-06-10"
+          "example": "1982-10-19"
         },
         "userPhone": {
           "type": "string",
-          "example": "516-396-4205"
+          "example": "209-803-5033"
         },
         "userStory": {
           "type": "string",
-          "example": "Atque et error omnis quaerat odit. Quisquam dolores repellendus expedita quos esse ut dolorem consequatur. In aut amet maiores sed molestiae dolores vel voluptas."
+          "example": "Ut cumque vitae quia eveniet. Dolorum rerum necessitatibus facilis consequuntur. Mollitia recusandae dolor optio dolor adipisci ut."
         },
         "userAvatar": {
           "type": "string",
-          "example": "Velit omnis ducimus enim voluptatibus ad."
+          "example": "Enim minima porro nulla aspernatur praesentium quasi eum incidunt."
         },
         "password": {
           "type": "string",
-          "example": "7Morris46"
+          "example": "6Theodore75"
         },
         "userProjectCount": {
           "type": "number",
-          "example": 4
+          "example": 1
         },
         "acorns": {
           "type": "number",
-          "example": 0
+          "example": 2
         },
         "userLevel": {
           "type": "number",
@@ -608,16 +710,43 @@
         "userLevel"
       ]
     },
+    "Connection": {
+      "type": "object",
+      "properties": {
+        "senderId": {
+          "type": "string",
+          "example": "7f577a57-3943-4ebc-be67-278fc5616784"
+        },
+        "receiverId": {
+          "type": "string",
+          "example": "d8cd528c-4a1c-4f91-8d0e-a5def3a04d16"
+        },
+        "accepted": {
+          "type": "boolean",
+          "example": false
+        },
+        "userIds": {
+          "type": "array",
+          "example": [
+            "576e9904-5825-4da8-b158-ffb0e2b0855b",
+            "937beecc-d8a5-4c09-a20f-110ca54afc1e"
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "Password": {
       "type": "object",
       "properties": {
         "userId": {
           "type": "string",
-          "example": "6312c99f-cfd2-47c3-bb30-149cf17c26af"
+          "example": "149b7b4e-d6c9-4892-b26a-d0f028310e17"
         },
         "hash": {
           "type": "string",
-          "example": "9Isadore73"
+          "example": "9Wilber66"
         }
       },
       "required": [
