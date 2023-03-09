@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Paper } from '@mui/material';
 
 import { getSuggestedConnections } from '../services';
 
-import { Connection } from './index';
+import { SuggestedConnection } from './index';
 
 export default function SuggestedConnections() {
   const [suggestedConnectionsData, setSuggestedConnectionsData] = useState(null);
@@ -21,24 +21,24 @@ export default function SuggestedConnections() {
   }, [navigate]);
 
   return (
-    <Box
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '10px',
-        border: '1px solid #1876D1',
-        borderRadius: '5px',
-        padding: '10px 10px 10px 15px'
-      }}>
-      <Typography color='#1876D1'>
-        {suggestedConnectionsData?.length > 0
-          ? 'You might want to connect...'
-          : 'No suggested connections.'}
-      </Typography>
-      {suggestedConnectionsData &&
-        suggestedConnectionsData.map((connectionRequestData, index) => (
-          <Connection connectionRequestData={connectionRequestData} key={index} />
+    <Paper>
+      <Box
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          borderRadius: '5px',
+          padding: '10px 10px 10px 15px'
+        }}>
+        <Typography color='#1876D1'>
+          {suggestedConnectionsData?.length > 0
+            ? 'You might want to connect...'
+            : 'No suggested connections.'}
+        </Typography>
+        {suggestedConnectionsData?.map((connectionRequestData, index) => (
+          <SuggestedConnection connectionRequestData={connectionRequestData} key={index} />
         ))}
-    </Box>
+      </Box>
+    </Paper>
   );
 }

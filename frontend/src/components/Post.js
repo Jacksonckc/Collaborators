@@ -94,37 +94,18 @@ export default function Post(props) {
     <Card sx={{ maxWidth: 505, width: '100%' }} style={{ margin: 'auto' }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
+          <Avatar sx={{ bgcolor: postAuthorData?.userAvatarColor }}>
             {postAuthorData?.userFirstName[0] + postAuthorData?.userLastName[0]}
           </Avatar>
         }
         action={
-          userData &&
-          userData._id === props.postData.authorId && (
-            // <Box>
-            //   <IconButton aria-label='settings' onClick={handleOpenSettings}>
-            //     <MoreVertIcon />
-            //   </IconButton>
-            //   <Menu
-            //     anchorEl={anchorSettings}
-            //     open={Boolean(anchorSettings)}
-            //     onClose={handleCloseSettings}
-            //     anchorOrigin={{
-            //       vertical: 'bottom',
-            //       horizontal: -70
-            //     }}
-            //     keepMounted>
-            //     <MenuItem key={1} >
-            //       <Typography textAlign='center'>Delete Post</Typography>
-            //     </MenuItem>
-            //   </Menu>
-            // </Box>
+          userData?._id === props.postData.authorId && (
             <Button color='error' onClick={handleDeletePost}>
               <DeleteIcon />
             </Button>
           )
         }
-        title={postAuthorData?.userFirstName} // This will be the author name
+        title={postAuthorData?.userFirstName}
         subheader={props.postData.postDate}
       />
       <CardContent>
@@ -145,7 +126,11 @@ export default function Post(props) {
             </Button>
           </Box>
         ) : (
-          <Typography variant='body2' color='text.secondary' onClick={() => setIsEditing(true)}>
+          <Typography
+            variant='body2'
+            color='text.secondary'
+            onClick={() => setIsEditing(true)}
+            style={{ cursor: 'pointer' }}>
             {props.postData.postCaption}
           </Typography>
         )}

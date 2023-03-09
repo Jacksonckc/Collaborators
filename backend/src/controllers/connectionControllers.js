@@ -121,10 +121,19 @@ const getAllConnections = async (req, res) => {
   }
   */
   const user = req.user;
+  // const existedConnectionsIds = [
+  //   ...new Set(flatten(existedConnections.map((c) => c.userIds))),
+  //   user._id.toString()
+  // ];
 
   try {
-    const result = await ConnectionModel.find({ userIds: user._id });
-    res.status(200).json(result);
+    const connections = await ConnectionModel.find({ userIds: user._id });
+
+    const connectionIds = [...new Set(flatten(connections.map((c) => c.userIds)))].pop(user._id);
+
+    const users = await UserModel.find({ _id: connectionIds });
+
+    res.status(200).json(users);
   } catch {
     res.status(400).json({ err: 'Fail to get all connections.' });
   }

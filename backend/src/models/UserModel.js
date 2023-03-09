@@ -9,7 +9,7 @@ const User = new Schema({
   userBirthday: Date,
   userPhone: String,
   userStory: String,
-  userAvatar: String,
+  userAvatarColor: String,
   userProjectCount: { type: Number, required: true },
   acorns: { type: Number, required: true },
   userLevel: { type: Number, required: true }

@@ -5,6 +5,7 @@ import Header from './Header';
 import LinearBuffer from './LinearBuffer';
 import Post from './Post';
 import Project from './Project';
+import SuggestedConnection from './SuggestedConnection';
 import SuggestedConnections from './SuggestedConnections';
 
 export {
@@ -15,5 +16,6 @@ export {
   LinearBuffer,
   Post,
   Project,
+  SuggestedConnection,
   SuggestedConnections
 };

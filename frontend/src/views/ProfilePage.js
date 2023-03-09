@@ -18,6 +18,7 @@ export default function ProfilePage() {
   const [userPhone, setUserPhone] = useState(null);
   const [userBirthday, setUserBirthday] = useState(null);
   const [userStory, setUserStory] = useState(null);
+  const [userAvatarColor, setUserAvatarColor] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [newPassword, setNewPassword] = useState(null);
 
@@ -38,6 +39,7 @@ export default function ProfilePage() {
       setUserPhone(result.userPhone);
       setUserBirthday(result.userBirthday);
       setUserStory(result.userStory);
+      setUserAvatarColor(result.userAvatarColor);
     };
     init();
   }, [navigate]);
@@ -51,7 +53,8 @@ export default function ProfilePage() {
       userEmail,
       userPhone,
       userBirthday,
-      userStory
+      userStory,
+      userAvatarColor
     });
 
     if (result?.err) alert(result.err);
@@ -109,7 +112,7 @@ export default function ProfilePage() {
   const open = Boolean(anchorEl);
 
   return (
-    <div>
+    <Box>
       <Header />
       {userData && (
         <Container style={constainerStyle} component='form' onSubmit={handleSubmit}>
@@ -168,6 +171,15 @@ export default function ProfilePage() {
                 label='Story: '
                 fullWidth
                 onChange={(e) => setUserStory(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                multiline
+                defaultValue={userAvatarColor}
+                label='Avatar Color: '
+                fullWidth
+                onChange={(e) => setUserAvatarColor(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -246,6 +258,6 @@ export default function ProfilePage() {
           </Button>
         </Container>
       )}
-    </div>
+    </Box>
   );
 }

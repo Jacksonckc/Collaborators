@@ -74,7 +74,7 @@ export default function HomePage() {
             style={{ margin: 'auto', backgroundColor: '	#F5F5F5', maxWidth: 505, width: '100%' }}>
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
+                <Avatar sx={{ bgcolor: userData?.userAvatarColor }}>
                   {userData?.userFirstName[0] + userData?.userLastName[0]}
                 </Avatar>
               }
@@ -98,15 +98,14 @@ export default function HomePage() {
             </Button>
           </Card>
           {isLoading && <LinearBuffer />}
-          {allPosts &&
-            allPosts.map((postData) => (
-              <Post
-                postData={postData}
-                key={postData._id}
-                setIsLoading={setIsLoading}
-                isLoading={isLoading}
-              />
-            ))}
+          {allPosts?.map((postData) => (
+            <Post
+              postData={postData}
+              key={postData._id}
+              setIsLoading={setIsLoading}
+              isLoading={isLoading}
+            />
+          ))}
         </Container>
         <Container
           style={{

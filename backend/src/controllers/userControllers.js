@@ -89,7 +89,6 @@ const changeUserInfo = async (req, res) => {
   const user = req.user;
 
   // in case someone passes in a password here
-
   try {
     const updatedData = _.omit(req.body, ['userEmail', 'userProjectCount', 'acorns', 'userLevel']);
     const updatedUserData = await UserModel.findByIdAndUpdate(user._id, updatedData, {

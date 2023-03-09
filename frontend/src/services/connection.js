@@ -68,4 +68,31 @@ const cancelConnectionRequest = async (receiverId) => {
   return null;
 };
 
-export { getSuggestedConnections, sendConnectionRequest, cancelConnectionRequest };
+const getAllConnections = async () => {
+  const headers = {
+    authorization: localStorage.getItem('token')
+  };
+
+  const method = 'GET';
+
+  const options = {
+    method,
+    headers
+  };
+
+  try {
+    const url = `${process.env.REACT_APP_BACKEND_URL}/user/connection/`;
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+  } catch {}
+
+  return null;
+};
+
+export {
+  getSuggestedConnections,
+  sendConnectionRequest,
+  cancelConnectionRequest,
+  getAllConnections
+};

@@ -1,7 +1,8 @@
 import {
   getSuggestedConnections,
   sendConnectionRequest,
-  cancelConnectionRequest
+  cancelConnectionRequest,
+  getAllConnections
 } from './connection';
 import {
   registerUser,
@@ -18,6 +19,7 @@ export {
   getSuggestedConnections,
   sendConnectionRequest,
   cancelConnectionRequest,
+  getAllConnections,
   registerUser,
   loginUser,
   getUserData,

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 import Box from '@mui/joy/Box';
-import { InputAdornment, Button, Typography, Avatar } from '@mui/material';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Button, Typography, Avatar } from '@mui/material';
+
 import SendIcon from '@mui/icons-material/Send';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -10,7 +10,7 @@ import { green } from '@mui/material/colors';
 
 import { sendConnectionRequest, cancelConnectionRequest } from '../services';
 
-export default function Connection({ connectionData }) {
+export default function SuggestedConnection({ connectionRequestData }) {
   const [sent, setSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,11 +27,11 @@ export default function Connection({ connectionData }) {
     setIsLoading(true);
     setTimeout(async () => {
       if (sent) {
-        const result = await cancelConnectionRequest(connectionData._id);
+        const result = await cancelConnectionRequest(connectionRequestData._id);
         if (result?.err) alert(result.err);
         else setSent(!sent);
       } else {
-        const result = await sendConnectionRequest(connectionData._id);
+        const result = await sendConnectionRequest(connectionRequestData._id);
         if (result?.err) alert(result.err);
         else setSent(!sent);
       }
@@ -44,14 +44,31 @@ export default function Connection({ connectionData }) {
       style={{
         display: 'flex',
         alignItems: 'center',
+
         justifyContent: 'space-between'
       }}>
-      <Avatar>
-        {(connectionData?.userFirstName[0] + connectionData?.userLastName[0]).toUpperCase()}
-      </Avatar>
-      <Typography fontSize={20}>{connectionData.userFirstName}</Typography>
+      <Box
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+          justifyContent: 'space-between'
+        }}>
+        <Avatar
+          style={{
+            height: '30px',
+            width: '30px',
+            fontSize: '15px',
+            backgroundColor: connectionRequestData.userAvatarColor
+          }}>
+          {(
+            connectionRequestData?.userFirstName[0] + connectionRequestData?.userLastName[0]
+          ).toUpperCase()}
+        </Avatar>
+        <Typography fontSize={20}>{connectionRequestData.userFirstName}</Typography>
+      </Box>
 
-      {/* <Box sx={{ m: 1, position: 'relative' }}>
+      <Box sx={{ m: 1, position: 'relative' }}>
         <Button
           variant='contained'
           disabled={isLoading}
@@ -72,7 +89,7 @@ export default function Connection({ connectionData }) {
             }}
           />
         )}
-      </Box> */}
+      </Box>
     </Box>
   );
 }
