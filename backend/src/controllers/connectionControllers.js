@@ -119,7 +119,6 @@ const acceptConnectionRequest = async (req, res) => {
   }
   */
   const user = req.user;
-  console.log(user._id, req.params.receiverId);
   try {
     const connection = await ConnectionModel.findOne({
       userIds: { $all: [user._id, req.params.receiverId] }
