@@ -56,7 +56,9 @@ const addUser = async (req, res) => {
       ...req.body,
       userProjectCount: 0,
       acorns: 10,
-      userLevel: 1
+      userLevel: 1,
+      userAvatarImg:
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAACECAMAAABmmnOVAAAAMFBMVEXk5ueutLe9wsTn6eqrsbS1ur3S1dext7rHy83b3t/g4uTV2NrY293KztC4vcDAxcft1dkyAAAC7ElEQVR4nO2a25KDIAxAgXARRPn/v10v266tVQgS6s5wHjp980wIEAiMNRqNRqPRaDQajUbjHwAAzHpvHcz/vmLA+k7JB2Kw9T3AdkZK/mT6rwZXVQOc2Bo8RExXLxrAur3BqsF1JQvw5sBh1hjrOOhjhWVMbAWH4dRhxlIPCRylwzYYxBYJcVgsSB18igPnhlLCJSlMoRB0AwJjWiAmC7L1IjI5Xy2IHBikO3DZ0YQibWY8LRyJBDMIB6pQ9JhAEE1TGFEO0wQhkLA4B85HgvFAjsYUivISENASfXkJ1NxYJIbyocAGYtpAijtYtARXpR0w+8aTO0gU38RwG0eTeJMovZHeIyfuMDtusU5krJi8/IoJaAeC2goEfhctv4GhM5Oi6kdXVoqgsrpFjYleKWgOHrhABJJzB/IERnRHgTqLBhoHVCjITuUMVLID0aF8JnWtkBSnrwep09QQ3Qv8WiSdw6QnvkNM2Mcodq43i3gsalyyR+50qcdi5TQ7panUeQF2mBgUJ/FDjV590JBcVG1AAevH1waUlDKQ9xj2Hk4H8+wGqtB/pys5f9T2etDezj3SbxjA+vtgbdXW/D44r7sgRrXkwpQcRonQ6d7VEQHm+mH8/TR/y8w5NzptGakIMNuN5kNb9sWFT0nKiEQAfIgIbFcMTTAwYDuOKvmlFL6oBzAvcAqrhtLlRgX8mDgMOw81lNGYFbIMVo0S1QU49MX6LhpXCwwY8LmwJ1wZE2BXRuIPafKDkXVjd6CRexhKeSCQbpH3uAPf6jm3yCo+y6TDFnzh9amIvAo2PcvHYQY1IvhLy1QLhEPZnNyQ3rsuuD68g7hOI3NAPDFB3poiSUqLnEYTgsQ3P+h+NNLCJwSi5I7xERMPBebGNI/4bRJxRizE21K0U2Mh2i/NaPrhJSIVDn1azkQKHGx7J4/I41VHvEisRF7bJL63vCpxnhR0++cLp0t3nbycit5TiUHU4XQ4oBJnDo1Go9G4OT+TtCHF3Y7fZwAAAABJRU5ErkJggg=='
     });
     const hash = await encryptPassword(req.body.password);
     await PasswordModel.create({ userId: newUser._id.toString(), hash });

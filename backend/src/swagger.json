@@ -7,10 +7,7 @@
   },
   "host": "localhost:3001",
   "basePath": "/",
-  "schemes": [
-    "http",
-    "https"
-  ],
+  "schemes": ["http", "https"],
   "paths": {
     "/user/": {
       "get": {
@@ -181,10 +178,7 @@
                   "example": "xxxxxx"
                 }
               },
-              "required": [
-                "userEmail",
-                "password"
-              ]
+              "required": ["userEmail", "password"]
             }
           }
         ],
@@ -573,21 +567,13 @@
         },
         "postComments": {
           "type": "array",
-          "example": [
-            "Sed quisquam quam commodi."
-          ],
+          "example": ["Sed quisquam quam commodi."],
           "items": {
             "type": "string"
           }
         }
       },
-      "required": [
-        "authorId",
-        "postDate",
-        "postCaption",
-        "postLikeCounts",
-        "postComments"
-      ]
+      "required": ["authorId", "postDate", "postCaption", "postLikeCounts", "postComments"]
     },
     "Project": {
       "type": "object",
@@ -647,11 +633,7 @@
           "example": "Ducimus nihil nobis recusandae et rerum qui ut."
         }
       },
-      "required": [
-        "skillName",
-        "skillLevel",
-        "skillDescription"
-      ]
+      "required": ["skillName", "skillLevel", "skillDescription"]
     },
     "User": {
       "type": "object",
@@ -680,7 +662,7 @@
           "type": "string",
           "example": "Ut cumque vitae quia eveniet. Dolorum rerum necessitatibus facilis consequuntur. Mollitia recusandae dolor optio dolor adipisci ut."
         },
-        "userAvatar": {
+        "userAvatarImg": {
           "type": "string",
           "example": "Enim minima porro nulla aspernatur praesentium quasi eum incidunt."
         },
@@ -749,10 +731,7 @@
           "example": "9Wilber66"
         }
       },
-      "required": [
-        "userId",
-        "hash"
-      ]
+      "required": ["userId", "hash"]
     },
     "Err": {
       "type": "object",

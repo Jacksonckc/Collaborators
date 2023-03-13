@@ -2,6 +2,7 @@ const {
   getSuggestedConnections,
   sendConnectionRequest,
   cancelConnectionRequest,
+  acceptConnectionRequest,
   getAllConnections
 } = require('./connectionControllers');
 const {
@@ -27,6 +28,7 @@ module.exports = {
   getSuggestedConnections,
   sendConnectionRequest,
   cancelConnectionRequest,
+  acceptConnectionRequest,
   getAllConnections,
   getUsers,
   getUser,

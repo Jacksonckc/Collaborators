@@ -94,7 +94,7 @@ export default function Post(props) {
     <Card sx={{ maxWidth: 505, width: '100%' }} style={{ margin: 'auto' }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: postAuthorData?.userAvatarColor }}>
+          <Avatar src={postAuthorData?.userAvatarImg}>
             {postAuthorData?.userFirstName[0] + postAuthorData?.userLastName[0]}
           </Avatar>
         }

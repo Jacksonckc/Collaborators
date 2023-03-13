@@ -68,6 +68,32 @@ const cancelConnectionRequest = async (receiverId) => {
   return null;
 };
 
+const acceptConnectionRequest = async (receiverId) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: localStorage.getItem('token')
+  };
+
+  const method = 'PUT';
+
+  const body = JSON.stringify({ accepted: true });
+
+  const options = {
+    method,
+    headers,
+    body
+  };
+
+  try {
+    const url = `${process.env.REACT_APP_BACKEND_URL}/user/connection/${receiverId}`;
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+  } catch {}
+
+  return null;
+};
+
 const getAllConnections = async () => {
   const headers = {
     authorization: localStorage.getItem('token')
@@ -94,5 +120,6 @@ export {
   getSuggestedConnections,
   sendConnectionRequest,
   cancelConnectionRequest,
+  acceptConnectionRequest,
   getAllConnections
 };

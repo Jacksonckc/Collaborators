@@ -39,7 +39,7 @@ const doc = {
       userBirthday: casual.date(),
       userPhone: casual.phone,
       userStory: casual.description,
-      userAvatarColor: casual.short_description,
+      userAvatarImg: casual.short_description,
       $password: casual.password,
       $userProjectCount: Math.floor(casual.random * 10),
       $acorns: Math.floor(casual.random * 10),

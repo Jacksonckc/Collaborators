@@ -74,7 +74,7 @@ export default function HomePage() {
             style={{ margin: 'auto', backgroundColor: '	#F5F5F5', maxWidth: 505, width: '100%' }}>
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: userData?.userAvatarColor }}>
+                <Avatar src={userData?.userAvatarImg}>
                   {userData?.userFirstName[0] + userData?.userLastName[0]}
                 </Avatar>
               }

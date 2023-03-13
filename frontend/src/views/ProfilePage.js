@@ -18,7 +18,7 @@ export default function ProfilePage() {
   const [userPhone, setUserPhone] = useState(null);
   const [userBirthday, setUserBirthday] = useState(null);
   const [userStory, setUserStory] = useState(null);
-  const [userAvatarColor, setUserAvatarColor] = useState(null);
+  const [userAvatarImg, setuserAvatarImg] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [newPassword, setNewPassword] = useState(null);
 
@@ -39,7 +39,7 @@ export default function ProfilePage() {
       setUserPhone(result.userPhone);
       setUserBirthday(result.userBirthday);
       setUserStory(result.userStory);
-      setUserAvatarColor(result.userAvatarColor);
+      setuserAvatarImg(result.userAvatarImg);
     };
     init();
   }, [navigate]);
@@ -54,7 +54,7 @@ export default function ProfilePage() {
       userPhone,
       userBirthday,
       userStory,
-      userAvatarColor
+      userAvatarImg
     });
 
     if (result?.err) alert(result.err);
@@ -175,11 +175,11 @@ export default function ProfilePage() {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                multiline
-                defaultValue={userAvatarColor}
-                label='Avatar Color: '
+                // multiline
+                defaultValue={userAvatarImg}
+                label='Avatar Img: '
                 fullWidth
-                onChange={(e) => setUserAvatarColor(e.target.value)}
+                onChange={(e) => setuserAvatarImg(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={4}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import AppBar from '@mui/material/AppBar';
@@ -15,13 +15,21 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
+import { getUserData } from '../services';
+
 const pages = ['My Posts', 'My Connections'];
 const settings = ['Profile', 'Favorites', 'Skills', 'Logout'];
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-
+  const [userData, setUserData] = useState(null);
+  useEffect(() => {
+    const init = async () => {
+      setUserData(await getUserData());
+    };
+    init();
+  }, []);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -145,7 +153,9 @@ const Header = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title='Profile'>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                <Avatar sx={{ bgcolor: userData?.userAvatarImg }} src={userData?.userAvatarImg}>
+                  {userData?.userFirstName[0] + userData?.userLastName[0]}
+                </Avatar>
               </IconButton>
             </Tooltip>
             <Menu

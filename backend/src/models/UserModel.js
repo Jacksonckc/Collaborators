@@ -9,10 +9,11 @@ const User = new Schema({
   userBirthday: Date,
   userPhone: String,
   userStory: String,
-  userAvatarColor: String,
+  userAvatarImg: String,
   userProjectCount: { type: Number, required: true },
   acorns: { type: Number, required: true },
-  userLevel: { type: Number, required: true }
+  userLevel: { type: Number, required: true },
+  status: String
 });
 
 const UserModel = mongoose.model('users', User);

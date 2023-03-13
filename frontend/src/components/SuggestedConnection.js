@@ -58,9 +58,9 @@ export default function SuggestedConnection({ connectionRequestData }) {
           style={{
             height: '30px',
             width: '30px',
-            fontSize: '15px',
-            backgroundColor: connectionRequestData.userAvatarColor
-          }}>
+            fontSize: '15px'
+          }}
+          src={connectionRequestData.userAvatarImg}>
           {(
             connectionRequestData?.userFirstName[0] + connectionRequestData?.userLastName[0]
           ).toUpperCase()}

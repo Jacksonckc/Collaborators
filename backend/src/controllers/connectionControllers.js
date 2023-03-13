@@ -84,8 +84,8 @@ const sendConnectionRequest = async (req, res) => {
 
 const cancelConnectionRequest = async (req, res) => {
   /*
-  #swagger.description = 'Cancel a connection request, you will receive 204 when canceled.'
-  #swagger.responses[204] = {
+  #swagger.description = 'Cancel a connection request, you will receive 200 when canceled.'
+  #swagger.responses[200] = {
     description: 'Cancelation successful. There will be no return value'
   }
   #swagger.responses[400] = {
@@ -105,6 +105,30 @@ const cancelConnectionRequest = async (req, res) => {
     res.sendStatus(200);
   } catch {
     res.status(400).json({ err: 'Fail to cancel connection request.' });
+  }
+};
+const acceptConnectionRequest = async (req, res) => {
+  /*
+  #swagger.description = 'Accept a connection request, you will receive 200 when Accepted.'
+  #swagger.responses[200] = {
+    description: 'Accept successfully. There will be no return value'
+  }
+  #swagger.responses[400] = {
+    description: 'Accept failed, it might be caused by anything. You will receive an err message.',
+    schema: { $ref: '#/definitions/Err' }
+  }
+  */
+  const user = req.user;
+  console.log(user._id, req.params.receiverId);
+  try {
+    const connection = await ConnectionModel.findOne({
+      userIds: { $all: [user._id, req.params.receiverId] }
+    });
+    await ConnectionModel.findByIdAndUpdate(connection._id, req.body);
+
+    res.sendStatus(200);
+  } catch {
+    res.status(400).json({ err: 'Fail to accpet connection request.' });
   }
 };
 
@@ -128,12 +152,31 @@ const getAllConnections = async (req, res) => {
 
   try {
     const connections = await ConnectionModel.find({ userIds: user._id });
+    const sentConnectionRequests = connections
+      .filter((c) => c.accepted == false && c.senderId == user._id)
+      .map((c) => c.receiverId);
+    const receivedConnectionRequests = connections
+      .filter((c) => c.accepted == false && c.receiverId == user._id)
+      .map((c) => c.senderId);
 
-    const connectionIds = [...new Set(flatten(connections.map((c) => c.userIds)))].pop(user._id);
+    const connectionIds = [...new Set(flatten(connections.map((c) => c.userIds)))].filter(
+      (c) => c != user._id
+    );
 
     const users = await UserModel.find({ _id: connectionIds });
 
-    res.status(200).json(users);
+    const newUsers = users.map((u) => {
+      let container = u;
+      container.status = receivedConnectionRequests.includes(container._id.toString())
+        ? 'sender'
+        : sentConnectionRequests.includes(container._id.toString())
+        ? 'receiver'
+        : 'connected';
+      return container;
+    });
+
+    // console.log(newUsers, users);
+    res.status(200).json(newUsers);
   } catch {
     res.status(400).json({ err: 'Fail to get all connections.' });
   }
@@ -143,5 +186,6 @@ module.exports = {
   getSuggestedConnections,
   sendConnectionRequest,
   cancelConnectionRequest,
+  acceptConnectionRequest,
   getAllConnections
 };

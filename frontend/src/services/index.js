@@ -2,6 +2,7 @@ import {
   getSuggestedConnections,
   sendConnectionRequest,
   cancelConnectionRequest,
+  acceptConnectionRequest,
   getAllConnections
 } from './connection';
 import {
@@ -19,6 +20,7 @@ export {
   getSuggestedConnections,
   sendConnectionRequest,
   cancelConnectionRequest,
+  acceptConnectionRequest,
   getAllConnections,
   registerUser,
   loginUser,
