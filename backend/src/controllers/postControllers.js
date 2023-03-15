@@ -1,4 +1,4 @@
-const { PostModel } = require('../models');
+const { PostModel, CommentModel } = require('../models');
 var _ = require('lodash');
 
 const getUserPosts = async (req, res) => {
@@ -117,6 +117,7 @@ const deletePost = async (req, res) => {
     if (user._id != post.authorId) return res.json({ err: 'You are not the author of this post!' });
     else {
       await PostModel.findByIdAndDelete(req.params.postId);
+      await CommentModel.deleteMany({ postId: req.params.postId });
       res.sendStatus(204);
     }
   } catch {

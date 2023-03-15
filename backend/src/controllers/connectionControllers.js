@@ -27,8 +27,7 @@ const getSuggestedConnections = async (req, res) => {
     });
 
     res.status(200).json(result);
-  } catch (e) {
-    console.log(e);
+  } catch {
     res.status(400).json({ err: 'Fail to retrieve suggested connections.' });
   }
 };

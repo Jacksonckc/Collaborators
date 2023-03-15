@@ -6,7 +6,6 @@ import { getUserData, getAllPosts, createPost } from '../services';
 import { checkAuthByToken } from '../utils';
 import { Container, Card, CardHeader, TextField, Button, Snackbar, Alert } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import { red } from '@mui/material/colors';
 
 export default function HomePage() {
   const [allPosts, setAllPosts] = useState();
@@ -19,7 +18,11 @@ export default function HomePage() {
   useEffect(() => {
     const init = async () => {
       checkAuthByToken(navigate);
-      setAllPosts(await getAllPosts());
+      const result = await getAllPosts();
+      await result.sort((a, b) => {
+        return new Date(b.postDate).getTime() - new Date(a.postDate).getTime();
+      });
+      setAllPosts(result);
       setUserData(await getUserData());
     };
     init();

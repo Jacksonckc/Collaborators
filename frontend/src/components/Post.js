@@ -9,9 +9,9 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { TextField, Box, Button } from '@mui/material';
+import { TextField, Box, Button, Tooltip } from '@mui/material';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -48,23 +48,19 @@ export default function Post(props) {
 
   useEffect(() => {
     const init = async () => {
-      // if no token, not authed
-
-      var result = await getUserData();
-      // once authed, set states
-      setUserData(result);
-      result = await getOtherUserData(props.postData.authorId);
-      setPostAuthorData(result);
-      result = await getAllCommentsByPostId(props.postData._id);
-      // await result.sort((a, b) => {
-      //   return new Date(b.commentDate).getTime() - new Date(a.commentDate).getTime();
-      // });
-      // console.log(result);
+      setUserData(await getUserData());
+      setPostAuthorData(await getOtherUserData(props.postData.authorId));
+      const result = await getAllCommentsByPostId(props.postData._id);
+      await result.sort((a, b) => {
+        return new Date(b.commentDate).getTime() - new Date(a.commentDate).getTime();
+      });
 
       setAllComments(result);
     };
     init();
   }, [props.postData.authorId, props.postData._id, isLoadingComments]);
+
+  let postDate = new Date(props.postData.postDate).toString().slice(3, 21);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -120,7 +116,7 @@ export default function Post(props) {
           )
         }
         title={postAuthorData?.userFirstName}
-        subheader={props.postData.postDate}
+        subheader={postDate}
       />
       <CardContent>
         {isEditing ? (
@@ -141,21 +137,20 @@ export default function Post(props) {
             </Button>
           </Box>
         ) : (
-          <Typography
-            variant='body2'
-            color='text.secondary'
-            onClick={(e) => handleClickToEdit(e)}
-            style={{ cursor: 'pointer' }}>
-            {props.postData.postCaption}
-          </Typography>
+          <Tooltip title='Click to edit' placement='bottom-start'>
+            <Typography
+              variant='body2'
+              color='text.secondary'
+              onClick={(e) => handleClickToEdit(e)}
+              style={{ cursor: 'pointer' }}>
+              {props.postData.postCaption}
+            </Typography>
+          </Tooltip>
         )}
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label='add to favorites' onClick={handleLikeClick}>
           {liked ? <FavoriteIcon style={{ color: 'red' }} /> : <FavoriteIcon />}
-        </IconButton>
-        <IconButton aria-label='share'>
-          <ShareIcon />
         </IconButton>
         <ExpandMore
           expand={expanded}

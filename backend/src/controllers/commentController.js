@@ -5,8 +5,7 @@ const getAllCommentsByPostId = async (req, res) => {
     const postId = req.params.postId;
     const allComments = await CommentModel.find({ postId });
     res.status(200).json(allComments);
-  } catch (e) {
-    console.log(e);
+  } catch {
     res.status(400).json({ err: 'Fail to retrieve all comments for this post.' });
   }
 };
@@ -26,8 +25,7 @@ const addCommentToPost = async (req, res) => {
 
     newComment.save();
     res.status(201).json({ ...newComment._doc });
-  } catch (e) {
-    console.log(e);
+  } catch {
     res.status(400).json({ err: 'Fail to add a comment to this post.' });
   }
 };
@@ -41,8 +39,7 @@ const deleteComment = async (req, res) => {
       await CommentModel.findByIdAndDelete(commentId);
     }
     res.sendStatus(200);
-  } catch (e) {
-    console.log(e);
+  } catch {
     res.status(400).json({ err: 'Fail to delete a comment from this post.' });
   }
 };

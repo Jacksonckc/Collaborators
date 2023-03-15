@@ -6,7 +6,6 @@ import { Button, Typography, Avatar } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CircularProgress from '@mui/material/CircularProgress';
-import { green } from '@mui/material/colors';
 
 import { sendConnectionRequest, cancelConnectionRequest } from '../services';
 

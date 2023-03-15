@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { TextField, Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import InputAdornment from '@mui/material/InputAdornment';
+
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import { getOtherUserData, deleteComment } from '../services';
@@ -48,13 +48,12 @@ export default function Comment({ commentData, userData, postData, setIsLoadingC
         <Typography>{commentData.commentContent}</Typography>
       </Box>
 
-      {userData._id === commentData.commenterId || postData.authorId === userData._id ? (
-        <Button onClick={handleDeleteComment}>
-          <DeleteOutlineIcon />
-        </Button>
-      ) : (
-        console.log(false)
-      )}
+      {userData._id === commentData.commenterId ||
+        (postData.authorId === userData._id && (
+          <Button onClick={handleDeleteComment}>
+            <DeleteOutlineIcon />
+          </Button>
+        ))}
     </Box>
   );
 }

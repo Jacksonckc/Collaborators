@@ -21,16 +21,12 @@ export default function AddComment({ postId, setIsLoadingComments }) {
     <FormControl>
       <Textarea
         placeholder='Perhaps your comment is better than the post...'
-        minRows={2}
+        minRows={1}
         onChange={(e) => setCommentContent(e.target.value)}
         endDecorator={
           <Box
             sx={{
               display: 'flex',
-              gap: 'var(--Textarea-paddingBlock)',
-              pt: 'var(--Textarea-paddingBlock)',
-              borderTop: '1px solid',
-              borderColor: 'divider',
               flex: 'auto'
             }}>
             <Button sx={{ ml: 'auto' }} onClick={handleAddComment}>
@@ -39,7 +35,8 @@ export default function AddComment({ postId, setIsLoadingComments }) {
           </Box>
         }
         sx={{
-          minWidth: 300
+          minWidth: 300,
+          border: '1px dotted gray'
         }}
       />
     </FormControl>

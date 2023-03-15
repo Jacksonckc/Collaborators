@@ -3,7 +3,7 @@ var _ = require('lodash');
 const mongoose = require('mongoose');
 
 const { checkIfUserExists, encryptPassword, generateJWTToken } = require('../utils');
-const { UserModel, PasswordModel } = require('../models');
+const { UserModel, PasswordModel, PostModel, CommentModel, ConnectionModel } = require('../models');
 
 const getUser = async (req, res) => {
   /*
@@ -116,7 +116,15 @@ const deleteUser = async (req, res) => {
   const user = req.user;
 
   try {
+    const userPostIds = await PostModel.find({ authorId: user._id }).select('_id');
+    const userPostIdStrings = userPostIds.map((id) => id._id.toString());
+    await CommentModel.deleteMany({ commenterId: user._id });
+    await CommentModel.deleteMany({ postId: { $in: userPostIdStrings } });
+    await PostModel.deleteMany({ authorId: user._id });
+    await ConnectionModel.deleteMany({ userIds: user._id });
+    await PasswordModel.findOneAndDelete({ userId: user._id });
     await UserModel.findByIdAndDelete(user._id);
+
     res.sendStatus(204);
   } catch {
     res.status(400).json({ err: 'Cannot delete user.' });
