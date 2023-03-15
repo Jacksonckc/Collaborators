@@ -15,7 +15,7 @@ const doc = {
       $authorId: casual.uuid,
       $postDate: casual.date(),
       $postCaption: casual.short_description,
-      $postLikeCounts: Math.floor(casual.random * 10),
+      $postLikeCount: Math.floor(casual.random * 10),
       $postComments: [casual.short_description]
     },
     Project: {

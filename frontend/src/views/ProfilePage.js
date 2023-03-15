@@ -157,7 +157,7 @@ export default function ProfilePage() {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                defaultValue={userBirthday.slice(0, 10)}
+                defaultValue={userBirthday?.slice(0, 10)}
                 label='Birthday: '
                 fullWidth
                 onChange={(e) => setUserBirthday(e.target.value)}

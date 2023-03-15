@@ -18,6 +18,7 @@ import {
   updateUserPassword
 } from './user';
 import { getAllPosts, getUserPosts, createPost, updatePost, deletePost } from './post';
+import { getLikeByPostId, getPostLikeCountByPostId, likePost, unLikePost } from './postLike';
 
 export {
   getAllCommentsByPostId,
@@ -39,5 +40,9 @@ export {
   getUserPosts,
   createPost,
   updatePost,
-  deletePost
+  deletePost,
+  getLikeByPostId,
+  getPostLikeCountByPostId,
+  likePost,
+  unLikePost
 };

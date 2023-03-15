@@ -48,12 +48,11 @@ export default function Comment({ commentData, userData, postData, setIsLoadingC
         <Typography>{commentData.commentContent}</Typography>
       </Box>
 
-      {userData._id === commentData.commenterId ||
-        (postData.authorId === userData._id && (
-          <Button onClick={handleDeleteComment}>
-            <DeleteOutlineIcon />
-          </Button>
-        ))}
+      {(userData._id === commentData.commenterId || postData.authorId === userData._id) && (
+        <Button onClick={handleDeleteComment}>
+          <DeleteOutlineIcon />
+        </Button>
+      )}
     </Box>
   );
 }

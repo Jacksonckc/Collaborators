@@ -5,6 +5,7 @@ const { getAuth } = require('../middleware/auth');
 const post = require('./post');
 const connection = require('./connection');
 const comment = require('./comment');
+const postLike = require('./postLike');
 
 routes.get('/', getAuth, controllers.getUser);
 routes.post('/', controllers.addUser);
@@ -17,6 +18,7 @@ routes.get('/all', getAuth, controllers.getUsers);
 routes.use('/post', getAuth, post); // another route
 routes.use('/connection', getAuth, connection); // another route
 routes.use('/comment', getAuth, comment); // another route
+routes.use('/postLike', getAuth, postLike); // another route
 
 routes.get('/:userId', getAuth, controllers.getOtherUser);
 

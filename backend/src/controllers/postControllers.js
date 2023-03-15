@@ -1,4 +1,4 @@
-const { PostModel, CommentModel } = require('../models');
+const { PostModel, CommentModel, PostLikeModel } = require('../models');
 var _ = require('lodash');
 
 const getUserPosts = async (req, res) => {
@@ -48,8 +48,7 @@ const createPost = async (req, res) => {
     const newPost = new PostModel({
       authorId: user._id.toString(),
       postDate: new Date(),
-      postCaption: req.body.postCaption,
-      postLikeCounts: 0
+      postCaption: req.body.postCaption
     });
 
     newPost.save();
@@ -83,12 +82,7 @@ const updatePost = async (req, res) => {
   }
 
   try {
-    const updatedData = _.omit(req.body, [
-      'authorId',
-      'postDate',
-      'postLikeCounts',
-      'postComments'
-    ]);
+    const updatedData = _.omit(req.body, ['authorId', 'postDate']);
 
     const updatedPostData = await PostModel.findByIdAndUpdate(req.params.postId, updatedData, {
       new: true
@@ -118,6 +112,7 @@ const deletePost = async (req, res) => {
     else {
       await PostModel.findByIdAndDelete(req.params.postId);
       await CommentModel.deleteMany({ postId: req.params.postId });
+      await PostLikeModel.deleteMany({ authorId: user._id });
       res.sendStatus(204);
     }
   } catch {

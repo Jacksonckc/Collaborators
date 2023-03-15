@@ -3,7 +3,14 @@ var _ = require('lodash');
 const mongoose = require('mongoose');
 
 const { checkIfUserExists, encryptPassword, generateJWTToken } = require('../utils');
-const { UserModel, PasswordModel, PostModel, CommentModel, ConnectionModel } = require('../models');
+const {
+  UserModel,
+  PasswordModel,
+  PostModel,
+  CommentModel,
+  ConnectionModel,
+  PostLikeModel
+} = require('../models');
 
 const getUser = async (req, res) => {
   /*
@@ -120,6 +127,7 @@ const deleteUser = async (req, res) => {
     const userPostIdStrings = userPostIds.map((id) => id._id.toString());
     await CommentModel.deleteMany({ commenterId: user._id });
     await CommentModel.deleteMany({ postId: { $in: userPostIdStrings } });
+    await PostLikeModel.deleteMany({ authorId: user._id });
     await PostModel.deleteMany({ authorId: user._id });
     await ConnectionModel.deleteMany({ userIds: user._id });
     await PasswordModel.findOneAndDelete({ userId: user._id });

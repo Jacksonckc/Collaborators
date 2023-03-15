@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { TextField, Box, Button, Tooltip } from '@mui/material';
+import { TextField, Box, Button, Tooltip, Badge } from '@mui/material';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -22,7 +22,11 @@ import {
   getOtherUserData,
   updatePost,
   deletePost,
-  getAllCommentsByPostId
+  getAllCommentsByPostId,
+  getLikeByPostId,
+  likePost,
+  unLikePost,
+  getPostLikeCountByPostId
 } from '../services';
 
 const ExpandMore = styled((props) => {
@@ -45,6 +49,7 @@ export default function Post(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [allComments, setAllComments] = useState(null);
   const [isLoadingComments, setIsLoadingComments] = useState(false);
+  const [postLikeCount, setPostLikeCount] = useState(0);
 
   useEffect(() => {
     const init = async () => {
@@ -56,17 +61,25 @@ export default function Post(props) {
       });
 
       setAllComments(result);
+      setLiked(await getLikeByPostId(props.postData._id));
+      setPostLikeCount(await getPostLikeCountByPostId(props.postData._id));
     };
     init();
-  }, [props.postData.authorId, props.postData._id, isLoadingComments]);
+  }, [props.postData.authorId, props.postData._id, isLoadingComments, postLikeCount]);
 
   let postDate = new Date(props.postData.postDate).toString().slice(3, 21);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const handleLikeClick = () => {
-    setLiked(!liked);
+  const handleLikeClick = async () => {
+    props.setIsLoading(true);
+    if (liked) {
+      await unLikePost(props.postData._id);
+    } else {
+      await likePost(props.postData._id);
+    }
+    props.setIsLoading(false);
   };
 
   const handleDeletePost = async () => {
@@ -79,7 +92,7 @@ export default function Post(props) {
         result?.err && alert(result.err);
 
         props.setIsLoading(false);
-      }, 3000);
+      }, 2000);
     } else return;
   };
 
@@ -90,7 +103,7 @@ export default function Post(props) {
       result?.err && alert(result.err);
       props.setIsLoading(false);
       setIsEditing(false);
-    }, 3000);
+    }, 2000);
   };
 
   const handleClickToEdit = (e) => {
@@ -149,9 +162,12 @@ export default function Post(props) {
         )}
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label='add to favorites' onClick={handleLikeClick}>
+        <Badge
+          badgeContent={postLikeCount.length}
+          onClick={handleLikeClick}
+          style={{ marginLeft: '10px' }}>
           {liked ? <FavoriteIcon style={{ color: 'red' }} /> : <FavoriteIcon />}
-        </IconButton>
+        </Badge>
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}

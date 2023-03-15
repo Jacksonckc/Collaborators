@@ -27,6 +27,13 @@ const {
   getAllPosts
 } = require('./postControllers');
 
+const {
+  getLikeByPostId,
+  getPostLikeCountByPostId,
+  likePost,
+  unLikePost
+} = require('./postLikeController');
+
 module.exports = {
   getAllCommentsByPostId,
   addCommentToPost,
@@ -48,5 +55,9 @@ module.exports = {
   createPost,
   updatePost,
   deletePost,
-  getAllPosts
+  getAllPosts,
+  getLikeByPostId,
+  getPostLikeCountByPostId,
+  likePost,
+  unLikePost
 };
