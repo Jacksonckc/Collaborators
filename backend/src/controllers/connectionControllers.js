@@ -174,7 +174,6 @@ const getAllConnections = async (req, res) => {
       return container;
     });
 
-    // console.log(newUsers, users);
     res.status(200).json(newUsers);
   } catch {
     res.status(400).json({ err: 'Fail to get all connections.' });

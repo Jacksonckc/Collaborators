@@ -16,9 +16,9 @@ export default function SuggestedConnection({ connectionRequestData }) {
 
   const buttonSx = {
     ...(sent && {
-      bgcolor: green[500],
+      bgcolor: '#73C6B6',
       '&:hover': {
-        bgcolor: green[700]
+        bgcolor: '#73C6B6'
       }
     })
   };
@@ -69,21 +69,17 @@ export default function SuggestedConnection({ connectionRequestData }) {
       </Box>
 
       <Box sx={{ m: 1, position: 'relative' }}>
-        <Button
-          variant='contained'
-          disabled={isLoading}
-          onClick={handleButtonClick}
-          style={{ display: 'flex', justifyContent: 'space-between' }}
-          endIcon={sent ? <CancelIcon /> : <SendIcon />}
-          sx={buttonSx}></Button>
+        <Button variant='contained' disabled={isLoading} onClick={handleButtonClick} sx={buttonSx}>
+          {sent ? <CancelIcon style={{ width: '20px' }} /> : <SendIcon style={{ width: '20px' }} />}
+        </Button>
         {isLoading && (
           <CircularProgress
             size={24}
             sx={{
-              color: green[500],
+              color: '#A6A6A6',
               position: 'absolute',
               top: '50%',
-              left: '53%',
+              left: '50%',
               marginTop: '-12px',
               marginLeft: '-12px'
             }}

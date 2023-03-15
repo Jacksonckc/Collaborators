@@ -1,3 +1,5 @@
+import { getAllCommentsByPostId, addCommentToPost, deleteComment } from './comment';
+
 import {
   getSuggestedConnections,
   sendConnectionRequest,
@@ -5,6 +7,7 @@ import {
   acceptConnectionRequest,
   getAllConnections
 } from './connection';
+
 import {
   registerUser,
   loginUser,
@@ -17,6 +20,9 @@ import {
 import { getAllPosts, getUserPosts, createPost, updatePost, deletePost } from './post';
 
 export {
+  getAllCommentsByPostId,
+  addCommentToPost,
+  deleteComment,
   getSuggestedConnections,
   sendConnectionRequest,
   cancelConnectionRequest,

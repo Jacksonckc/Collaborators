@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
 import Box from '@mui/joy/Box';
-import { InputAdornment, Button, Typography, Avatar } from '@mui/material';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Button, Typography, Avatar } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CircularProgress from '@mui/material/CircularProgress';
 import { green } from '@mui/material/colors';
@@ -12,15 +11,6 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
 export default function Connection({ connectionData, setUpdating }) {
   const [isLoading, setIsLoading] = useState(false);
-
-  const buttonSx = {
-    ...{
-      bgcolor: green[500],
-      '&:hover': {
-        bgcolor: green[700]
-      }
-    }
-  };
 
   const handleCancelConnectionRequest = async () => {
     setIsLoading(true);

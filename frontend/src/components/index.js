@@ -1,4 +1,5 @@
 import AddComment from './AddComment';
+import Comment from './Comment';
 import Connection from './Connection';
 import Copyright from './Copyright';
 import Header from './Header';
@@ -10,6 +11,7 @@ import SuggestedConnections from './SuggestedConnections';
 
 export {
   AddComment,
+  Comment,
   Connection,
   Copyright,
   Header,

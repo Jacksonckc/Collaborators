@@ -90,7 +90,11 @@ export default function HomePage() {
             />
 
             <Button
-              style={{ display: 'block', margin: '5px 10px 10px auto ' }}
+              style={{
+                display: 'block',
+                margin: '5px 10px 10px auto ',
+                backgroundColor: '#73C6B6'
+              }}
               variant='contained'
               onClick={handleCreatePost}
               disabled={isLoading}>

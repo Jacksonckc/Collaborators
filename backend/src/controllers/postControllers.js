@@ -49,8 +49,7 @@ const createPost = async (req, res) => {
       authorId: user._id.toString(),
       postDate: new Date(),
       postCaption: req.body.postCaption,
-      postLikeCounts: 0,
-      postComments: []
+      postLikeCounts: 0
     });
 
     newPost.save();

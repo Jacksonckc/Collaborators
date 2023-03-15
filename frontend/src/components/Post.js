@@ -8,19 +8,22 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import InputAdornment from '@mui/material/InputAdornment';
 import { TextField, Box, Button } from '@mui/material';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-import { AddComment } from './index';
-import { getUserData, getOtherUserData, updatePost, deletePost } from '../services';
+import { AddComment, Comment } from './index';
+import {
+  getUserData,
+  getOtherUserData,
+  updatePost,
+  deletePost,
+  getAllCommentsByPostId
+} from '../services';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -38,8 +41,10 @@ export default function Post(props) {
   const [liked, setLiked] = useState(false);
   const [userData, setUserData] = useState(null);
   const [postAuthorData, setPostAuthorData] = useState(null);
-  const [newPostCaption, setNewPostCaption] = useState('new');
+  const [newPostCaption, setNewPostCaption] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [allComments, setAllComments] = useState(null);
+  const [isLoadingComments, setIsLoadingComments] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -50,9 +55,16 @@ export default function Post(props) {
       setUserData(result);
       result = await getOtherUserData(props.postData.authorId);
       setPostAuthorData(result);
+      result = await getAllCommentsByPostId(props.postData._id);
+      // await result.sort((a, b) => {
+      //   return new Date(b.commentDate).getTime() - new Date(a.commentDate).getTime();
+      // });
+      // console.log(result);
+
+      setAllComments(result);
     };
     init();
-  }, [props.postData.authorId]);
+  }, [props.postData.authorId, props.postData._id, isLoadingComments]);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -64,19 +76,14 @@ export default function Post(props) {
   const handleDeletePost = async () => {
     const response = window.confirm('Are you sure you want to delete your post?');
     if (response) {
-      try {
-        props.setIsLoading(true);
+      props.setIsLoading(true);
+      setTimeout(async () => {
+        const result = await deletePost(props.postData._id);
 
-        setTimeout(async () => {
-          const result = await deletePost(props.postData._id);
+        result?.err && alert(result.err);
 
-          result?.err && alert(result.err);
-
-          props.setIsLoading(false);
-        }, 3000);
-      } catch (e) {
-        alert(e);
-      }
+        props.setIsLoading(false);
+      }, 3000);
     } else return;
   };
 
@@ -88,6 +95,13 @@ export default function Post(props) {
       props.setIsLoading(false);
       setIsEditing(false);
     }, 3000);
+  };
+
+  const handleClickToEdit = (e) => {
+    if (userData?._id === props.postData.authorId) {
+      setIsEditing(true);
+      setNewPostCaption(props.postData.postCaption);
+    }
   };
 
   return (
@@ -120,7 +134,8 @@ export default function Post(props) {
             <TextField
               style={{ width: '100%' }}
               defaultValue={props.postData.postCaption}
-              onChange={(e) => setNewPostCaption(e.target.value)}></TextField>
+              onChange={(e) => setNewPostCaption(e.target.value)}
+            />
             <Button onClick={handleConfirmEdit}>
               {props.isLoading ? <CloudUploadIcon /> : <ModeEditIcon />}
             </Button>
@@ -129,7 +144,7 @@ export default function Post(props) {
           <Typography
             variant='body2'
             color='text.secondary'
-            onClick={() => setIsEditing(true)}
+            onClick={(e) => handleClickToEdit(e)}
             style={{ cursor: 'pointer' }}>
             {props.postData.postCaption}
           </Typography>
@@ -152,25 +167,19 @@ export default function Post(props) {
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <Box style={{ margin: '5px' }}>
-          <AddComment />
+          <AddComment postId={props.postData._id} setIsLoadingComments={setIsLoadingComments} />
         </Box>
         <CardContent>
-          <Typography paragraph>Comments:</Typography>
-          {props.postData.postComments?.map((comment, index) => (
-            // needs to create a comment comp
-            <TextField
+          <Typography paragraph>
+            {allComments?.length > 0 ? 'Comments:' : 'Be the first one to comment!'}
+          </Typography>
+          {allComments?.map((comment, index) => (
+            <Comment
+              commentData={comment}
               key={index}
-              style={{ width: '100%' }}
-              defaultValue={comment}
-              variant='standard'
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <AccountCircle />
-                  </InputAdornment>
-                )
-              }}
+              userData={userData}
+              postData={props.postData}
+              setIsLoadingComments={setIsLoadingComments}
             />
           ))}
         </CardContent>

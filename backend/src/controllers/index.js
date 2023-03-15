@@ -1,3 +1,5 @@
+const { getAllCommentsByPostId, addCommentToPost, deleteComment } = require('./commentController');
+
 const {
   getSuggestedConnections,
   sendConnectionRequest,
@@ -5,6 +7,7 @@ const {
   acceptConnectionRequest,
   getAllConnections
 } = require('./connectionControllers');
+
 const {
   getUsers,
   getUser,
@@ -25,6 +28,9 @@ const {
 } = require('./postControllers');
 
 module.exports = {
+  getAllCommentsByPostId,
+  addCommentToPost,
+  deleteComment,
   getSuggestedConnections,
   sendConnectionRequest,
   cancelConnectionRequest,
