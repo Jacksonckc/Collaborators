@@ -17,7 +17,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 
 import { getUserData } from '../services';
 
-const pages = ['My Posts', 'My Connections'];
+const pages = ['My Posts', 'My Connections', 'Project Gallery'];
 const settings = ['Profile', 'Favorites', 'Skills', 'Logout'];
 
 const Header = () => {
@@ -54,6 +54,9 @@ const Header = () => {
   };
   const handleGoToMyPosts = () => {
     navigate('/myPosts');
+  };
+  const handleGoToProjectGallery = () => {
+    navigate('/projectGallery');
   };
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -115,6 +118,9 @@ const Header = () => {
               <MenuItem key={pages[1]} onClick={handleGoToMyConnections}>
                 <Typography textAlign='center'>{pages[1]}</Typography>
               </MenuItem>
+              <MenuItem key={pages[2]} onClick={handleGoToProjectGallery}>
+                <Typography textAlign='center'>{pages[2]}</Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -147,6 +153,12 @@ const Header = () => {
               onClick={handleGoToMyConnections}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               {pages[1]}
+            </Button>
+            <Button
+              key={pages[2]}
+              onClick={handleGoToProjectGallery}
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              {pages[2]}
             </Button>
           </Box>
 

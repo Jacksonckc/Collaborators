@@ -112,7 +112,7 @@ const deletePost = async (req, res) => {
     else {
       await PostModel.findByIdAndDelete(req.params.postId);
       await CommentModel.deleteMany({ postId: req.params.postId });
-      await PostLikeModel.deleteMany({ authorId: user._id });
+      await PostLikeModel.deleteMany({ authorId: user._id, postId: req.params.postId });
       res.sendStatus(204);
     }
   } catch {

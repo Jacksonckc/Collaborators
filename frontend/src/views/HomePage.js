@@ -13,6 +13,7 @@ export default function HomePage() {
   const [errMessage, setErrMessage] = useState(null);
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showBuffer, setShowBuffer] = useState(false);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -29,12 +30,14 @@ export default function HomePage() {
   }, [navigate, isLoading]);
 
   const handleCreatePost = async () => {
+    setShowBuffer(true);
     setIsLoading(true);
     setTimeout(async () => {
       const result = await createPost(postCaption);
       result?.err && setErrMessage(result.err);
       setPostCaption(null);
       setIsLoading(false);
+      setShowBuffer(false);
     }, 2000);
   };
 
@@ -73,6 +76,8 @@ export default function HomePage() {
             flexDirection: 'column',
             gap: '10px'
           }}>
+          {showBuffer && <LinearBuffer />}
+
           <Card
             style={{ margin: 'auto', backgroundColor: '	#F5F5F5', maxWidth: 505, width: '100%' }}>
             <CardHeader
@@ -104,7 +109,6 @@ export default function HomePage() {
               Add Post
             </Button>
           </Card>
-          {isLoading && <LinearBuffer />}
           {allPosts?.map((postData) => (
             <Post
               postData={postData}

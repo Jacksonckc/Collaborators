@@ -17,6 +17,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { AddComment, Comment } from './index';
+import { LinearBuffer } from '.';
 import {
   getUserData,
   getOtherUserData,
@@ -50,6 +51,7 @@ export default function Post(props) {
   const [allComments, setAllComments] = useState(null);
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [postLikeCount, setPostLikeCount] = useState(0);
+  const [showBuffer, setShowBuffer] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -74,35 +76,41 @@ export default function Post(props) {
   };
   const handleLikeClick = async () => {
     props.setIsLoading(true);
+    setShowBuffer(true);
     if (liked) {
       await unLikePost(props.postData._id);
     } else {
       await likePost(props.postData._id);
     }
     props.setIsLoading(false);
+    setShowBuffer(false);
   };
 
   const handleDeletePost = async () => {
     const response = window.confirm('Are you sure you want to delete your post?');
     if (response) {
       props.setIsLoading(true);
+      setShowBuffer(true);
       setTimeout(async () => {
         const result = await deletePost(props.postData._id);
 
         result?.err && alert(result.err);
 
         props.setIsLoading(false);
+        setShowBuffer(false);
       }, 2000);
     } else return;
   };
 
   const handleConfirmEdit = async () => {
     props.setIsLoading(true);
+    setShowBuffer(true);
     setTimeout(async () => {
       const result = await updatePost(props.postData._id, newPostCaption);
       result?.err && alert(result.err);
       props.setIsLoading(false);
       setIsEditing(false);
+      setShowBuffer(false);
     }, 2000);
   };
 
@@ -115,6 +123,8 @@ export default function Post(props) {
 
   return (
     <Card sx={{ maxWidth: 505, width: '100%' }} style={{ margin: 'auto' }}>
+      {showBuffer && <LinearBuffer />}
+
       <CardHeader
         avatar={
           <Avatar src={postAuthorData?.userAvatarImg}>
@@ -163,10 +173,18 @@ export default function Post(props) {
       </CardContent>
       <CardActions disableSpacing>
         <Badge
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right'
+          }}
           badgeContent={postLikeCount.length}
           onClick={handleLikeClick}
-          style={{ marginLeft: '10px' }}>
-          {liked ? <FavoriteIcon style={{ color: 'red' }} /> : <FavoriteIcon />}
+          style={{ marginLeft: '10px', cursor: 'pointer' }}>
+          {liked ? (
+            <FavoriteIcon style={{ color: 'red', marginBottom: '-5px' }} />
+          ) : (
+            <FavoriteIcon style={{ marginBottom: '-5px' }} />
+          )}
         </Badge>
         <ExpandMore
           expand={expanded}

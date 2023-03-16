@@ -6,6 +6,7 @@ import {
   MyConnectionsPage,
   MyPostsPage,
   ProfilePage,
+  ProjectGalleryPage,
   RegisterPage
 } from './views';
 
@@ -32,6 +33,10 @@ const App = () => {
     {
       path: '/profile',
       element: <ProfilePage />
+    },
+    {
+      path: '/projectGallery',
+      element: <ProjectGalleryPage />
     },
     {
       path: '/register',
