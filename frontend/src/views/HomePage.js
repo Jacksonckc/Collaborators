@@ -18,7 +18,7 @@ export default function HomePage() {
   const navigate = useNavigate();
   useEffect(() => {
     const init = async () => {
-      checkAuthByToken(navigate);
+      await checkAuthByToken(navigate);
       const result = await getAllPosts();
       await result.sort((a, b) => {
         return new Date(b.postDate).getTime() - new Date(a.postDate).getTime();

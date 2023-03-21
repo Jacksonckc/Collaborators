@@ -700,6 +700,32 @@
         }
       }
     },
+    "/user/postLike/all/{postId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/user/postLike/": {
       "post": {
         "description": "",
@@ -764,6 +790,59 @@
           }
         }
       }
+    },
+    "/project/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "projectAuthorId": {
+                  "example": "any"
+                },
+                "projectName": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -772,24 +851,24 @@
       "properties": {
         "authorId": {
           "type": "string",
-          "example": "7df25d66-beb5-4353-b86f-35cb6f376295"
+          "example": "998e44ca-a823-4ad5-a6eb-f3e2b7a0c9ab"
         },
         "postDate": {
           "type": "string",
-          "example": "2002-03-01"
+          "example": "1978-02-05"
         },
         "postCaption": {
           "type": "string",
-          "example": "Enim maiores occaecati necessitatibus magni fugiat."
+          "example": "Iusto in et omnis aut vel exercitationem quia."
         },
         "postLikeCount": {
           "type": "number",
-          "example": 2
+          "example": 8
         },
         "postComments": {
           "type": "array",
           "example": [
-            "Facilis et quae molestias quia dolor aliquid molestiae aut."
+            "Et excepturi ut laudantium eum minima repudiandae minus quia eos."
           ],
           "items": {
             "type": "string"
@@ -809,27 +888,27 @@
       "properties": {
         "projectName": {
           "type": "string",
-          "example": "Voluptatum qui ullam laudantium."
+          "example": "Quos et quas atque."
         },
         "projectLink": {
           "type": "string",
-          "example": "Oran_Mertz@yahoo.com"
+          "example": "Langworth_Rosamond@gmail.com"
         },
         "projectAutherId": {
           "type": "string",
-          "example": "1e51591e-c579-467e-96ac-9e26c7914ad5"
+          "example": "6cf1e3a0-a360-47ef-ab7c-6579e22caf4a"
         },
         "projectLikesCount": {
           "type": "number",
-          "example": 21
+          "example": 4
         },
         "projectStartDate": {
           "type": "string",
-          "example": "2010-05-17"
+          "example": "2004-06-14"
         },
         "projectDescription": {
           "type": "string",
-          "example": "Omnis harum voluptate placeat et ut est sequi. Et qui amet sapiente dignissimos deleniti. Tenetur qui repudiandae tempore totam eos. Distinctio autem est dolorem nihil omnis temporibus."
+          "example": "Numquam velit esse id. Aut debitis quam voluptatem sit ab quam omnis esse. Voluptatem quisquam reprehenderit iusto similique in amet voluptatem veritatis."
         },
         "isProjectFinished": {
           "type": "boolean",
@@ -851,15 +930,15 @@
       "properties": {
         "skillName": {
           "type": "string",
-          "example": "cn"
+          "example": "pt"
         },
         "skillLevel": {
           "type": "number",
-          "example": 0
+          "example": 1
         },
         "skillDescription": {
           "type": "string",
-          "example": "Eum dolores rerum quia et."
+          "example": "Incidunt aliquam ab necessitatibus natus in veniam."
         }
       },
       "required": [
@@ -873,43 +952,43 @@
       "properties": {
         "userEmail": {
           "type": "string",
-          "example": "Rau_Danielle@Sipes.us"
+          "example": "Hilda.Aufderhar@yahoo.com"
         },
         "userFirstName": {
           "type": "string",
-          "example": "Jed"
+          "example": "Skyla"
         },
         "userLastName": {
           "type": "string",
-          "example": "Crona"
+          "example": "Reynolds"
         },
         "userBirthday": {
           "type": "string",
-          "example": "1986-04-23"
+          "example": "2010-09-15"
         },
         "userPhone": {
           "type": "string",
-          "example": "247-674-9912"
+          "example": "934-353-2744"
         },
         "userStory": {
           "type": "string",
-          "example": "Sint necessitatibus consequatur sit fugiat velit ut eius perspiciatis. Quia tenetur quos inventore aut. Inventore soluta ea sit consequatur ratione ipsum officia voluptatem molestiae. Hic nostrum sint provident laborum quis."
+          "example": "Iusto debitis quos et esse error. Mollitia consequatur non qui. Ratione odit saepe dolorem ut. Quasi possimus magni aspernatur qui."
         },
         "userAvatarImg": {
           "type": "string",
-          "example": "Numquam fugiat consectetur eveniet ipsum."
+          "example": "Voluptatem quibusdam voluptatem sit commodi."
         },
         "password": {
           "type": "string",
-          "example": "0Carlee49"
+          "example": "2Una48"
         },
         "userProjectCount": {
           "type": "number",
-          "example": 3
+          "example": 4
         },
         "acorns": {
           "type": "number",
-          "example": 9
+          "example": 5
         },
         "userLevel": {
           "type": "number",
@@ -930,11 +1009,11 @@
       "properties": {
         "senderId": {
           "type": "string",
-          "example": "8a6fa3ce-2321-4254-a7d1-97d945610a7c"
+          "example": "f71daf8c-02e0-4623-a5f5-46f2ef6ae6c1"
         },
         "receiverId": {
           "type": "string",
-          "example": "77e64610-4a82-4742-bc9f-e7a9a259f803"
+          "example": "02f93466-c9a6-4565-b2c6-8d3735a7ac5e"
         },
         "accepted": {
           "type": "boolean",
@@ -943,8 +1022,8 @@
         "userIds": {
           "type": "array",
           "example": [
-            "53556d53-f3d7-4d6d-b0e9-ee2c787566ba",
-            "42eba7de-4443-4e01-99e6-463a8464067d"
+            "b5df072c-d149-4aeb-aaa4-89f398b5b7ea",
+            "187a5e68-4415-4a47-9a75-0dde3662dccb"
           ],
           "items": {
             "type": "string"
@@ -957,11 +1036,11 @@
       "properties": {
         "userId": {
           "type": "string",
-          "example": "b0a9cab6-ce67-4393-8c59-de53932382a5"
+          "example": "45252610-ff1e-4c96-b128-a974e32e6f19"
         },
         "hash": {
           "type": "string",
-          "example": "3Horace82"
+          "example": "4Citlalli04"
         }
       },
       "required": [

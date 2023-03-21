@@ -13,7 +13,7 @@ export default function MyPostsPage() {
   const navigate = useNavigate();
   useEffect(() => {
     const init = async () => {
-      checkAuthByToken(navigate);
+      await checkAuthByToken(navigate);
       setAllPosts(await getUserPosts());
     };
     init();

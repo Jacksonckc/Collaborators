@@ -27,7 +27,7 @@ export default function ProfilePage() {
   useEffect(() => {
     const init = async () => {
       // if no token, not authed
-      checkAuthByToken(navigate);
+      await checkAuthByToken(navigate);
 
       const result = await getUserData();
 

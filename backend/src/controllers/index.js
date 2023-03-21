@@ -1,4 +1,4 @@
-const { getAllCommentsByPostId, addCommentToPost, deleteComment } = require('./commentController');
+const { getAllCommentsByPostId, addCommentToPost, deleteComment } = require('./commentControllers');
 
 const {
   getSuggestedConnections,
@@ -32,7 +32,9 @@ const {
   getPostLikeCountByPostId,
   likePost,
   unLikePost
-} = require('./postLikeController');
+} = require('./postLikeControllers');
+
+const { getAllProjects, addProject } = require('./projectControllers');
 
 module.exports = {
   getAllCommentsByPostId,
@@ -59,5 +61,7 @@ module.exports = {
   getLikeByPostId,
   getPostLikeCountByPostId,
   likePost,
-  unLikePost
+  unLikePost,
+  getAllProjects,
+  addProject
 };
