@@ -34,7 +34,7 @@ const {
   unLikePost
 } = require('./postLikeControllers');
 
-const { getAllProjects, addProject } = require('./projectControllers');
+const { getAllProjects, addProject, deleteProject } = require('./projectControllers');
 
 module.exports = {
   getAllCommentsByPostId,
@@ -63,5 +63,6 @@ module.exports = {
   likePost,
   unLikePost,
   getAllProjects,
-  addProject
+  addProject,
+  deleteProject
 };

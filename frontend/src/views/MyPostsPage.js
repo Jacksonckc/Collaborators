@@ -31,7 +31,7 @@ export default function MyPostsPage() {
         }}>
         {isLoading && <LinearBuffer />}
         {allPosts?.length === 0 ? (
-          <div>You dont have any posts yet, go make one!</div>
+          <div>You don't have any posts yet, go make one!</div>
         ) : (
           allPosts.map((postData) => (
             <Post postData={postData} key={postData._id} setIsLoading={setIsLoading} />

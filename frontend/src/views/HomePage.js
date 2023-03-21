@@ -50,7 +50,7 @@ export default function HomePage() {
   };
 
   return (
-    <div>
+    <div style={{ height: '100VH' }}>
       <Snackbar
         open={errMessage != null}
         autoHideDuration={2000}
@@ -66,9 +66,25 @@ export default function HomePage() {
           display: 'grid',
           gridTemplateColumns: '1fr 2fr 1fr',
           alignItems: 'start',
-          marginTop: '40px'
+          marginTop: '40px',
+          height: '100%'
         }}>
-        <Container></Container>
+        <Container
+          style={{
+            maxWidth: '300px',
+            padding: '0',
+            margin: ' 0 auto',
+            position: 'sticky',
+            top: '108.5px',
+            height: '80%'
+          }}>
+          <img
+            src='https://cdn.wallpapersafari.com/45/19/q5LXkx.jpg'
+            alt=''
+            width='100%'
+            height='100%'
+          />
+        </Container>
 
         <Container
           style={{

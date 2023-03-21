@@ -15,13 +15,19 @@ const addProject = async (req, res) => {
   if (user._id.toString() !== req.body.projectAuthorId) {
     return res.status(400).json({ err: 'You are not allow to add a project to another account.' });
   }
+
+  if (!req.body.projectName || !req.body.projectRewardAcorns || !req.body.projectDescription)
+    return res
+      .status(400)
+      .json({ err: 'You need all the necessary information to create a project.' });
+
   try {
     const isProjectExist = await ProjectModel.findOne({ projectName: req.body.projectName });
 
     if (isProjectExist) return res.status(400).json({ err: 'Project already exists.' });
 
     if (user.acorns < req.body.projectRewardAcorns) {
-      return res.status(400).json({ err: 'You do not have enough acorn to run the project.' });
+      return res.status(400).json({ err: 'You do not have enough acorns to run the project.' });
     }
 
     const newProject = new ProjectModel({
@@ -40,4 +46,21 @@ const addProject = async (req, res) => {
   }
 };
 
-module.exports = { getAllProjects, addProject };
+const deleteProject = async (req, res) => {
+  const user = req.user;
+
+  if (user._id.toString() !== req.body.projectAuthorId) {
+    return res
+      .status(400)
+      .json({ err: 'You are not allow to delete a project from another account.' });
+  }
+
+  try {
+    await ProjectModel.findByIdAndDelete(req.body.projectId);
+    res.sendStatus(204);
+  } catch {
+    res.status(400).json({ err: 'Fail to delete a project.' });
+  }
+};
+
+module.exports = { getAllProjects, addProject, deleteProject };

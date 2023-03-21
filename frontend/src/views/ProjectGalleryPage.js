@@ -4,7 +4,7 @@ import { Button, Box, TextField, Snackbar, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { Header, Project, LinearBuffer } from '../components';
-import { getAllProjects, getUserData } from '../services';
+import { getAllProjects, getUserData, addProject } from '../services';
 import { checkAuthByToken } from '../utils';
 
 const ProjectGalleryPage = () => {
@@ -13,9 +13,10 @@ const ProjectGalleryPage = () => {
   const [isMakingProject, setIsMakingProject] = useState(false);
   const [errMessage, setErrMessage] = useState(null);
   const [showBuffer, setShowBuffer] = useState(false);
-  const [projectName, setProjectName] = useState(false);
-  const [projectDescription, setProjectDescription] = useState(false);
-  const [projectRewardAcorns, setProjectRewardAcorns] = useState(false);
+  const [projectName, setProjectName] = useState(null);
+  const [projectDescription, setProjectDescription] = useState(null);
+  const [projectLink, setProjectLink] = useState(null);
+  const [projectRewardAcorns, setProjectRewardAcorns] = useState(null);
 
   const navigate = useNavigate();
 
@@ -28,7 +29,7 @@ const ProjectGalleryPage = () => {
       setUserData(await getUserData());
     };
     init();
-  }, [navigate]);
+  }, [navigate, showBuffer]);
 
   const handleCloseSnackbar = (reason) => {
     if (reason === 'clickaway') {
@@ -40,14 +41,24 @@ const ProjectGalleryPage = () => {
 
   const handleCreateProject = async () => {
     setShowBuffer(true);
-    const projectData = { projectName, projectDescription, projectRewardAcorns };
+    const projectData = {
+      projectName,
+      projectDescription,
+      projectRewardAcorns,
+      projectLink,
+      projectAuthorId: userData._id
+    };
     setTimeout(async () => {
-      const result = { err: 'NO!' }; // need to call a service for this
-      result?.err && setErrMessage(result.err);
-
+      const result = await addProject(projectData); // need to call a service for this
+      if (result?.err) setErrMessage(result.err);
+      else {
+        setIsMakingProject(false);
+        alert('You have added a project!');
+      }
       setShowBuffer(false);
     }, 3000);
   };
+
   return (
     <Box>
       <Snackbar
@@ -75,24 +86,34 @@ const ProjectGalleryPage = () => {
               boxSizing: 'border-box'
             }}>
             <TextField
-              placeholder='Project Name: '
               onChange={(e) => setProjectName(e.target.value)}
+              required
+              label='Project Name'
             />
             <TextField
-              placeholder='Project Description: '
+              label='Project Description'
+              required
               onChange={(e) => setProjectDescription(e.target.value)}
             />
+            <TextField label='Project Link' onChange={(e) => setProjectLink(e.target.value)} />
             <TextField
-              placeholder='Project Reward Acorns: '
+              label='Project Reward Acorns'
+              required
               onChange={(e) => setProjectRewardAcorns(e.target.value)}
             />
             <Button onClick={handleCreateProject}>Start Project!</Button>
           </Box>
         ) : (
           <Carousel animation='slide' height={500}>
-            {allProjects?.map((project, i) => (
-              <Project key={i} project={project} />
-            ))}
+            {userData &&
+              allProjects?.map((project, i) => (
+                <Project
+                  key={i}
+                  project={project}
+                  userData={userData}
+                  setShowBuffer={setShowBuffer}
+                />
+              ))}
           </Carousel>
         )}
       </Box>

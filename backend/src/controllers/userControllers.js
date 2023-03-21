@@ -9,7 +9,8 @@ const {
   PostModel,
   CommentModel,
   ConnectionModel,
-  PostLikeModel
+  PostLikeModel,
+  ProjectModel
 } = require('../models');
 
 const getUser = async (req, res) => {
@@ -130,6 +131,7 @@ const deleteUser = async (req, res) => {
     await PostLikeModel.deleteMany({ authorId: user._id });
     await PostModel.deleteMany({ authorId: user._id });
     await ConnectionModel.deleteMany({ userIds: user._id });
+    await ProjectModel.deleteMany({ projectAuthorId: user._id });
     await PasswordModel.findOneAndDelete({ userId: user._id });
     await UserModel.findByIdAndDelete(user._id);
 

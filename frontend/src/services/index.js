@@ -19,7 +19,7 @@ import {
 } from './user';
 import { getAllPosts, getUserPosts, createPost, updatePost, deletePost } from './post';
 import { getLikeByPostId, getPostLikeCountByPostId, likePost, unLikePost } from './postLike';
-import { getAllProjects } from './project';
+import { getAllProjects, addProject, deleteProject } from './project';
 
 export {
   getAllCommentsByPostId,
@@ -46,5 +46,7 @@ export {
   getPostLikeCountByPostId,
   likePost,
   unLikePost,
-  getAllProjects
+  getAllProjects,
+  addProject,
+  deleteProject
 };
